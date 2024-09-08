@@ -1,0 +1,9 @@
+rootProject.name = 'animal'
+
+include 'hub'
+include 'order'
+include 'company'
+include 'notification'
+include 'auth'
+include 'common'
+
