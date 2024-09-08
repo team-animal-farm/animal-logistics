@@ -1,9 +1,8 @@
 rootProject.name = 'animal'
 
-include 'hub'
-include 'order'
-include 'company'
-include 'notification'
-include 'auth'
-include 'common'
-
+include 'module:hub'
+include 'module:order'
+include 'module:company'
+include 'module:notification'
+include 'module:auth'
+include 'module:common'
