@@ -33,10 +33,8 @@
       - infrastructure: 인프라스트럭처 계층
           - SampleRepository.class: 리포지토리
       - dto: 데이터 전송 객체
-          - request: 요청 객체
-            - CreateSampleReq.class: 생성 요청 객체
-          - response: 응답 객체
-            - CreateSampleRes.class: 생성 응답 객체
+          - SampleRequest.class: 요청 객체
+          - SampleResponse.class: 응답 객체
       - mapper: 매퍼
         - SampleMapper.class: 매퍼
       - property: 프로퍼티
