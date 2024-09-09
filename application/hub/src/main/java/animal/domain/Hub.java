@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Hub extends BaseEntity {
 
     @EmbeddedId
-    private final HubId id = new HubId();
+    private final HubId id = HubId.ofRandom();
 
     @Embedded
     private Address address;
