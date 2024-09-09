@@ -1,26 +1,11 @@
 # 디렉토리 가이드
 
-- 도메인형 디렉토리 구조를 사용합니다.
+- 애플리케이션 레벨에서 사용하는 디렉토리 가이드 입니다.
 - 디렉토리명은 소문자로 작성하며, 단어 사이는 `-`로 구분합니다.
 - 디렉토리명은 단수형으로 작성합니다.
 
 ```text
-- domain
-- global
-- infra
-```
-
-- 1계층으로는 domain, global, infra 디렉토리를 사용합니다.
-    - domain 디렉토리는 전체적인 도메인을 나타냅니다.
-    - global 디렉토리는 전체적인 설정을 나타냅니다.
-    - infra 디렉토리는 외부와 연결되는 인프라를 나타냅니다.
-
-```text
-- domain
-    - model : 공통으로 쓰이는 값 객체, BaseEntity 등
-    - user
-      // ... 
-    - sample : 샘플 도메인 
+- sample : 샘플 애플리케이션 
       - presentation: 프레젠테이션 계층
           - SampleController.class: 컨트롤러
       - application: 응용 계층
@@ -54,28 +39,3 @@
 ## 리포지토리
 
 - Repository는 도메인 디렉토리에 위치하는 것이 맞으나, JPA를 사용할 경우 JPA Repository를 사용하게 되면 인프라스트럭처 계층에 위치하도록 한다.
-
-```text
-- global
-  - common
-    - response
-  - exception
-  - security
-  // ...
-```
-
-- global 디렉토리는 전체적인 설정을 나타냅니다.
-    - common 디렉토리는 공통으로 사용되는 객체를 나타냅니다.
-    - exception 디렉토리는 예외 처리를 나타냅니다.
-    - security 디렉토리는 보안 설정을 나타냅니다.
-    - 도메인 구조와 같이, global 디렉토리도 도메인형 디렉토리 구조를 사용합니다.
-
-```text
-- infra
-  - sms
-  - email
-  // ...
-```
-
-- infra 디렉토리는 외부와 연결되는 인프라를 나타냅니다.
-    - 도메인 구조와 같이, infra 디렉토리도 도메인형 디렉토리 구조를 사용합니다.

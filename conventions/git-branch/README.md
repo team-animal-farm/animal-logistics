@@ -2,6 +2,8 @@
 
 ## [Github Flow](https://docs.github.com/ko/get-started/using-github/github-flow) 사용
 
+![Github Flow](../../docs/images/github-flow.png)   
+*[출처](https://gist.github.com/Tlaloc-Es/993a6970c2f79a11cd36fc4457de0295)*
 
 ### 특징
 
