@@ -38,7 +38,7 @@ public class HubService {
     /**
      * 허브 리스트 조회
      */
-    public List<GetHubRes> getHubResList() {
+    public List<GetHubRes> getHubList() {
 
         return hubRepository.findAll()
             .stream()

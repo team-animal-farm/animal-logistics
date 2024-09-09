@@ -39,7 +39,7 @@ public class HubController {
      */
     @GetMapping
     public CommonResponse<List<GetHubRes>> getHubList() {
-        List<GetHubRes> hubList = hubService.getHubResList();
+        List<GetHubRes> hubList = hubService.getHubList();
         return CommonResponse.success(hubList);
     }
 
