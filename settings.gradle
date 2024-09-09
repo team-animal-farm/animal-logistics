@@ -6,3 +6,7 @@ include 'application:company'
 include 'application:notification'
 include 'application:auth'
 include 'common:common'
+include 'component:component-exception'
+include 'component:component-jpa'
+findProject(':component:component-jpa')?.name = 'component-jpa'
+
