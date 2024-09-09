@@ -1,4 +1,5 @@
-import CommonResponse.CommonEmptyRes;
+package exception;
+
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import response.CommonResponse;
+import response.CommonResponse.CommonEmptyRes;
+import response.ErrorCase;
 
 /**
  * 전역 예외 처리 핸들러

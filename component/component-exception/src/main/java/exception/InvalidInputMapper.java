@@ -1,3 +1,5 @@
+package exception;
+
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 import org.mapstruct.Mapper;
