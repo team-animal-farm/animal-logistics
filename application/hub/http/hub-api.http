@@ -1,0 +1,25 @@
+### 허브 생성
+POST http://localhost:8081/hubs
+Content-Type: application/json
+
+{
+  "address": {
+    "roadAddress": "서울특별시 강남구 강남대로 1234",
+    "detailAddress": "강남빌딩 1234호",
+    "zipcode": "12345"
+  },
+  "coordinate": {
+    "latitude": 37.123456,
+    "longitude": 127.123456
+  }
+}
+
+> {%
+  client.global.set("hubId", response.body.data.id); // sampleId 라는 변수에 response.body.data.id 값을 저장
+%}
+
+### 허브 리스트 조회
+GET http://localhost:8081/hubs
+
+### 허브 단건 조회
+GET http://localhost:8081/hubs/{{hubId}}
