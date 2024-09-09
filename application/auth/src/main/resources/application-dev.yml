@@ -21,6 +21,6 @@ spring:
       stop:
         command: down
         timeout: 1m
-      file: application/hub/docker-compose.yml
+      file: application/auth/docker-compose.yml
 server:
   port: 8084
