@@ -9,7 +9,6 @@ import animal.infrastructure.HubRepository;
 import animal.mapper.HubMapper;
 import exception.GlobalException;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,8 @@ public class HubService {
     /**
      * 허브 단건 조회
      */
-    public GetHubRes getHub(UUID id) {
-        Hub hub = hubRepository.findById(HubId.of(id))
+    public GetHubRes getHub(HubId hubId) {
+        Hub hub = hubRepository.findById(hubId)
             .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
 
         return hubMapper.toGetHubRes(hub);

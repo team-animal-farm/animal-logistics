@@ -1,6 +1,7 @@
 package animal.presentation;
 
 import animal.application.HubService;
+import animal.domain.HubId;
 import animal.dto.HubRequest.CreateHubReq;
 import animal.dto.HubResponse.CreateHubRes;
 import animal.dto.HubResponse.GetHubRes;
@@ -30,7 +31,7 @@ public class HubController {
      */
     @GetMapping("/{hubId}")
     public CommonResponse<GetHubRes> getHub(@PathVariable("hubId") UUID hubId) {
-        GetHubRes hub = hubService.getHub(hubId);
+        GetHubRes hub = hubService.getHub(HubId.of(hubId));
         return CommonResponse.success(hub);
     }
 
