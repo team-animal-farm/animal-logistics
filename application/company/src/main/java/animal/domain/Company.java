@@ -2,24 +2,27 @@ package animal.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import jpa.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "p_company")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Company {
+public class Company extends BaseEntity {
 
-    @Id
-    @Column(name = "company_id")
-    private UUID id;
+    @EmbeddedId
+    private final CompanyId id = new CompanyId();
+
     private UUID hubId;
     private String name;
 
@@ -35,10 +38,9 @@ public class Company {
     private Address address;
 
     @Builder
-    public Company(UUID hubId, String name, String companyType, Address address) {
+    private Company(UUID hubId, String name, String companyType, Address address) {
         this.hubId = hubId;
         this.name = name;
-        // 초기값 세팅
         this.companyStatus = CompanyStatus.OPENED;
         this.companyType = CompanyType.valueOf(companyType);
         this.address = address;
