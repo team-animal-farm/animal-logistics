@@ -1,8 +1,16 @@
 package animal.presentation;
 
 import animal.application.CompanyService;
+import animal.dto.CompanyRequest;
 import animal.dto.CompanyRequest.CreateCompanyReq;
+import animal.dto.CompanyResponse.GetCompanyRes;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +26,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     /**
-     * 업체 생성 API
+     * 업체 등록 API
      */
     @PostMapping
     public CommonResponse<CommonEmptyRes> createCompany(@RequestBody CreateCompanyReq createCompanyReq) {
@@ -26,4 +34,38 @@ public class CompanyController {
         return CommonResponse.success();
     }
 
+    /**
+     * 업체 조회 API
+     */
+    @GetMapping("/{companyId}")
+    public CommonResponse<GetCompanyRes> getCompany(@PathVariable UUID companyId) {
+        return CommonResponse.success(companyService.getCompany(companyId));
+    }
+
+    /**
+     * 업체 수정 API
+     */
+    @PatchMapping("/{companyId}")
+    public CommonResponse<CommonEmptyRes> updateCompany(@PathVariable UUID companyId,
+        @RequestBody CompanyRequest.UpdateCompanyReq updateCompanyReq) {
+        companyService.updateCompany(companyId, updateCompanyReq);
+        return CommonResponse.success();
+    }
+
+    /**
+     * 업체 삭제 API
+     */
+    @DeleteMapping("/{companyId}")
+    public CommonResponse<CommonEmptyRes> deleteCompany(@PathVariable UUID companyId) {
+        companyService.deleteCompany(companyId);
+        return CommonResponse.success();
+    }
+
+    /**
+     * 업체 목록 조회 API
+     */
+    @GetMapping
+    public CommonResponse<List<GetCompanyRes>> getCompanyList() {
+        return CommonResponse.success(companyService.getCompanyList());
+    }
 }

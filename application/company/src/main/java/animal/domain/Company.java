@@ -43,12 +43,18 @@ public class Company extends BaseEntity {
         this.address = address;
     }
 
+    public void updateCompany(String companyStatus, String companyType, Address address) {
+        this.companyStatus = CompanyStatus.valueOf(companyStatus);
+        this.companyType = CompanyType.valueOf(companyType);
+        this.address = address;
+    }
+
     public enum CompanyStatus {
         OPENED, CLOSED
     }
 
+
     public enum CompanyType {
         PRODUCER, RECEIVER
     }
-
 }

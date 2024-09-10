@@ -11,4 +11,13 @@ public class CompanyRequest {
     ) {
 
     }
+
+    public record UpdateCompanyReq(
+        String companyStatus,
+        String companyType,
+        Address address
+    ) {
+
+    }
+
 }
