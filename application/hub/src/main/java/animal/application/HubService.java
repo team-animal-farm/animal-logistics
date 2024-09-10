@@ -3,8 +3,10 @@ package animal.application;
 import animal.domain.Hub;
 import animal.domain.HubId;
 import animal.dto.HubRequest.CreateHubReq;
+import animal.dto.HubRequest.UpdateHubReq;
 import animal.dto.HubResponse.CreateHubRes;
 import animal.dto.HubResponse.GetHubRes;
+import animal.dto.HubResponse.UpdateHubRes;
 import animal.infrastructure.HubRepository;
 import animal.mapper.HubMapper;
 import exception.GlobalException;
@@ -50,6 +52,27 @@ public class HubService {
         Hub savedHub = hubRepository.save(hub);
 
         return hubMapper.toCreateHubRes(savedHub);
+    }
+
+    /**
+     * 허브 수정
+     */
+    @Transactional
+    public UpdateHubRes updateHub(HubId hubId, UpdateHubReq updateHubReq) {
+
+        Hub hub = findHub(hubId);
+        hub.updateHubInfo(updateHubReq.address(), updateHubReq.coordinate());
+
+        return hubMapper.toUpdateHubRes(hub);
+    }
+
+    /**
+     * 허브 삭제
+     */
+    @Transactional
+    public void deleteHub(HubId hubId) {
+        Hub hub = findHub(hubId);
+        hubRepository.delete(hub);
     }
 
     private Hub findHub(HubId hubId) {
