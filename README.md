@@ -51,7 +51,7 @@
 - Spring Security
 - Spring Data Jpa
 - Spring Data Redis
-- jjwt 0.12.5
+- jjwt 0.12.6
 - QueryDSL 5.0.0
 - mapStruct 1.5.5.Final
 - Lombok
