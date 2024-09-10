@@ -38,11 +38,8 @@ public class HubService {
      * 허브 리스트 조회
      */
     public List<GetHubRes> getHubList() {
-
-        return hubRepository.findAll()
-            .stream()
-            .map(hubMapper::toGetHubRes)
-            .toList();
+        List<Hub> hubList = hubRepository.findAll();
+        return hubMapper.toGetHubResList(hubList);
     }
 
     /**
@@ -51,11 +48,7 @@ public class HubService {
     @Transactional
     public CreateHubRes createHub(CreateHubReq createHubReq) {
 
-        Hub hub = Hub.builder()
-            .address(createHubReq.address())
-            .coordinate(createHubReq.coordinate())
-            .build();
-
+        Hub hub = hubMapper.toHub(createHubReq);
         Hub savedHub = hubRepository.save(hub);
 
         return hubMapper.toCreateHubRes(savedHub);
