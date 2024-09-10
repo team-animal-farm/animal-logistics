@@ -11,6 +11,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = SPRING)
 public interface HubMapper {
 
+    Hub toHub(CreateHubReq createHubReq);
+
     @Mapping(target = "id", source = "id.id")
     GetHubRes toGetHubRes(Hub hub);
 
