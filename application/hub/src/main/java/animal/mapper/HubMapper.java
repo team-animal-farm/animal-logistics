@@ -14,6 +14,8 @@ public interface HubMapper {
     @Mapping(target = "id", source = "id.id")
     GetHubRes toGetHubRes(Hub hub);
 
+    List<GetHubRes> toGetHubResList(List<Hub> hubList);
+
     @Mapping(target = "id", source = "id.id")
     CreateHubRes toCreateHubRes(Hub hub);
 }
