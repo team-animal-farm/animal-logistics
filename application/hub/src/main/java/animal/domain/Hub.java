@@ -30,4 +30,9 @@ public class Hub extends BaseEntity {
         this.address = address;
         this.coordinate = coordinate;
     }
+
+    public void updateHubInfo(Address address, Coordinate coordinate) {
+        this.address = address;
+        this.coordinate = coordinate;
+    }
 }
