@@ -21,4 +21,12 @@ public class HubResponse {
     ) {
 
     }
+
+    public record UpdateHubRes(
+        UUID id,
+        Address address,
+        Coordinate coordinate
+    ) {
+
+    }
 }
