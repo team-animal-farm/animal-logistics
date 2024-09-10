@@ -1,13 +1,13 @@
 package animal.dto;
 
+import animal.domain.Address;
+
 public class CompanyRequest {
 
     public record CreateCompanyReq(
-        String name,
+        String username,
         String companyType,
-        String roadAddress,
-        String detailAddress,
-        String zipcode
+        Address address
     ) {
 
     }

@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import java.util.UUID;
 import jpa.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,8 +22,7 @@ public class Company extends BaseEntity {
     @EmbeddedId
     private final CompanyId id = new CompanyId();
 
-    private UUID hubId;
-    private String name;
+    private String username;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -38,9 +36,8 @@ public class Company extends BaseEntity {
     private Address address;
 
     @Builder
-    private Company(UUID hubId, String name, String companyType, Address address) {
-        this.hubId = hubId;
-        this.name = name;
+    private Company(String username, String companyType, Address address) {
+        this.username = username;
         this.companyStatus = CompanyStatus.OPENED;
         this.companyType = CompanyType.valueOf(companyType);
         this.address = address;

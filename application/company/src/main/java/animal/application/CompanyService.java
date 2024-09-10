@@ -1,6 +1,5 @@
 package animal.application;
 
-import animal.domain.Address;
 import animal.domain.Company;
 import animal.dto.CompanyRequest.CreateCompanyReq;
 import animal.infrastructure.CompanyRepository;
@@ -17,21 +16,11 @@ public class CompanyService {
 
     @Transactional
     public void createCompany(CreateCompanyReq createCompanyReq) {
-        Address address = Address.builder()
-            .roadAddress(createCompanyReq.roadAddress())
-            .detailAddress(createCompanyReq.detailAddress())
-            .zipcode(createCompanyReq.zipcode())
-            .build();
-
-        // TODO: 업체 주소와 가장 가까운 허브를 찾아오는 로직 필요
-        // var hubId = hubClient.findHub(address);
 
         Company company = Company.builder()
-            .name(createCompanyReq.name())
-            .address(address)
+            .username(createCompanyReq.username())
             .companyType(createCompanyReq.companyType())
-            // TODO: 허브ID 받아오는 로직 처리 후 수정
-            .hubId(null)
+            .address(createCompanyReq.address())
             .build();
 
         companyRepository.save(company);
