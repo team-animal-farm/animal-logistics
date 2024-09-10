@@ -26,6 +26,7 @@ public class CompanyService {
     public void createCompany(CreateCompanyReq createCompanyReq) {
         Company company = Company.builder()
             .username(createCompanyReq.username())
+            .name(createCompanyReq.name())
             .companyType(createCompanyReq.companyType())
             .address(createCompanyReq.address())
             .build();
@@ -44,7 +45,8 @@ public class CompanyService {
     public void updateCompany(UUID companyId, UpdateCompanyReq updateCompanyReq) {
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
-        company.updateCompany(updateCompanyReq.companyStatus(), updateCompanyReq.companyType(), updateCompanyReq.address());
+        company.updateCompany(updateCompanyReq.name(), updateCompanyReq.companyStatus(), updateCompanyReq.companyType(),
+            updateCompanyReq.address());
     }
 
     @Transactional

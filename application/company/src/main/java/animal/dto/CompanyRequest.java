@@ -6,6 +6,7 @@ public class CompanyRequest {
 
     public record CreateCompanyReq(
         String username,
+        String name,
         String companyType,
         Address address
     ) {
@@ -13,6 +14,7 @@ public class CompanyRequest {
     }
 
     public record UpdateCompanyReq(
+        String name,
         String companyStatus,
         String companyType,
         Address address
