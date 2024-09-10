@@ -28,9 +28,7 @@ public class HubService {
      * 허브 단건 조회
      */
     public GetHubRes getHub(HubId hubId) {
-        Hub hub = hubRepository.findById(hubId)
-            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
-
+        Hub hub = findHub(hubId);
         return hubMapper.toGetHubRes(hub);
     }
 
@@ -52,5 +50,10 @@ public class HubService {
         Hub savedHub = hubRepository.save(hub);
 
         return hubMapper.toCreateHubRes(savedHub);
+    }
+
+    private Hub findHub(HubId hubId) {
+        return hubRepository.findById(hubId)
+            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
     }
 }
