@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public class SampleResponse {
+import java.util.UUID;
 
-    public record getUserResponse(
+public class UserResponse {
+
+    public record GetUserRes(
             String username,
 
             String nickname,
@@ -17,9 +19,9 @@ public class SampleResponse {
 
             String phone,
 
-            String password,
-
             Address address,
+
+            UUID hubName,
 
             UserRole role
     ) {
