@@ -53,7 +53,7 @@ public class CompanyService {
     public void deleteCompany(UUID companyId) {
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
-        company.setDeletedYnTrue();
+        company.delete("");
     }
 
     public List<GetCompanyRes> getCompanyList() {

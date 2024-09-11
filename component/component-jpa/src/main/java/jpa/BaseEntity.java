@@ -35,11 +35,11 @@ public abstract class BaseEntity {
 
     protected Boolean deletedYn = false;
 
-    public void setDeletedYnTrue() {
+    public void delete(String username) {
         this.deletedYn = true;
         this.deletedAt = LocalDateTime.now();
         // TODO: 헤더에서 받아오는 방식으로 처리하는 게 좋을듯?
-        this.deletedBy = "";
+        this.deletedBy = username;
     }
 
     public void setDeletedYnFalse() {
