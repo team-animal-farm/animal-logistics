@@ -52,8 +52,9 @@ public class JwtUtil {
     }*/
 
     //jwt 추출
-    public String parseJwt(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+    public String parseJwt(String bearerToken) {
+        //todo : 필터에서 header의 token을 인자로 넘겨줌으로 수정
+        //String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
