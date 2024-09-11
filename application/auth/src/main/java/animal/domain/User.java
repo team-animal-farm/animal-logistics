@@ -1,5 +1,6 @@
 package animal.domain;
 
+import animal.dto.UserRequest.ModifyUserReq;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ import jakarta.persistence.Table;
 import java.util.UUID;
 import jpa.BaseEntity;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +19,15 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "p_user")
 @SQLRestriction("deleted_at IS NULL")
 public class User extends BaseEntity {
 
   @Id
-  private String userName;
+  private String username;
 
   @Column(nullable = false)
   private UUID hubId;
@@ -42,7 +46,7 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   private UserRole role;
 
-  @Builder
+ /* @Builder
   private User(UUID hubId, String nickname, String email, String phone, String password, Address address, UserRole role) {
     this.hubId = hubId;
     this.nickname = nickname;
@@ -51,6 +55,14 @@ public class User extends BaseEntity {
     this.password = password;
     this.address = address;
     this.role = role;
-  }
+  }*/
 
+  public void updateInfo(ModifyUserReq dto) {
+    this.hubId = dto.getHubId();
+    this.nickname = dto.getNickname();
+    this.email = dto.getEmail();
+    this.phone = dto.getPhone();
+    this.address = dto.getAddress();
+
+  }
 }
