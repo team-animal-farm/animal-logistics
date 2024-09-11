@@ -1,0 +1,46 @@
+# 상단의 다음으로 실행에서 dev를 선택해주세요.
+
+### 허브 생성
+POST {{URL}}/hubs
+Content-Type: application/json
+
+{
+  "address": {
+    "roadAddress": "서울특별시 강남구 강남대로 1234",
+    "detailAddress": "강남빌딩 1234호",
+    "zipcode": "12345"
+  },
+  "coordinate": {
+    "latitude": 37.123456,
+    "longitude": 127.123456
+  }
+}
+
+> {%
+  client.global.set("HUB_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
+%}
+
+### 허브 리스트 조회
+GET {{URL}}/hubs
+
+### 허브 단건 조회
+GET {{URL}}/hubs/{{HUB_ID}}
+
+### 허브 수정
+PATCH {{URL}}/hubs/{{HUB_ID}}
+Content-Type: application/json
+
+{
+  "address": {
+    "roadAddress": "서울특별시 강남구 강남대로 1234",
+    "detailAddress": "강남빌딩 1235호",
+    "zipcode": "12345"
+  },
+  "coordinate": {
+    "latitude": 37.123459,
+    "longitude": 127.123459
+  }
+}
+
+### 허브 삭제
+DELETE {{URL}}/hubs/{{HUB_ID}}

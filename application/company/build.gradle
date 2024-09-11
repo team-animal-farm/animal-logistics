@@ -10,6 +10,12 @@ repositories {
 }
 
 dependencies {
+    implementation project(':common:common')
+    implementation project(':component:component-jpa')
+    implementation project(':component:component-exception')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     // spring validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
@@ -21,9 +27,6 @@ dependencies {
 
     // docker compose support
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-
-    implementation(project(':component:component-jpa'))
-    implementation(project(':component:component-exception'))
 }
 
 test {
