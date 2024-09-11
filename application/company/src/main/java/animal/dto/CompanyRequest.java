@@ -22,4 +22,10 @@ public class CompanyRequest {
 
     }
 
+    public record AddStockReq(
+        Integer stockQuantity,
+        Integer requiredQuantity
+    ) {
+
+    }
 }

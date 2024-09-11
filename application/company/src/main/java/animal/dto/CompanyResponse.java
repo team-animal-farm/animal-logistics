@@ -19,4 +19,11 @@ public class CompanyResponse {
     ) {
 
     }
+
+    public record AddCompanyRes(
+        UUID companyId,
+        Integer stockQuantity
+    ) {
+
+    }
 }

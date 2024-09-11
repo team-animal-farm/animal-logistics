@@ -2,8 +2,11 @@ package animal.application;
 
 import animal.domain.Company;
 import animal.domain.CompanyId;
+import animal.dto.CompanyRequest;
 import animal.dto.CompanyRequest.CreateCompanyReq;
 import animal.dto.CompanyRequest.UpdateCompanyReq;
+import animal.dto.CompanyResponse;
+import animal.dto.CompanyResponse.AddCompanyRes;
 import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
 import animal.infrastructure.CompanyRepository;
@@ -63,5 +66,12 @@ public class CompanyService {
         List<Company> companyList = companyRepository.findAll();
 
         return companyList.stream().map(companyMapper::toDto).toList();
+    }
+
+    public CompanyResponse.AddCompanyRes addStock(CompanyId companyId, CompanyRequest.AddStockReq addStockReq) {
+        companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
+        // 부족한 수량만큼 추가하고 재고를 1000개로 맞춰주는 로직
+        Integer quantity = 1000 - addStockReq.stockQuantity() + addStockReq.requiredQuantity();
+        return new AddCompanyRes(companyId.getId(), quantity);
     }
 }

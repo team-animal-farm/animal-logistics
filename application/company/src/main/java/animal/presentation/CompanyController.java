@@ -3,7 +3,9 @@ package animal.presentation;
 import animal.application.CompanyService;
 import animal.domain.CompanyId;
 import animal.dto.CompanyRequest;
+import animal.dto.CompanyRequest.AddStockReq;
 import animal.dto.CompanyRequest.CreateCompanyReq;
+import animal.dto.CompanyResponse.AddCompanyRes;
 import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
 import java.util.List;
@@ -70,4 +72,14 @@ public class CompanyController {
     public CommonResponse<List<GetCompanyRes>> getCompanyList() {
         return CommonResponse.success(companyService.getCompanyList());
     }
+
+    /**
+     * 재고 추가 API
+     */
+    @PostMapping("/{companyId}/stocks")
+    public AddCompanyRes addStock(@PathVariable UUID companyId, @RequestBody AddStockReq addStockReq) {
+        return companyService.addStock(CompanyId.of(companyId), addStockReq);
+    }
+
+
 }
