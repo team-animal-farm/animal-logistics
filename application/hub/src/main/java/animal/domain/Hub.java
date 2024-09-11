@@ -25,6 +25,9 @@ public class Hub extends BaseEntity {
     @Embedded
     private Coordinate coordinate;
 
+    @OneToMany(mappedBy = "hub", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<Inventory> inventoryList = new ArrayList<>();
+
     @Builder
     private Hub(Address address, Coordinate coordinate) {
         this.address = address;
