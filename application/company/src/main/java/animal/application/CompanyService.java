@@ -1,14 +1,15 @@
 package animal.application;
 
 import animal.domain.Company;
+import animal.domain.CompanyId;
 import animal.dto.CompanyRequest.CreateCompanyReq;
 import animal.dto.CompanyRequest.UpdateCompanyReq;
+import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
 import animal.infrastructure.CompanyRepository;
 import animal.mapper.CompanyMapper;
 import exception.GlobalException;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
 
     @Transactional
-    public void createCompany(CreateCompanyReq createCompanyReq) {
+    public CreateCompanyRes createCompany(CreateCompanyReq createCompanyReq) {
         Company company = Company.builder()
             .username(createCompanyReq.username())
             .name(createCompanyReq.name())
@@ -31,10 +32,12 @@ public class CompanyService {
             .address(createCompanyReq.address())
             .build();
 
-        companyRepository.save(company);
+        Company save = companyRepository.save(company);
+
+        return companyMapper.toCreateCompanyRes(save);
     }
 
-    public GetCompanyRes getCompany(UUID companyId) {
+    public GetCompanyRes getCompany(CompanyId companyId) {
         // TODO: 회원 검증 로직이 필요한지?
 
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
@@ -42,7 +45,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public void updateCompany(UUID companyId, UpdateCompanyReq updateCompanyReq) {
+    public void updateCompany(CompanyId companyId, UpdateCompanyReq updateCompanyReq) {
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
         company.updateCompany(updateCompanyReq.name(), updateCompanyReq.companyStatus(), updateCompanyReq.companyType(),
@@ -50,7 +53,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public void deleteCompany(UUID companyId) {
+    public void deleteCompany(CompanyId companyId) {
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
         company.delete("");

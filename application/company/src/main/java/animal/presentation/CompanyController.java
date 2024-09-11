@@ -1,8 +1,10 @@
 package animal.presentation;
 
 import animal.application.CompanyService;
+import animal.domain.CompanyId;
 import animal.dto.CompanyRequest;
 import animal.dto.CompanyRequest.CreateCompanyReq;
+import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
 import java.util.List;
 import java.util.UUID;
@@ -29,9 +31,9 @@ public class CompanyController {
      * 업체 등록 API
      */
     @PostMapping
-    public CommonResponse<CommonEmptyRes> createCompany(@RequestBody CreateCompanyReq createCompanyReq) {
-        companyService.createCompany(createCompanyReq);
-        return CommonResponse.success();
+    public CommonResponse<CreateCompanyRes> createCompany(@RequestBody CreateCompanyReq createCompanyReq) {
+        var createCompanyRes = companyService.createCompany(createCompanyReq);
+        return CommonResponse.success(createCompanyRes);
     }
 
     /**
@@ -39,7 +41,7 @@ public class CompanyController {
      */
     @GetMapping("/{companyId}")
     public CommonResponse<GetCompanyRes> getCompany(@PathVariable UUID companyId) {
-        return CommonResponse.success(companyService.getCompany(companyId));
+        return CommonResponse.success(companyService.getCompany(CompanyId.of(companyId)));
     }
 
     /**
@@ -48,7 +50,7 @@ public class CompanyController {
     @PatchMapping("/{companyId}")
     public CommonResponse<CommonEmptyRes> updateCompany(@PathVariable UUID companyId,
         @RequestBody CompanyRequest.UpdateCompanyReq updateCompanyReq) {
-        companyService.updateCompany(companyId, updateCompanyReq);
+        companyService.updateCompany(CompanyId.of(companyId), updateCompanyReq);
         return CommonResponse.success();
     }
 
@@ -57,7 +59,7 @@ public class CompanyController {
      */
     @DeleteMapping("/{companyId}")
     public CommonResponse<CommonEmptyRes> deleteCompany(@PathVariable UUID companyId) {
-        companyService.deleteCompany(companyId);
+        companyService.deleteCompany(CompanyId.of(companyId));
         return CommonResponse.success();
     }
 
