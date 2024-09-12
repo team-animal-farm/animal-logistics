@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import response.CommonResponse;
 import response.CommonResponse.CommonEmptyRes;
+import response.CompanyType;
 
 @RestController
 @RequestMapping("/companies")
@@ -77,13 +79,14 @@ public class CompanyController {
     /**
      * 업체 검색 API
      */
-//    @GetMapping("/search")
-//    public CommonResponse<List<GetCompanyRes>> searchCompany(
-//        @RequestParam String restaurantName,
-//        Pageable pageable
-//    ) {
-//        return CommonResponse.success(companyService.searchCompany(searchCompanyReq));
-//    }
+    @GetMapping("/search")
+    public CommonResponse<Page<GetCompanyRes>> searchCompany(
+        @RequestParam(required = false) String companyName,
+        @RequestParam(required = false) CompanyType companyType,
+        Pageable pageable
+    ) {
+        return CommonResponse.success(companyService.searchCompany(companyName, companyType, pageable));
+    }
 
     /**
      * 재고 추가 API

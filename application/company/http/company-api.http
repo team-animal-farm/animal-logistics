@@ -25,6 +25,10 @@ GET {{URL}}/companies
 ### 업체 단건 조회
 GET {{URL}}/companies/{{COMPANY_ID}}
 
+> {%
+  client.global.set("COMPANY_NAME", response.body.data.name); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
+%}
+
 ### 업체 수정
 PATCH {{URL}}/companies/{{COMPANY_ID}}
 Content-Type: application/json
@@ -40,5 +44,12 @@ Content-Type: application/json
   }
 }
 
+> {%
+  client.global.set("COMPANY_NAME", response.body.data.name); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
+%}
+
 ### 업체 삭제
 DELETE {{URL}}/companies/{{COMPANY_ID}}
+
+### 업체 검색
+GET {{URL}}/companies/search?companyName={{COMPANY_NAME}}&companyType=RECEIVER
