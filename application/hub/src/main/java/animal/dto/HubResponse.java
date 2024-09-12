@@ -2,10 +2,10 @@ package animal.dto;
 
 import animal.domain.Address;
 import animal.domain.Coordinate;
-import animal.domain.manager.CompanyDeliveryManager;
-import animal.domain.manager.HubDeliveryManager;
-import animal.domain.manager.HubManager;
-import animal.domain.manager.ProviderCompanyManager;
+import animal.dto.ManagerResponse.GetCompanyDeliveryManagerRes;
+import animal.dto.ManagerResponse.GetHubDeliveryManagerRes;
+import animal.dto.ManagerResponse.GetHubManagerRes;
+import animal.dto.ManagerResponse.GetProviderCompanyManagerRes;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,10 +15,10 @@ public class HubResponse {
         UUID id,
         Address address,
         Coordinate coordinate,
-        List<HubManager> hubManagerList,
-        List<HubDeliveryManager> hubDeliveryManagerList,
-        List<CompanyDeliveryManager> companyDeliveryManagerList,
-        List<ProviderCompanyManager> providerCompanyManagerList
+        List<GetHubManagerRes> hubManagerList,
+        List<GetHubDeliveryManagerRes> hubDeliveryManagerList,
+        List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
+        List<GetProviderCompanyManagerRes> providerCompanyManagerList
     ) {
 
     }
@@ -27,10 +27,10 @@ public class HubResponse {
         UUID id,
         Address address,
         Coordinate coordinate,
-        List<HubManager> hubManagerList,
-        List<HubDeliveryManager> hubDeliveryManagerList,
-        List<CompanyDeliveryManager> companyDeliveryManagerList,
-        List<ProviderCompanyManager> providerCompanyManagerList
+        List<GetHubManagerRes> hubManagerList,
+        List<GetHubDeliveryManagerRes> hubDeliveryManagerList,
+        List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
+        List<GetProviderCompanyManagerRes> providerCompanyManagerList
     ) {
 
     }
@@ -39,10 +39,10 @@ public class HubResponse {
         UUID id,
         Address address,
         Coordinate coordinate,
-        List<HubManager> hubManagerList,
-        List<HubDeliveryManager> hubDeliveryManagerList,
-        List<CompanyDeliveryManager> companyDeliveryManagerList,
-        List<ProviderCompanyManager> providerCompanyManagerList
+        List<GetHubManagerRes> hubManagerList,
+        List<GetHubDeliveryManagerRes> hubDeliveryManagerList,
+        List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
+        List<GetProviderCompanyManagerRes> providerCompanyManagerList
     ) {
 
     }
