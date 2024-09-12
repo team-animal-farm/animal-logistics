@@ -2,11 +2,12 @@ package animal.mapper;
 
 import static animal.dto.CompanyResponse.CreateCompanyRes;
 import static animal.dto.CompanyResponse.GetCompanyRes;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 import animal.domain.Company;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = SPRING)
 public interface CompanyMapper {
 
 
