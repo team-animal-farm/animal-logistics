@@ -12,6 +12,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import response.CompanyStatus;
+import response.CompanyType;
 
 @Entity
 @Getter
@@ -37,27 +39,19 @@ public class Company extends BaseEntity {
     private Address address;
 
     @Builder
-    private Company(String username, String name, String companyType, Address address) {
+    private Company(String username, String name, CompanyType companyType, Address address) {
         this.username = username;
         this.name = name;
         this.companyStatus = CompanyStatus.OPENED;
-        this.companyType = CompanyType.valueOf(companyType);
+        this.companyType = companyType;
         this.address = address;
     }
 
-    public void updateCompany(String name, String companyStatus, String companyType, Address address) {
+    public void updateCompany(String name, CompanyStatus companyStatus, CompanyType companyType, Address address) {
         this.name = name;
-        this.companyStatus = CompanyStatus.valueOf(companyStatus);
-        this.companyType = CompanyType.valueOf(companyType);
+        this.companyStatus = companyStatus;
+        this.companyType = companyType;
         this.address = address;
     }
 
-    public enum CompanyStatus {
-        OPENED, CLOSED
-    }
-
-
-    public enum CompanyType {
-        PRODUCER, RECEIVER
-    }
 }

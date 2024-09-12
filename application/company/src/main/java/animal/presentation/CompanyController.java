@@ -8,9 +8,10 @@ import animal.dto.CompanyRequest.CreateCompanyReq;
 import animal.dto.CompanyResponse.AddCompanyRes;
 import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -69,9 +70,20 @@ public class CompanyController {
      * 업체 목록 조회 API
      */
     @GetMapping
-    public CommonResponse<List<GetCompanyRes>> getCompanyList() {
-        return CommonResponse.success(companyService.getCompanyList());
+    public CommonResponse<Page<GetCompanyRes>> getCompanyList(Pageable pageable) {
+        return CommonResponse.success(companyService.getCompanyList(pageable));
     }
+
+    /**
+     * 업체 검색 API
+     */
+//    @GetMapping("/search")
+//    public CommonResponse<List<GetCompanyRes>> searchCompany(
+//        @RequestParam String restaurantName,
+//        Pageable pageable
+//    ) {
+//        return CommonResponse.success(companyService.searchCompany(searchCompanyReq));
+//    }
 
     /**
      * 재고 추가 API

@@ -12,8 +12,9 @@ import animal.dto.CompanyResponse.GetCompanyRes;
 import animal.infrastructure.CompanyRepository;
 import animal.mapper.CompanyMapper;
 import exception.GlobalException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import response.ErrorCase;
@@ -62,10 +63,10 @@ public class CompanyService {
         company.delete("");
     }
 
-    public List<GetCompanyRes> getCompanyList() {
-        List<Company> companyList = companyRepository.findAll();
+    public Page<GetCompanyRes> getCompanyList(Pageable pageable) {
+        Page<Company> companyList = companyRepository.findAll(pageable);
 
-        return companyList.stream().map(companyMapper::toDto).toList();
+        return companyList.map(companyMapper::toDto);
     }
 
     public CompanyResponse.AddCompanyRes addStock(CompanyId companyId, CompanyRequest.AddStockReq addStockReq) {

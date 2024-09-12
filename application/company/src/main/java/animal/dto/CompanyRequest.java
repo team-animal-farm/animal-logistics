@@ -1,13 +1,15 @@
 package animal.dto;
 
 import animal.domain.Address;
+import response.CompanyStatus;
+import response.CompanyType;
 
 public class CompanyRequest {
 
     public record CreateCompanyReq(
         String username,
         String name,
-        String companyType,
+        CompanyType companyType,
         Address address
     ) {
 
@@ -15,8 +17,8 @@ public class CompanyRequest {
 
     public record UpdateCompanyReq(
         String name,
-        String companyStatus,
-        String companyType,
+        CompanyStatus companyStatus,
+        CompanyType companyType,
         Address address
     ) {
 
