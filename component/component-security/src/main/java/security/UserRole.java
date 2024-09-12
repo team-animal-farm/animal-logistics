@@ -1,4 +1,4 @@
-package animal.domain;
+package security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
