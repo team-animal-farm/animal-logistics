@@ -1,9 +1,9 @@
 package animal.domain;
 
+import animal.jpa.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jpa.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="p_user")
+@Table(name = "p_user")
 public class User extends BaseEntity {
 
     @Id
