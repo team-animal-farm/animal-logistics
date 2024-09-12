@@ -1,14 +1,17 @@
 package animal.mapper;
 
-import animal.dto.SampleRequest;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 import animal.domain.User;
-import animal.dto.SampleResponse;
+import animal.dto.UserRequest;
+import animal.dto.UserResponse;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = SPRING)
 public interface UserMapper {
 
-    User from(SampleRequest.SignUpUserReq SignUpUserReq);
+  User from(UserRequest.SignUpUserReq SignUpUserReq);
 
-    SampleResponse.getUserResponse toDto(User user);
+  //User from(UserRequest.SignUpDeliveryReq signUpDeliveryReq);
+
+  UserResponse.GetUserRes toGetUserResponse(User user);
 }
