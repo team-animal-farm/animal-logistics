@@ -10,6 +10,11 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+    properties:
+      hibernate:
+        show_sql: true # sql 로깅
+        format_sql: true # SQL 문 정렬하여 출력
+        highlight_sql: true # SQL 문 색 부여
   h2:
     console:
       enabled: true
