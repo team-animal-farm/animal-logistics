@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import jpa.BaseEntity;
@@ -23,7 +21,6 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "p_user")
 @SQLRestriction("deleted_at IS NULL")
 public class User extends BaseEntity {
