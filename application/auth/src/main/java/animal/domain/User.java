@@ -1,34 +1,67 @@
 package animal.domain;
 
-import animal.jpa.BaseEntity;
+import animal.dto.UserRequest.ModifyUserReq;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
+import jpa.BaseEntity;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Table(name = "p_user")
+@SQLRestriction("deleted_at IS NULL")
 public class User extends BaseEntity {
 
-    @Id
-    private String username;
+  @Id
+  private String username;
 
-    private String nickname;
+  @Column(nullable = false)
+  private UUID hubId;
 
-    private String email;
+  private String nickname;
 
-    private String phone;
+  @Column(unique = true)
+  private String email;
 
-    private String password;
+  private String phone;
 
-    private Address address;
+  private String password;
 
-    private UserRole role;
+  private Address address;
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private UserRole role;
+
+ /* @Builder
+  private User(UUID hubId, String nickname, String email, String phone, String password, Address address, UserRole role) {
+    this.hubId = hubId;
+    this.nickname = nickname;
+    this.email = email;
+    this.phone = phone;
+    this.password = password;
+    this.address = address;
+    this.role = role;
+  }*/
+
+  public void updateInfo(ModifyUserReq dto) {
+    this.hubId = dto.getHubId();
+    this.nickname = dto.getNickname();
+    this.email = dto.getEmail();
+    this.phone = dto.getPhone();
+    this.address = dto.getAddress();
+  }
 }

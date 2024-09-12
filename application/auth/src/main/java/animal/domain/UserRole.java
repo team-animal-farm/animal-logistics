@@ -1,25 +1,29 @@
 package animal.domain;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum UserRole {
 
-    COMPANY(Authority.COMPANY),
-    DELIVER(Authority.DELIVERY),
-    MANAGER(Authority.MANAGER),
-    MASTER(Authority.MASTER);
+  COMPANY_SUPPLY(Authority.COMPANY_SUPPLY),
+  COMPANY_RECEIVE(Authority.COMPANY_RECEIVE),
+  DELIVER_HUB(Authority.DELIVERY_HUB),
+  DELIVERY_COMPANY(Authority.DELIVERY_COMPANY),
+  MANAGER(Authority.MANAGER),
+  MASTER(Authority.MASTER);
 
 
-    private final String authority;
-    UserRole(String authority) {
-        this.authority = authority;
-    }
+  private final String authority;
 
-    public static class Authority{
-        public static final String COMPANY="ROLE_COMPANY";
-        public static final String DELIVERY="ROLE_DELIVERY";
-        public static final String MANAGER="ROLE_MANAGER";
-        public static final String MASTER = "ROLE_MASTER";
-    }
+  public static class Authority {
+
+    public static final String COMPANY_SUPPLY = "ROLE_COMPANY_SUPPLY";
+    public static final String COMPANY_RECEIVE = "ROLE_COMPANY_RECEIVE";
+    public static final String DELIVERY_COMPANY = "ROLE_DELIVERY";
+    public static final String DELIVERY_HUB = "ROLE_DELIVERY";
+    public static final String MANAGER = "ROLE_MANAGER";
+    public static final String MASTER = "ROLE_MASTER";
+  }
 }
