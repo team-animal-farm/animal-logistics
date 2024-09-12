@@ -3,6 +3,8 @@ package animal.domain;
 import animal.dto.UserRequest.ModifyUserReq;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -44,6 +46,7 @@ public class User extends BaseEntity {
   private Address address;
 
   @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
   private UserRole role;
 
  /* @Builder
@@ -63,6 +66,5 @@ public class User extends BaseEntity {
     this.email = dto.getEmail();
     this.phone = dto.getPhone();
     this.address = dto.getAddress();
-
   }
 }
