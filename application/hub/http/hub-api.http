@@ -84,6 +84,57 @@ Content-Type: application/json
   client.global.set("HUB_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
 %}
 
+### 허브 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/hub
+Content-Type: application/json
+
+{
+  "username": "hubmanager"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 허브 배송 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/hub-delivery
+Content-Type: application/json
+
+{
+  "username": "delivery",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 업체 배송 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/company-delivery
+Content-Type: application/json
+
+{
+  "username": "delivery",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 공급 업체 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/provider-company
+Content-Type: application/json
+
+{
+  "username": "provider",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
 ### 재고 생성
 POST {{URL}}/hubs/{{HUB_ID}}/inventories
 Content-Type: application/json
