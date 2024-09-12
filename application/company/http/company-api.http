@@ -19,6 +19,7 @@ Content-Type: application/json
   client.global.set("COMPANY_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
 %}
 
+
 ### 업체 리스트 조회
 GET {{URL}}/companies
 
@@ -42,3 +43,15 @@ Content-Type: application/json
 
 ### 업체 삭제
 DELETE {{URL}}/companies/{{COMPANY_ID}}
+
+
+### 물품 생성
+POST {{URL}}/products
+Content-Type: application/json
+
+{
+  "companyId": "{{COMPANY_ID}}",
+  "hubId": "{{HUB_ID}}",
+  "name": "플라스틱",
+  "price": 10000
+}

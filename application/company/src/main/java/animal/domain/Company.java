@@ -1,13 +1,17 @@
 package animal.domain;
 
 import animal.jpa.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +42,9 @@ public class Company extends BaseEntity {
     @Embedded
     private Address address;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    private List<Product> products = new ArrayList<>();
+
     @Builder
     private Company(String username, String name, CompanyType companyType, Address address) {
         this.username = username;
@@ -54,4 +61,7 @@ public class Company extends BaseEntity {
         this.address = address;
     }
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
 }

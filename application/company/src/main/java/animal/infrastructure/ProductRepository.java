@@ -1,9 +1,9 @@
 package animal.infrastructure;
 
 import animal.domain.Product;
-import java.util.UUID;
+import animal.domain.ProductId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<Product, UUID> {
+public interface ProductRepository extends JpaRepository<Product, ProductId> {
 
 }
