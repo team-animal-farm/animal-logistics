@@ -11,6 +11,7 @@ import exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import response.ErrorCase;
 
 @Service
@@ -20,7 +21,9 @@ public class UserService {
   private final JwtUtil jwtUtil;
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+  private final HubClient hubClient;
 
+  //배달 담당자 생성
   public void createDeliveryUser(UserRequest.SignUpDeliveryReq dto) {
 
     //security 적용해야하니까 user에서 추가
@@ -28,7 +31,8 @@ public class UserService {
 
     checkEmail(dto.getEmail());
 
-    //내부 통신
+    //내부 통신 - hub에 delivery 사용자 등록 요청
+    hubClient.createDeliveryUser(dto);
 
     User user = userMapper.from(dto);
     userRepository.save(user);
@@ -37,7 +41,8 @@ public class UserService {
   public void createCompanyUser(UserRequest.SignUpCompanyReq dto) {
     checkEmail(dto.getEmail());
 
-    //내부 통신
+    //내부 통신 - hub에 company 사용자 등록 요청
+    hubClient.createCompanyUser(dto);
 
     User user = userMapper.from(dto);
     userRepository.save(user);
@@ -50,14 +55,18 @@ public class UserService {
   }
 
   public String createAccessToken(String email) {
-    User user = userRepository.findByEmail(email);
+    User user = userRepository.findById(email)
+        .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
     return jwtUtil.createToken(user.getEmail(), user.getRole());
   }
 
 
   public UserResponse.GetUserRes getUserInfo(String username) {
+
+    //내부 통신 - hub 사용자 데이터 요청
+
     return userRepository.findById(username)
-        //todo : hub이름이 필요함 feignClient로 데이터 받아서 hub타입을 String으로 변경
+
         .map(userMapper::toGetUserResponse)
         .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
   }
@@ -66,31 +75,38 @@ public class UserService {
 
   }
 
+  @Transactional
   public void modifyDeliveryUser(String username, UserRequest.ModifyDeliveryUserReq dto) {
 
+    /**
+     * 허브 변경
+     * 배달 타입 변경
+     *슬랙 아이디 변경
+     */
+
+    //내부 통신 -
     User user = userRepository.findById(username)
         .orElseThrow((() -> new GlobalException(ErrorCase.USER_NOT_FOUND)));
 
     user.updateInfo((ModifyUserReq) dto);
 
-    //내부 통신
 
   }
 
-
   public void modifyCompanyUser(String username, UserRequest.ModifyUserReq dto) {
 
+    //내부 통신
     User user = userRepository.findById(username)
         .orElseThrow((() -> new GlobalException(ErrorCase.USER_NOT_FOUND)));
 
     user.updateInfo((ModifyUserReq) dto);
 
-    //내부 통신
 
   }
 
   public void deleteUser(String username) {
-    //todo : 회원 탈퇴 시 관련 정보를 모두 삭제 message broker로 보상 트랜잭션 로직 요청
+    //todo : 동기 통신으로 개발하고 비동기 통신으로 리팩토링
+    //내부 통신 - 데이터 삭제 요청
     User user = userRepository.findById(username)
         .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
     user.markDeleted(username);

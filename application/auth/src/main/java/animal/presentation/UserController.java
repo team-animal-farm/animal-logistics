@@ -4,7 +4,6 @@ import animal.application.UserService;
 import animal.dto.UserRequest;
 import animal.dto.UserResponse;
 import jakarta.validation.Valid;
-import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -33,8 +32,8 @@ public class UserController {
    */
   //todo : 필터로 변경 예정
   @GetMapping("/signIn")
-  public CommonResponse createAuthenticationToken(final Principal principal) {
-    final String response = userService.createAccessToken(principal.getName());
+  public CommonResponse createAuthenticationToken(@RequestBody String email) {
+    final String response = userService.createAccessToken(email);
     return CommonResponse.success(response);
   }
 
