@@ -6,12 +6,14 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "p_company")
+@Table(name = "p_delivery")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Compan extends User {
+public class DeliveryUser extends User {
 
   @Column(nullable = false)
-  private CompanyType type;
+  private DeliveryType type;
+
+  @Column(nullable = false)
+  private String slackId;
 
 }
