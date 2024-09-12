@@ -25,8 +25,15 @@ public enum ErrorCase {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, 2000, "유저를 찾을 수 없습니다."),
     // 로그인 필요 401
     LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, 2001, "로그인이 필요합니다."),
+
     //중복된 email 400
-    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST,2002, "중복된 Email 입니다."),
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, 2002, "중복된 Email 입니다."),
+
+    /* 업체 3000번대 */
+
+    // 존재하지 않는 업체 404
+    COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, 3000, "업체를 찾을 수 없습니다."),
+
     ;
 
     private final HttpStatus httpStatus; // 응답 상태 코드

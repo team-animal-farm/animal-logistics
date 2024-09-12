@@ -20,4 +20,16 @@ public class CompanyId implements Serializable { // JPA 식별자 타입은 Seri
     @Column(name = "company_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    public static CompanyId of(UUID id) {
+        CompanyId companyId = new CompanyId();
+        companyId.id = id;
+        return companyId;
+    }
+
+    public static CompanyId ofRandom() {
+        CompanyId companyId = new CompanyId();
+        companyId.id = UUID.randomUUID();
+        return companyId;
+    }
 }

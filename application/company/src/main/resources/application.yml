@@ -3,3 +3,8 @@ spring:
     name: company-service
   profiles:
     default: dev
+
+# 각 서비스 별로 패키지 구분이 안돼있어서 공통인 animal 패키지로 설정
+base-package:
+  jpa: "animal"
+
