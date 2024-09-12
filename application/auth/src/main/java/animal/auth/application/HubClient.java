@@ -1,6 +1,6 @@
-package animal.application;
+package animal.auth.application;
 
-import animal.dto.UserRequest;
+import animal.auth.dto.UserRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,8 @@ public interface HubClient {
   /**
    * delivery user 등록 요청
    */
-  @PostMapping("/hubs /deliveryUser/create")
+
+  @PostMapping("/hubs/deliveryUser/create")
   String createDeliveryUser(@RequestBody UserRequest.SignUpDeliveryReq dto);
 
   /**

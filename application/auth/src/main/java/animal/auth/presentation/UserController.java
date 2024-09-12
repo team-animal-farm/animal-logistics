@@ -1,8 +1,8 @@
-package animal.presentation;
+package animal.auth.presentation;
 
-import animal.application.UserService;
-import animal.dto.UserRequest;
-import animal.dto.UserResponse;
+import animal.auth.application.UserService;
+import animal.auth.dto.UserRequest;
+import animal.auth.dto.UserResponse.GetUserRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +31,7 @@ public class UserController {
    * 로그인
    */
   //todo : 필터로 변경 예정
-  @GetMapping("/signIn")
+  @GetMapping("/sign-in")
   public CommonResponse createAuthenticationToken(@RequestBody String email) {
     final String response = userService.createAccessToken(email);
     return CommonResponse.success(response);
@@ -40,7 +40,7 @@ public class UserController {
   /**
    * 배송담당자 회원가입
    */
-  @PostMapping("/delivery/signUp")
+  @PostMapping("/delivery/sign-up")
   public CommonResponse createDeliveryUser(@Valid @RequestBody UserRequest.SignUpDeliveryReq request) {
     userService.createDeliveryUser(request);
     return CommonResponse.success();
@@ -49,7 +49,7 @@ public class UserController {
   /**
    * 업체 회원가입
    */
-  @PostMapping("/company/signUp")
+  @PostMapping("/company/sign-up")
   public CommonResponse createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
     userService.createCompanyUser(request);
     return CommonResponse.success();
@@ -60,7 +60,7 @@ public class UserController {
    */
   @GetMapping("/{username}")
   public CommonResponse getUser(@PathVariable String username) {
-    UserResponse.GetUserRes response = userService.getUserInfo(username);
+    GetUserRes response = userService.getUserInfo(username);
     return CommonResponse.success(response);
   }
 
