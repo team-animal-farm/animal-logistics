@@ -1,4 +1,4 @@
-package animal.filter;
+package security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +26,7 @@ public class UserRolePreAuthFilter extends OncePerRequestFilter {
     if (username != null && rolesHeader != null) {
       List<SimpleGrantedAuthority> authorities = Arrays.stream(rolesHeader.split(","))
           .map(role -> new SimpleGrantedAuthority(role.trim()))
-          .collect(Collectors.toList());
+          .toList();
 
       UsernamePasswordAuthenticationToken authenticationToken =
           new UsernamePasswordAuthenticationToken(username, null, authorities);

@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group = 'ex'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'io.jsonwebtoken:jjwt:0.12.6'
+    api 'org.springframework.boot:spring-boot-starter-security'
+}
+
+test {
+    useJUnitPlatform()
+}

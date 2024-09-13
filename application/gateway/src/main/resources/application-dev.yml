@@ -1,0 +1,33 @@
+spring:
+  docker:
+    compose:
+      lifecycle-management: start_only # start_only, start_and_stop ??? ???, ??? ?? ? ???? ?? ??? ??? ? ??
+      start:
+        command: up
+      stop:
+        command: down
+        timeout: 1m
+      file: application/auth/docker-compose.yml
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/users
+          filters:
+            - name: OrderServiceLog
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+server:
+  port: 8080
+
