@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import response.CompanyType;
 import response.ErrorCase;
 
 @Service
@@ -74,5 +75,11 @@ public class CompanyService {
         // 부족한 수량만큼 추가하고 재고를 1000개로 맞춰주는 로직
         Integer quantity = 1000 - addStockReq.stockQuantity() + addStockReq.requiredQuantity();
         return new AddCompanyRes(companyId.getId(), quantity);
+    }
+
+    public Page<GetCompanyRes> searchCompany(String companyName, CompanyType companyType, Pageable pageable) {
+        Page<Company> companyList = companyRepository.findCompany(companyName, companyType, pageable);
+        
+        return companyList.map(companyMapper::toDto);
     }
 }
