@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'ex'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    //gateway
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+}
+
+
+test {
+    useJUnitPlatform()
+}

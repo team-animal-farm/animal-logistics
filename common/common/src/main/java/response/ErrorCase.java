@@ -35,8 +35,19 @@ public enum ErrorCase {
     COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, 3000, "업체를 찾을 수 없습니다."),
 
     // 존재하지 않는 상품 404
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다.");
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다."),
 
+
+    /* 허브 4000번대 */
+
+    // 존재하지 않는 허브 404
+    HUB_NOT_FOUND(HttpStatus.NOT_FOUND, 4000, "허브를 찾을 수 없습니다."),
+    // 존재하지 않는 재고 404
+    INVENTORY_NOT_FOUND(HttpStatus.NOT_FOUND, 4001, "재고를 찾을 수 없습니다."),
+    // 업체 배송 매니저 추가 제한 초과 400
+    COMPANY_DELIVERY_MANAGER_OVER_LIMIT(HttpStatus.BAD_REQUEST, 4002, "업체 배송 매니저 추가 제한을 초과했습니다."),
+    // 허브 배송 매니저 추가 제한 초과 400
+    HUB_DELIVERY_MANAGER_OVER_LIMIT(HttpStatus.BAD_REQUEST, 4003, "허브 배송 매니저 추가 제한을 초과했습니다.");
 
     private final HttpStatus httpStatus; // 응답 상태 코드
     private final Integer code; // 응답 코드. 도메인에 따라 1000번대로 나뉨

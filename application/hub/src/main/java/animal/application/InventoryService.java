@@ -109,13 +109,13 @@ public class InventoryService {
 
     private Hub findHub(HubId hubId) {
         return hubRepository.findById(hubId)
-            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
+            .orElseThrow(() -> new GlobalException(ErrorCase.HUB_NOT_FOUND));
     }
 
     private Inventory findInventory(InventoryId inventoryId, HubId hubId) {
         Hub hub = findHub(hubId);
 
         return hub.getInventory(inventoryId)
-            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
+            .orElseThrow(() -> new GlobalException(ErrorCase.INVENTORY_NOT_FOUND));
     }
 }

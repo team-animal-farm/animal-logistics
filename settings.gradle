@@ -5,8 +5,14 @@ include 'application:order'
 include 'application:company'
 include 'application:notification'
 include 'application:auth'
+include 'application:gateway'
+include 'application:eureka'
+
+
 include 'common:common'
 include 'component:component-exception'
+include 'component:component-security'
 include 'component:component-jpa'
+
 findProject(':component:component-jpa')?.name = 'component-jpa'
 

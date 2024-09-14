@@ -15,6 +15,7 @@ public class CompanyResponse {
 
     public record GetCompanyRes(
         String username,
+        String name,
         CompanyType companyType,
         CompanyStatus companyStatus,
         Address address
