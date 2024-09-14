@@ -8,6 +8,8 @@ import animal.dto.ProductResponse.CreateProductRes;
 import animal.dto.ProductResponse.GetProductRes;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -75,15 +77,14 @@ public class ProductController {
      * 상품 검색 API
      */
     @GetMapping("/{companyId}")
-    public CommonResponse<GetProductRes> searchProduct(
+    public CommonResponse<Page<GetProductRes>> searchProduct(
         @PathVariable UUID companyId,
-        @RequestParam String name,
-        @RequestParam
+        @RequestParam String productName,
+        Pageable pageable
     ) {
-        var getProductRes = productService.getProduct(CompanyId.of(companyId), ProductId.of(UUID.randomUUID()));
+        var getProductRes = productService.getProductList(CompanyId.of(companyId), productName, pageable);
         return CommonResponse.success(getProductRes);
     }
-
 
 
 }

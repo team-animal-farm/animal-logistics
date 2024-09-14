@@ -13,8 +13,11 @@ public interface ProductMapper {
 //    GetProductRes toDto(Product product);
 
     @Mapping(target = "id", source = "id.id")
+    @Mapping(target = "companyId", source = "company.id.id")
     CreateProductRes toCreateProductRes(Product product);
 
     @Mapping(target = "id", source = "id.id")
+    @Mapping(target = "companyId", source = "company.id.id")
     GetProductRes toGetProductRes(Product product);
+
 }

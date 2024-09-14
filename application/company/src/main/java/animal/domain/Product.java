@@ -42,7 +42,11 @@ public class Product extends BaseEntity {
     }
 
     public void update(String name, Long price) {
-        this.name = name;
-        this.price = price;
+        if (name != null) {
+            this.name = name;
+        }
+        if (price != null) {
+            this.price = price;
+        }
     }
 }

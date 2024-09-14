@@ -8,11 +8,14 @@ import animal.dto.ProductRequest.CreateProductReq;
 import animal.dto.ProductRequest.UpdateProductReq;
 import animal.dto.ProductResponse;
 import animal.dto.ProductResponse.CreateProductRes;
+import animal.dto.ProductResponse.GetProductRes;
 import animal.infrastructure.CompanyRepository;
 import animal.infrastructure.ProductRepository;
 import animal.mapper.ProductMapper;
 import exception.GlobalException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import response.ErrorCase;
@@ -58,8 +61,11 @@ public class ProductService {
             .orElseThrow(() -> new GlobalException(ErrorCase.PRODUCT_NOT_FOUND));
 
         product.update(updateProductReq.name(), updateProductReq.price());
+
+        // 상품 수정 후 hub에 수정 요청
     }
 
+    @Transactional
     public void deleteProduct(CompanyId companyId, ProductId productId) {
         Company company = companyRepository.findById(companyId)
             .orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
@@ -69,6 +75,8 @@ public class ProductService {
             .findFirst()
             // TODO: username 필요
             .ifPresent(product -> product.delete("admin"));
+
+        // 상품 삭제 후 hub에 삭제 요청
     }
 
     public ProductResponse.GetProductRes getProduct(CompanyId companyId, ProductId productId) {
@@ -81,5 +89,15 @@ public class ProductService {
             .orElseThrow(() -> new GlobalException(ErrorCase.PRODUCT_NOT_FOUND));
 
         return productMapper.toGetProductRes(product);
+    }
+
+    public Page<GetProductRes> getProductList(CompanyId companyId, String productName, Pageable pageable) {
+        Company company = companyRepository.findById(companyId)
+            .orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
+
+        // 상품 검색인데 like 검색처럼 동작 page list 반환
+        Page<Product> productList = productRepository.findByCompanyAndNameContaining(company, productName, pageable);
+
+        return productList.map(productMapper::toGetProductRes);
     }
 }
