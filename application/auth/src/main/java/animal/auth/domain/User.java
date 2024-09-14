@@ -1,6 +1,7 @@
 package animal.auth.domain;
 
 import animal.auth.dto.UserRequest.ModifyUserReq;
+import animal.jpa.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,17 +46,6 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private UserRole role;
-
- /* @Builder
-  private User(UUID hubId, String nickname, String email, String phone, String password, Address address, UserRole role) {
-    this.hubId = hubId;
-    this.nickname = nickname;
-    this.email = email;
-    this.phone = phone;
-    this.password = password;
-    this.address = address;
-    this.role = role;
-  }*/
 
   public void updateInfo(ModifyUserReq dto) {
     this.hubId = dto.getHubId();

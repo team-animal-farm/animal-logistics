@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import security.UserRole;
 
 @FeignClient(
     name = "hub-service",
@@ -31,14 +32,14 @@ public interface HubClient {
    */
   //todo : 사용자 role과 pk를 전송하면 GetInfoUserReq로 매핑
   @GetMapping("/hubs/deliveryUser/{username}")
-  UserResponse.CompanyUserRes GetCompanyUserInfo();
+  UserResponse.CompanyUserRes GetCompanyUserInfo(UserRole role);
 
   /**
    * 업체 데이터 요청
    */
   //todo : 사용자 role과 pk를 전송하면 GetInfoUserReq로 매핑
   @GetMapping("/hubs/companyUser/{username}")
-  UserResponse.DeliveryUserRes GetDeliveryUserInfo();
+  UserResponse.DeliveryUserRes GetDeliveryUserInfo(UserRole role);
 
   /**
    * 슬랙 아이디 변경

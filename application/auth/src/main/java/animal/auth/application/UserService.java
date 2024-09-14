@@ -117,7 +117,7 @@ public class UserService {
     //내부 통신 - 데이터 삭제 요청
     User user = userRepository.findById(username)
         .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
-    user.markDeleted(username);
+    user.delete(username);
   }
 
 

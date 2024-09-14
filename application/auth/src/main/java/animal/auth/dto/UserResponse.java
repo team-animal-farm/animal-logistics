@@ -1,9 +1,9 @@
 package animal.auth.dto;
 
 import animal.auth.domain.Address;
-import animal.auth.domain.CompanyType;
 import animal.auth.domain.DeliveryType;
 import java.util.UUID;
+import response.CompanyType;
 import security.UserRole;
 
 public class UserResponse {
@@ -24,15 +24,17 @@ public class UserResponse {
 
       UserRole role
   ) {
+
   }
 
   public record DeliveryUserRes(
       DeliveryType type,
       String slackId
-  ){
+  ) {
+
   }
 
-  public record CompanyUserRes() {
-    CompanyType type
+  public record CompanyUserRes(CompanyType type) {
+
   }
 }
