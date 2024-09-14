@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import response.CommonResponse;
+import response.CommonResponse.CommonEmptyRes;
 
 
 @RestController
@@ -24,7 +25,6 @@ import response.CommonResponse;
 @RequestMapping("/users")
 public class UserController {
 
-  //todo : CommonResponse 반환 타입 수정
   private final UserService userService;
 
   /**
@@ -32,7 +32,7 @@ public class UserController {
    */
   //todo : 필터로 변경 예정
   @GetMapping("/sign-in")
-  public CommonResponse createAuthenticationToken(@RequestBody String email) {
+  public CommonResponse<String> createAuthenticationToken(@RequestBody String email) {
     final String response = userService.createAccessToken(email);
     return CommonResponse.success(response);
   }
@@ -41,7 +41,7 @@ public class UserController {
    * 배송담당자 회원가입
    */
   @PostMapping("/delivery/sign-up")
-  public CommonResponse createDeliveryUser(@Valid @RequestBody UserRequest.SignUpDeliveryReq request) {
+  public CommonResponse<CommonEmptyRes> createDeliveryUser(@Valid @RequestBody UserRequest.SignUpDeliveryReq request) {
     userService.createDeliveryUser(request);
     return CommonResponse.success();
   }
@@ -50,7 +50,7 @@ public class UserController {
    * 업체 회원가입
    */
   @PostMapping("/company/sign-up")
-  public CommonResponse createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
+  public CommonResponse<CommonEmptyRes> createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
     userService.createCompanyUser(request);
     return CommonResponse.success();
   }
@@ -59,7 +59,7 @@ public class UserController {
    * 사용자 상세 조회
    */
   @GetMapping("/{username}")
-  public CommonResponse getUser(@PathVariable String username) {
+  public CommonResponse<GetUserRes> getUser(@PathVariable String username) {
     GetUserRes response = userService.getUserInfo(username);
     return CommonResponse.success(response);
   }
@@ -72,7 +72,7 @@ public class UserController {
    * 사용자 목록 조회
    */
   @GetMapping
-  public CommonResponse getUserList(
+  public CommonResponse<CommonEmptyRes> getUserList(
       @PageableDefault(page = 1, size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable
   ) {
     userService.getUserList(pageable);
@@ -84,7 +84,7 @@ public class UserController {
    */
   //사용자의 권한은 수정이 안됨,username
   @PatchMapping("/delivery/{username}")
-  public CommonResponse modifyDeliveryUser(@PathVariable String username,
+  public CommonResponse<CommonEmptyRes> modifyDeliveryUser(@PathVariable String username,
       @Valid @RequestBody UserRequest.ModifyDeliveryUserReq request) {
     userService.modifyDeliveryUser(username, request);
     return CommonResponse.success();
@@ -95,7 +95,7 @@ public class UserController {
    */
   //사용자의 권한은 수정이 안됨,username
   @PatchMapping("/company/{username}")
-  public CommonResponse modifyCompanyUser(@PathVariable String username,
+  public CommonResponse<CommonEmptyRes> modifyCompanyUser(@PathVariable String username,
       @Valid @RequestBody UserRequest.ModifyUserReq request) {
     userService.modifyCompanyUser(username, request);
     return CommonResponse.success();
@@ -105,7 +105,7 @@ public class UserController {
    * 사용자 탈퇴
    */
   @DeleteMapping("/{username}")
-  public CommonResponse deleteUser(@PathVariable String username) {
+  public CommonResponse<CommonEmptyRes> deleteUser(@PathVariable String username) {
     userService.deleteUser(username);
     return CommonResponse.success();
   }
