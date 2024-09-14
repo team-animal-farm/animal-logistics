@@ -1,6 +1,6 @@
-package animal.domain;
+package animal.auth.domain;
 
-import animal.dto.UserRequest.ModifyUserReq;
+import animal.auth.dto.UserRequest.ModifyUserReq;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,13 +8,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
-import jpa.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
+import security.UserRole;
 
 @Entity
 @Getter

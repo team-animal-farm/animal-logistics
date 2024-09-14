@@ -1,15 +1,18 @@
-package animal.domain;
+package animal.auth.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@Table(name = "p_company")
+@Table(name = "p_delivery")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CompanyUser extends User {
+public class DeliveryUser extends User {
 
   @Column(nullable = false)
-  private CompanyType type;
+  private DeliveryType type;
+
+  @Column(nullable = false)
+  private String slackId;
 
 }
