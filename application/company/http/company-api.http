@@ -66,3 +66,24 @@ Content-Type: application/json
   "price": 10000
 }
 
+> {%
+  client.global.set("PRODUCT_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
+%}
+
+### 물품 리스트 조회
+GET {{URL}}/products/{{COMPANY_ID}}?productName=플라&page=0&size=10
+
+### 물품 단건 조회
+GET {{URL}}/products/{{COMPANY_ID}}/{{PRODUCT_ID}}
+
+### 물품 수정
+PATCH {{URL}}/products/{{COMPANY_ID}}
+Content-Type: application/json
+
+{
+  "productId": "{{PRODUCT_ID}}",
+  "name": "플라스틱2"
+}
+
+### 물품 삭제
+DELETE {{URL}}/products/{{COMPANY_ID}}/{{PRODUCT_ID}}
