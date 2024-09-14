@@ -34,7 +34,9 @@ public enum ErrorCase {
     // 존재하지 않는 업체 404
     COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, 3000, "업체를 찾을 수 없습니다."),
 
-    ;
+    // 존재하지 않는 상품 404
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다.");
+
 
     private final HttpStatus httpStatus; // 응답 상태 코드
     private final Integer code; // 응답 코드. 도메인에 따라 1000번대로 나뉨

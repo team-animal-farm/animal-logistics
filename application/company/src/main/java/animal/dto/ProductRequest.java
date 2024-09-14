@@ -12,4 +12,12 @@ public class ProductRequest {
     ) {
 
     }
+
+    public record UpdateProductReq(
+        UUID productId,
+        String name,
+        Long price
+    ) {
+
+    }
 }

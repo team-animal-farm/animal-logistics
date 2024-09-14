@@ -13,4 +13,14 @@ public class ProductResponse {
     ) {
 
     }
+
+    public record GetProductRes(
+        UUID id,
+        UUID hubId,
+        UUID companyId,
+        Long price,
+        String name
+    ) {
+
+    }
 }

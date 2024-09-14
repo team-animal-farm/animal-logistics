@@ -41,4 +41,8 @@ public class Product extends BaseEntity {
         this.company = company;
     }
 
+    public void update(String name, Long price) {
+        this.name = name;
+        this.price = price;
+    }
 }
