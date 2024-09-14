@@ -8,7 +8,7 @@ plugins {
 bootJar.enabled = false // 현재 모듈의 jar 파일을 생성하지 않음
 jar.enabled = true // 현재 모듈의 jar 파일을 생성
 
-subprojects { // 모든 하위 모듈에 이 설정을 적용
+subprojects {
     group = 'ex'
     version = '0.0.1-SNAPSHOT'
 
@@ -17,6 +17,7 @@ subprojects { // 모든 하위 모듈에 이 설정을 적용
             languageVersion = JavaLanguageVersion.of(17)
         }
     }
+
 
     apply plugin: 'java'
     apply plugin: 'java-library'
@@ -27,12 +28,36 @@ subprojects { // 모든 하위 모듈에 이 설정을 적용
         mavenCentral()
     }
 
+    if (project.path.startsWith(':application:')) {
+        ext {
+            set('springCloudVersion', "2023.0.3")
+        }
+
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            }
+
+        }
+    }
+
+
     dependencies { // 모든 하위 모듈에 이 설정을 적용
         // spring
-        implementation 'org.springframework.boot:spring-boot-starter'
+        //implementation 'org.springframework.boot:spring-boot-starter'
 
-        // spring web mvc
-        implementation 'org.springframework.boot:spring-boot-starter-web'
+        if (project.name != 'gateway') {
+            // spring web mvc
+            implementation 'org.springframework.boot:spring-boot-starter'
+            implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        }
+
+        /* if (project.name != 'gateway') {
+             // spring web mvc
+             implementation 'org.springframework.boot:spring-boot-starter-web'
+         }*/
+
 
         // lombok
         compileOnly 'org.projectlombok:lombok'
@@ -51,6 +76,19 @@ subprojects { // 모든 하위 모듈에 이 설정을 적용
 
         if (project.name != 'common') {
             implementation project(':common:common')
+        }
+
+        // 특정 application 모듈에만 적용할 종속성
+        if (project.path.startsWith(':application:')) {
+            if (project.name == 'eureka') {
+                //eureka server
+                implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+            } else {
+                //eureka client
+                implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+            }
+            //openFeign
+            implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
         }
     }
 
