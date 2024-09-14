@@ -25,9 +25,26 @@ public enum ErrorCase {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, 2000, "유저를 찾을 수 없습니다."),
     // 로그인 필요 401
     LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, 2001, "로그인이 필요합니다."),
+
     //중복된 email 400
-    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST,2002, "중복된 Email 입니다."),
-    ;
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, 2002, "중복된 Email 입니다."),
+
+    /* 업체 3000번대 */
+
+    // 존재하지 않는 업체 404
+    COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, 3000, "업체를 찾을 수 없습니다."),
+
+
+    /* 허브 4000번대 */
+
+    // 존재하지 않는 허브 404
+    HUB_NOT_FOUND(HttpStatus.NOT_FOUND, 4000, "허브를 찾을 수 없습니다."),
+    // 존재하지 않는 재고 404
+    INVENTORY_NOT_FOUND(HttpStatus.NOT_FOUND, 4001, "재고를 찾을 수 없습니다."),
+    // 업체 배송 매니저 추가 제한 초과 400
+    COMPANY_DELIVERY_MANAGER_OVER_LIMIT(HttpStatus.BAD_REQUEST, 4002, "업체 배송 매니저 추가 제한을 초과했습니다."),
+    // 허브 배송 매니저 추가 제한 초과 400
+    HUB_DELIVERY_MANAGER_OVER_LIMIT(HttpStatus.BAD_REQUEST, 4003, "허브 배송 매니저 추가 제한을 초과했습니다.");
 
     private final HttpStatus httpStatus; // 응답 상태 코드
     private final Integer code; // 응답 코드. 도메인에 따라 1000번대로 나뉨

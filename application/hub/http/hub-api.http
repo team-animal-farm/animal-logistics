@@ -17,14 +17,24 @@ Content-Type: application/json
 }
 
 > {%
+
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
   client.global.set("HUB_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
 %}
 
 ### 허브 리스트 조회
 GET {{URL}}/hubs
 
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
 ### 허브 단건 조회
 GET {{URL}}/hubs/{{HUB_ID}}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
 
 ### 허브 수정
 PATCH {{URL}}/hubs/{{HUB_ID}}
@@ -42,5 +52,153 @@ Content-Type: application/json
   }
 }
 
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
 ### 허브 삭제
 DELETE {{URL}}/hubs/{{HUB_ID}}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 허브 생성
+POST {{URL}}/hubs
+Content-Type: application/json
+
+{
+  "address": {
+    "roadAddress": "서울특별시 강남구 강남대로 1234",
+    "detailAddress": "강남빌딩 1234호",
+    "zipcode": "12345"
+  },
+  "coordinate": {
+    "latitude": 37.123456,
+    "longitude": 127.123456
+  }
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+  client.global.set("HUB_ID", response.body.data.id); // HUB_ID 라는 변수에 response.body.data.id 값을 저장
+%}
+
+### 허브 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/hub
+Content-Type: application/json
+
+{
+  "username": "hubmanager"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 허브 배송 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/hub-delivery
+Content-Type: application/json
+
+{
+  "username": "delivery",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 업체 배송 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/company-delivery
+Content-Type: application/json
+
+{
+  "username": "delivery",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 공급 업체 매니저 추가
+POST {{URL}}/hubs/{{HUB_ID}}/managers/provider-company
+Content-Type: application/json
+
+{
+  "username": "provider",
+  "slackId": "slackId"
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 생성
+POST {{URL}}/hubs/{{HUB_ID}}/inventories
+Content-Type: application/json
+
+{
+  "productId": "{{INVENTORY_ID}}",
+  "quantity": {
+    "amount": 100
+  },
+  "price": {
+    "amount": 1000
+  }
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 리스트 조회
+GET {{URL}}/hubs/{{HUB_ID}}/inventories
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 단건 조회
+GET {{URL}}/hubs/{{HUB_ID}}/inventories/{{INVENTORY_ID}}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 절대적인 수정
+PATCH {{URL}}/hubs/{{HUB_ID}}/inventories/{{INVENTORY_ID}}
+Content-Type: application/json
+
+{
+  "quantity": {
+    "amount": 100
+  },
+  "price": {
+    "amount": 1000
+  }
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 상대적인 증감 수정
+PATCH {{URL}}/hubs/{{HUB_ID}}/inventories/{{INVENTORY_ID}}/adjust
+Content-Type: application/json
+
+{
+  "quantity": -10
+}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
+### 재고 삭제
+DELETE {{URL}}/hubs/{{HUB_ID}}/inventories/{{INVENTORY_ID}}
+
+> {%
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}

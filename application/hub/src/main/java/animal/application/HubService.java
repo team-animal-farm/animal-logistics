@@ -77,6 +77,6 @@ public class HubService {
 
     private Hub findHub(HubId hubId) {
         return hubRepository.findById(hubId)
-            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
+            .orElseThrow(() -> new GlobalException(ErrorCase.HUB_NOT_FOUND));
     }
 }
