@@ -69,7 +69,7 @@ public class UserService {
 
     //todo : company와 delivery를 서브 클래스로 두는 슈퍼클래스로 관리하도록 변경
     UserRole role = user.getRole();
-    if (role.toString().startsWith("COMPANY")) {
+    if (role.isCompanyRole()) {
       UserResponse.CompanyUserRes response = hubClient.GetCompanyUserInfo(role);
       return userMapper.toGetUserResponse(user, response);
     } else {
