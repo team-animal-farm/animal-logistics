@@ -1,15 +1,15 @@
-package animal.dto;
+package animal.auth.dto;
 
-import animal.domain.Address;
-import animal.domain.CompanyType;
-import animal.domain.DeliveryType;
-import animal.domain.UserRole;
+import animal.auth.domain.Address;
+import animal.auth.domain.CompanyType;
+import animal.auth.domain.DeliveryType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import security.UserRole;
 
 public class UserRequest {
 

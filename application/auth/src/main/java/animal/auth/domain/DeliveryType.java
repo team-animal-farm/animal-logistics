@@ -1,4 +1,4 @@
-package animal.domain;
+package animal.auth.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

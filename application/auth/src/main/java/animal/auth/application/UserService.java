@@ -1,18 +1,19 @@
-package animal.application;
+package animal.auth.application;
 
-import animal.domain.User;
-import animal.dto.UserRequest;
-import animal.dto.UserRequest.ModifyUserReq;
-import animal.dto.UserResponse;
-import animal.infrastructure.UserRepository;
-import animal.mapper.UserMapper;
-import animal.utils.JwtUtil;
+import animal.auth.domain.User;
+import animal.auth.dto.UserRequest;
+import animal.auth.dto.UserRequest.ModifyUserReq;
+import animal.auth.dto.UserResponse;
+import animal.auth.infrastructure.UserRepository;
+import animal.auth.mapper.UserMapper;
 import exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import response.ErrorCase;
+import security.JwtUtil;
+import security.UserRole;
 
 @Service
 @RequiredArgsConstructor
@@ -26,12 +27,10 @@ public class UserService {
   //배달 담당자 생성
   public void createDeliveryUser(UserRequest.SignUpDeliveryReq dto) {
 
-    //security 적용해야하니까 user에서 추가
-    //request.encodingPassword(passwordEncoder.encode(request.password()));
+    //encodePassword.encodingPassword(passwordEncoder.encode(dto.getPassword()));
 
     checkEmail(dto.getEmail());
 
-    //내부 통신 - hub에 delivery 사용자 등록 요청
     hubClient.createDeliveryUser(dto);
 
     User user = userMapper.from(dto);
@@ -39,9 +38,11 @@ public class UserService {
   }
 
   public void createCompanyUser(UserRequest.SignUpCompanyReq dto) {
+
+    //encodePassword.encodingPassword(passwordEncoder.encode(dto.getPassword()));
+
     checkEmail(dto.getEmail());
 
-    //내부 통신 - hub에 company 사용자 등록 요청
     hubClient.createCompanyUser(dto);
 
     User user = userMapper.from(dto);
@@ -60,15 +61,22 @@ public class UserService {
     return jwtUtil.createToken(user.getEmail(), user.getRole());
   }
 
-
+  //사용자 상세 조회
   public UserResponse.GetUserRes getUserInfo(String username) {
 
-    //내부 통신 - hub 사용자 데이터 요청
-
-    return userRepository.findById(username)
-
-        .map(userMapper::toGetUserResponse)
+    User user = userRepository.findById(username)
         .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
+
+    //todo : company와 delivery를 서브 클래스로 두는 슈퍼클래스로 관리하도록 변경
+    UserRole role = user.getRole();
+    if (role.isCompanyRole()) {
+      UserResponse.CompanyUserRes response = hubClient.GetCompanyUserInfo(role);
+      return userMapper.toGetUserResponse(user, response);
+    } else {
+      UserResponse.DeliveryUserRes response = hubClient.GetDeliveryUserInfo(role);
+      hubClient.GetDeliveryUserInfo(role);
+      return userMapper.toGetUserResponse(user, response);
+    }
   }
 
   public void getUserList(Pageable pageable) {
@@ -79,23 +87,23 @@ public class UserService {
   public void modifyDeliveryUser(String username, UserRequest.ModifyDeliveryUserReq dto) {
 
     /**
-     * 허브 변경
-     * 배달 타입 변경
-     *슬랙 아이디 변경
+     * 허브 변경,배달 타입 변경,슬랙 아이디 변경이 있지만
+     * 슬랙 아이디 변경만 가능하도록 만듬
      */
-
-    //내부 통신 -
     User user = userRepository.findById(username)
         .orElseThrow((() -> new GlobalException(ErrorCase.USER_NOT_FOUND)));
 
+    //todo : slackid를 변경했는지 redis로 먼저 확인
+    hubClient.ModifySlackId(username);
     user.updateInfo((ModifyUserReq) dto);
-
 
   }
 
   public void modifyCompanyUser(String username, UserRequest.ModifyUserReq dto) {
 
-    //내부 통신
+    /**
+     * 업체 변경 시
+     */
     User user = userRepository.findById(username)
         .orElseThrow((() -> new GlobalException(ErrorCase.USER_NOT_FOUND)));
 
@@ -105,11 +113,11 @@ public class UserService {
   }
 
   public void deleteUser(String username) {
-    //todo : 동기 통신으로 개발하고 비동기 통신으로 리팩토링
+    //todo : 비동기 통신으로?
     //내부 통신 - 데이터 삭제 요청
     User user = userRepository.findById(username)
         .orElseThrow(() -> new GlobalException(ErrorCase.USER_NOT_FOUND));
-    user.markDeleted(username);
+    user.delete(username);
   }
 
 

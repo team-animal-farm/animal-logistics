@@ -1,4 +1,4 @@
-package animal.domain;
+package animal.auth.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
