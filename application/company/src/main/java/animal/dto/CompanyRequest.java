@@ -18,7 +18,6 @@ public class CompanyRequest {
     public record UpdateCompanyReq(
         String name,
         CompanyStatus companyStatus,
-        CompanyType companyType,
         Address address
     ) {
 

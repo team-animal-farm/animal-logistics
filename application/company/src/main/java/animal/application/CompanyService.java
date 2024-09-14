@@ -42,7 +42,6 @@ public class CompanyService {
     }
 
     public GetCompanyRes getCompany(CompanyId companyId) {
-        // TODO: 회원 검증 로직이 필요한지?
 
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
         return companyMapper.toDto(company);
@@ -52,7 +51,7 @@ public class CompanyService {
     public void updateCompany(CompanyId companyId, UpdateCompanyReq updateCompanyReq) {
         Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
-        company.updateCompany(updateCompanyReq.name(), updateCompanyReq.companyStatus(), updateCompanyReq.companyType(),
+        company.updateCompany(updateCompanyReq.name(), updateCompanyReq.companyStatus(),
             updateCompanyReq.address());
     }
 

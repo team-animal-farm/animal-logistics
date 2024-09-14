@@ -54,10 +54,9 @@ public class Company extends BaseEntity {
         this.address = address;
     }
 
-    public void updateCompany(String name, CompanyStatus companyStatus, CompanyType companyType, Address address) {
+    public void updateCompany(String name, CompanyStatus companyStatus, Address address) {
         this.name = name;
         this.companyStatus = companyStatus;
-        this.companyType = companyType;
         this.address = address;
     }
 
