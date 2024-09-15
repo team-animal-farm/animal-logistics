@@ -81,16 +81,15 @@ public class InventoryController {
     }
 
     /**
-     * 재고 절대적인 수량 변경
+     * 여러 재고 수량 변경
      */
-    @PatchMapping("/{inventoryId}/adjust")
-    public CommonResponse<AdjustInventoryRes> adjustInventory(
+    @PatchMapping("/adjust")
+    public CommonResponse<List<AdjustInventoryRes>> adjustInventories(
         @PathVariable("hubId") UUID hubId,
-        @PathVariable("inventoryId") UUID inventoryId,
-        @RequestBody AdjustInventoryReq adjustInventoryReq
+        @RequestBody List<AdjustInventoryReq> adjustInventoryListReq
     ) {
-        AdjustInventoryRes response = inventoryService
-            .adjustInventoryQuantity(HubId.of(hubId), InventoryId.of(inventoryId), adjustInventoryReq.quantity());
+
+        List<AdjustInventoryRes> response = inventoryService.adjustInventoryQuantity(HubId.of(hubId), adjustInventoryListReq);
 
         return CommonResponse.success(response);
     }
