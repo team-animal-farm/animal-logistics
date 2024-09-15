@@ -4,6 +4,7 @@ import animal.domain.Hub;
 import animal.domain.HubId;
 import animal.domain.Inventory;
 import animal.domain.InventoryId;
+import animal.dto.InventoryRequest.AdjustInventoryReq;
 import animal.dto.InventoryRequest.CreateInventoryReq;
 import animal.dto.InventoryRequest.UpdateInventoryReq;
 import animal.dto.InventoryResponse.AdjustInventoryRes;
@@ -86,16 +87,25 @@ public class InventoryService {
     }
 
     /**
-     * 재고의 상대적인 수량 수정
+     * 여러 개의 재고의 상대적인 수량 수정
      */
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE) // TODO : 추후 최적화 필요
-    public AdjustInventoryRes adjustInventoryQuantity(HubId hubId, InventoryId inventoryId, int quantity) {
+    public List<AdjustInventoryRes> adjustInventoryQuantity(HubId hubId, List<AdjustInventoryReq> adjustInventoryReqList) {
 
-        Inventory inventory = findInventory(inventoryId, hubId);
-        inventory.adjust(quantity);
+        Hub hub = findHub(hubId);
 
-        return inventoryMapper.toAdjustInventoryRes(inventory);
+        return adjustInventoryReqList
+            .stream()
+            .map(request -> adjustInventory(request, hub))
+            .map(inventoryMapper::toAdjustInventoryRes)
+            .toList();
+    }
+
+    private Inventory adjustInventory(AdjustInventoryReq request, Hub hub) {
+        Inventory inventory = findInventory(InventoryId.of(request.productId()), hub);
+        inventory.adjust(request.quantity());
+        return inventory;
     }
 
     /**
@@ -110,6 +120,11 @@ public class InventoryService {
     private Hub findHub(HubId hubId) {
         return hubRepository.findById(hubId)
             .orElseThrow(() -> new GlobalException(ErrorCase.HUB_NOT_FOUND));
+    }
+
+    private Inventory findInventory(InventoryId inventoryId, Hub hub) {
+        return hub.getInventory(inventoryId)
+            .orElseThrow(() -> new GlobalException(ErrorCase.INVENTORY_NOT_FOUND));
     }
 
     private Inventory findInventory(InventoryId inventoryId, HubId hubId) {
