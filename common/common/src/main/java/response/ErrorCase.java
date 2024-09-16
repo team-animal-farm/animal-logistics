@@ -34,6 +34,9 @@ public enum ErrorCase {
     // 존재하지 않는 업체 404
     COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, 3000, "업체를 찾을 수 없습니다."),
 
+    // 존재하지 않는 상품 404
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다."),
+
 
     /* 허브 4000번대 */
 

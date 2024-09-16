@@ -2,8 +2,6 @@ package animal.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import java.io.Serializable;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -18,6 +16,17 @@ import lombok.NoArgsConstructor;
 public class ProductId implements Serializable { // JPA 식별자 타입은 Serializable 구현해야 함
 
     @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    public static ProductId of(UUID id) {
+        ProductId productId = new ProductId();
+        productId.id = id;
+        return productId;
+    }
+
+    public static ProductId ofRandom() {
+        ProductId productId = new ProductId();
+        productId.id = UUID.randomUUID();
+        return productId;
+    }
 }
