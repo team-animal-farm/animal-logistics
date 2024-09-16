@@ -35,13 +35,7 @@ public class ProductService {
             .orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
 
         // 상품 등록 로직
-        Product product = Product.builder()
-            .productId(ProductId.ofRandom())
-            .hubId(createProductReq.hubId())
-            .name(createProductReq.name())
-            .price(createProductReq.price())
-            .company(company)
-            .build();
+        Product product = productMapper.toProduct(createProductReq, company);
 
         company.addProduct(product);
 
