@@ -36,6 +36,10 @@ public class Hub extends BaseEntity {
     @EmbeddedId
     private final HubId id = HubId.ofRandom();
 
+    private String name;
+
+    private Integer sequence;
+
     @Embedded
     private Address address;
 
@@ -62,9 +66,11 @@ public class Hub extends BaseEntity {
     private List<ProviderCompanyManager> providerCompanyManagerList = new ArrayList<>();
 
     @Builder
-    private Hub(Address address, Coordinate coordinate) {
+    private Hub(Address address, Coordinate coordinate, String name, Integer sequence) {
         this.address = address;
         this.coordinate = coordinate;
+        this.name = name;
+        this.sequence = sequence;
     }
 
     /**

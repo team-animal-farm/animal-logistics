@@ -34,6 +34,9 @@ public class InventoryRequest {
 
     public record AdjustInventoryReq(
 
+        @NotNull(message = "상품 id는 필수입니다.")
+        UUID productId,
+
         @NotNull(message = "수량은 필수입니다.")
         Integer quantity
     ) {

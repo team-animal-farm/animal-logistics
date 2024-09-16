@@ -8,3 +8,141 @@ spring:
 base-package:
   jpa: "animal"
 
+hubs:
+  list:
+    - name: 서울특별시 센터
+      address:
+        roadAddress: 서울특별시 송파구 송파대로
+        detailAddress: 55
+        zipcode: 05655
+      coordinate:
+        latitude: 37.5146
+        longitude: 127.1063
+    - name: 경기 북부 센터
+      address:
+        roadAddress: 경기도 고양시 덕양구 권율대로
+        detailAddress: 570
+        zipcode: 10299
+      coordinate:
+        latitude: 37.6584
+        longitude: 126.8358
+    - name: 경기 남부 센터
+      address:
+        roadAddress: 경기도 이천시 덕평로
+        detailAddress: 257-21
+        zipcode: 17389
+      coordinate:
+        latitude: 37.2060
+        longitude: 127.4901
+    - name: 부산광역시 센터
+      address:
+        roadAddress: 부산 동구 중앙대로
+        detailAddress: 206
+        zipcode: 48733
+      coordinate:
+        latitude: 35.1342
+        longitude: 129.0561
+    - name: 대구광역시 센터
+      address:
+        roadAddress: 대구 북구 태평로
+        detailAddress: 161
+        zipcode: 41585
+      coordinate:
+        latitude: 35.8903
+        longitude: 128.5826
+    - name: 인천광역시 센터
+      address:
+        roadAddress: 인천 남동구 정각로
+        detailAddress: 29
+        zipcode: 21568
+      coordinate:
+        latitude: 37.4485
+        longitude: 126.7300
+    - name: 광주광역시 센터
+      address:
+        roadAddress: 광주 서구 내방로
+        detailAddress: 111
+        zipcode: 61948
+      coordinate:
+        latitude: 35.1485
+        longitude: 126.8911
+    - name: 대전광역시 센터
+      address:
+        roadAddress: 대전 서구 둔산로
+        detailAddress: 100
+        zipcode: 35242
+      coordinate:
+        latitude: 36.3510
+        longitude: 127.3789
+    - name: 울산광역시 센터
+      address:
+        roadAddress: 울산 남구 중앙로
+        detailAddress: 201
+        zipcode: 44799
+      coordinate:
+        latitude: 35.5407
+        longitude: 129.3126
+    - name: 세종특별자치시 센터
+      address:
+        roadAddress: 세종특별자치시 한누리대로
+        detailAddress: 2130
+        zipcode: 30151
+      coordinate:
+        latitude: 36.4802
+        longitude: 127.2895
+    - name: 강원특별자치도 센터
+      address:
+        roadAddress: 강원특별자치도 춘천시 중앙로
+        detailAddress: 1
+        zipcode: 24345
+      coordinate:
+        latitude: 37.8813
+        longitude: 127.7298
+    - name: 충청북도 센터
+      address:
+        roadAddress: 충북 청주시 상당구 상당로
+        detailAddress: 82
+        zipcode: 28528
+      coordinate:
+        latitude: 36.6424
+        longitude: 127.4891
+    - name: 충청남도 센터
+      address:
+        roadAddress: 충남 홍성군 홍북읍 충남대로
+        detailAddress: 21
+        zipcode: 32270
+      coordinate:
+        latitude: 36.6017
+        longitude: 126.6608
+    - name: 전북특별자치도 센터
+      address:
+        roadAddress: 전북특별자치도 전주시 완산구 효자로
+        detailAddress: 225
+        zipcode: 54999
+      coordinate:
+        latitude: 35.8200
+        longitude: 127.1477
+    - name: 전라남도 센터
+      address:
+        roadAddress: 전남 무안군 삼향읍 오룡길
+        detailAddress: 1
+        zipcode: 58567
+      coordinate:
+        latitude: 34.9901
+        longitude: 126.4862
+    - name: 경상북도 센터
+      address:
+        roadAddress: 경북 안동시 풍천면 도청대로
+        detailAddress: 455
+        zipcode: 36759
+      coordinate:
+        latitude: 36.5684
+        longitude: 128.7271
+    - name: 경상남도 센터
+      address:
+        roadAddress: 경남 창원시 의창구 중앙대로
+        detailAddress: 300
+        zipcode: 51154
+      coordinate:
+        latitude: 35.2285
+        longitude: 128.6811

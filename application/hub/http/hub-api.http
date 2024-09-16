@@ -185,12 +185,15 @@ Content-Type: application/json
 %}
 
 ### 재고 상대적인 증감 수정
-PATCH {{URL}}/hubs/{{HUB_ID}}/inventories/{{INVENTORY_ID}}/adjust
+PATCH {{URL}}/hubs/{{HUB_ID}}/inventories/adjust
 Content-Type: application/json
 
-{
-  "quantity": -10
-}
+[
+  {
+    "productId": "{{INVENTORY_ID}}",
+    "quantity": -10
+  }
+]
 
 > {%
   client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));

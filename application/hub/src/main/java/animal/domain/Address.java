@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 @Getter
 @Embeddable
@@ -24,6 +25,7 @@ public class Address {
     private String zipcode;
 
     @Builder
+    @ConstructorBinding
     private Address(String roadAddress, String detailAddress, String zipcode) {
         this.roadAddress = roadAddress;
         this.detailAddress = detailAddress;

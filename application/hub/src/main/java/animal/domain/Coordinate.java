@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import response.ErrorCase;
 
 @Getter
@@ -28,6 +29,7 @@ public class Coordinate {
     private Double longitude;
 
     @Builder
+    @ConstructorBinding
     private Coordinate(Double latitude, Double longitude) {
         if (!isValidLatitude(latitude) || !isValidLongitude(longitude)) {
             throw new GlobalException(ErrorCase.INVALID_INPUT);
