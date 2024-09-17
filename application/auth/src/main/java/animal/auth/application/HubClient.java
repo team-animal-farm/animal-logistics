@@ -1,5 +1,6 @@
 package animal.auth.application;
 
+import animal.auth.config.HubFeignClientConfig;
 import animal.auth.dto.UserRequest;
 import animal.auth.dto.UserResponse.CompanyUserRes;
 import animal.auth.dto.UserResponse.DeliveryUserRes;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
     name = "hub-service",
+    configuration = HubFeignClientConfig.class,
     fallbackFactory = HubFallbackFactory.class,
     path = "/hubs"
 )
