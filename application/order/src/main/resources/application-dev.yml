@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54322/animal
-    username: sa
-    password:
+    username: animal
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: create
@@ -22,5 +22,11 @@ spring:
         command: down
         timeout: 1m
       file: application/order/docker-compose.yml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+  instance:
+    hostname: localhost
 server:
   port: 8082
