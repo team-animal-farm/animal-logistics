@@ -22,7 +22,7 @@ public class HubFallbackFactory implements FallbackFactory<HubClient> {
 
       @Override
       public void createDeliveryUser(SignUpDeliveryReq dto) {
-        log.warn("###Fallback 호출-createDeliveryUser 오류 발생 원인 :{}", cause.getMessage());
+        log.warn("###Fallback 호출-createDeliveryUser 오류 발생 원인  :{}", cause.getMessage());
         handleFeignException(cause);
       }
 
