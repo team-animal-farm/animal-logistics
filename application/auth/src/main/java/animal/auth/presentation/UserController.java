@@ -2,7 +2,7 @@ package animal.auth.presentation;
 
 import animal.auth.application.UserService;
 import animal.auth.dto.UserRequest;
-import animal.auth.dto.UserResponse.GetUserRes;
+import animal.auth.dto.UserResponse.UserRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -28,16 +28,6 @@ public class UserController {
   private final UserService userService;
 
   /**
-   * 로그인
-   */
-  //todo : 필터로 변경 예정
-  @GetMapping("/sign-in")
-  public CommonResponse<String> createAuthenticationToken(@RequestBody String email) {
-    final String response = userService.createAccessToken(email);
-    return CommonResponse.success(response);
-  }
-
-  /**
    * 배송담당자 회원가입
    */
   @PostMapping("/delivery/sign-up")
@@ -53,15 +43,6 @@ public class UserController {
   public CommonResponse<CommonEmptyRes> createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
     userService.createCompanyUser(request);
     return CommonResponse.success();
-  }
-
-  /**
-   * 사용자 상세 조회
-   */
-  @GetMapping("/{username}")
-  public CommonResponse<GetUserRes> getUser(@PathVariable String username) {
-    GetUserRes response = userService.getUserInfo(username);
-    return CommonResponse.success(response);
   }
 
   //필터 파라미터 - delivery, company
@@ -80,24 +61,22 @@ public class UserController {
   }
 
   /**
-   * 배송담당자 정보 수정
+   * 사용자 상세 조회
    */
-  //사용자의 권한은 수정이 안됨,username
-  @PatchMapping("/delivery/{username}")
-  public CommonResponse<CommonEmptyRes> modifyDeliveryUser(@PathVariable String username,
-      @Valid @RequestBody UserRequest.ModifyDeliveryUserReq request) {
-    userService.modifyDeliveryUser(username, request);
-    return CommonResponse.success();
+  @GetMapping("/{username}")
+  public CommonResponse<UserRes> getUser(@PathVariable String username) {
+    var response = userService.getUserInfo(username);
+    return CommonResponse.success(response);
   }
 
+
   /**
-   * 업체 정보 수정
+   * 사용자 정보 수정
    */
-  //사용자의 권한은 수정이 안됨,username
-  @PatchMapping("/company/{username}")
+  @PatchMapping("/{username}")
   public CommonResponse<CommonEmptyRes> modifyCompanyUser(@PathVariable String username,
       @Valid @RequestBody UserRequest.ModifyUserReq request) {
-    userService.modifyCompanyUser(username, request);
+    userService.modifyUser(username, request);
     return CommonResponse.success();
   }
 
