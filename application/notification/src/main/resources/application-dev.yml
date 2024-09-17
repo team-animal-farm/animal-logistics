@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54325/animal
-    username: sa
-    password:
+    username: animal
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: create
@@ -24,3 +24,13 @@ spring:
       file: application/notification/docker-compose.yml
 server:
   port: 8085
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+  instance:
+    hostname: localhost
+ai:
+  api:
+    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent
+    key: "${AI_API_KEY}"
