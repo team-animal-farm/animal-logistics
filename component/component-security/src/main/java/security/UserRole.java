@@ -17,8 +17,9 @@ public enum UserRole {
 
   private final String authority;
 
-  public boolean isCompanyRole() {
-    return authority.startsWith("COMPANY");
+
+  public boolean isDeliveryRole() {
+    return authority.startsWith("DELIVERY");
   }
 
   public static class Authority {

@@ -41,23 +41,6 @@ public class UserRequest {
   }
 
   @Getter
-  @AllArgsConstructor
-  public static class SignUpDeliveryReq extends SignUpUserReq {
-
-    private DeliveryType type;
-
-    @NotBlank(message = "슬랙 id는 필수 입력입니다.")
-    private String slackId;
-  }
-
-  @Getter
-  @AllArgsConstructor
-  public static class SignUpCompanyReq extends SignUpUserReq {
-
-    private CompanyType type;
-  }
-
-  @Getter
   public abstract static class ModifyUserReq {
 
     private String nickname;
@@ -77,9 +60,26 @@ public class UserRequest {
 
   @Getter
   @AllArgsConstructor
+  public static class SignUpDeliveryReq extends SignUpUserReq {
+
+    private DeliveryType type;
+
+    @NotBlank(message = "슬랙 id는 필수 입력입니다.")
+    private String slackId;
+  }
+
+  @Getter
+  @AllArgsConstructor
+  public static class SignUpCompanyReq extends SignUpUserReq {
+
+    private CompanyType type;
+  }
+
+
+  @Getter
+  @AllArgsConstructor
   public static class ModifyDeliveryUserReq extends ModifyUserReq {
 
-    //만약
     private DeliveryType type;
     @NotBlank(message = "슬랙 id는 필수 입력입니다.")
     private String slackId;
@@ -89,8 +89,13 @@ public class UserRequest {
   @AllArgsConstructor
   public static class ModifyCompanyUserReq extends ModifyUserReq {
 
-    //만약 하면 공급-> 수량 type변경 시 company의 상품 모두 삭제
     private CompanyType type;
+  }
+
+  public record UpdateDeliveryUserReq(
+      DeliveryType type,
+      String slackId) {
+
   }
 
 
