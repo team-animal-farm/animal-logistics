@@ -1,40 +1,63 @@
 package animal.auth.dto;
 
 import animal.auth.domain.Address;
+import animal.auth.domain.CompanyType;
 import animal.auth.domain.DeliveryType;
-import java.util.UUID;
-import response.CompanyType;
+import animal.auth.domain.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import security.UserRole;
 
 public class UserResponse {
 
-  //todo : 상속으로 변경
-  public record GetUserRes(
-      String username,
+  @Getter
+  @Setter
+  @ToString(callSuper = true)
+  public abstract static class UserRes {
 
-      String nickname,
+    protected String username;
 
-      String email,
+    protected String nickname;
 
-      String phone,
+    protected String email;
 
-      Address address,
+    protected String phone;
 
-      UUID hubName,
+    protected Address address;
 
-      UserRole role
-  ) {
+    protected UserRole role;
+
+    //허브 이름을 반환
+    protected String hubName;
+
+    public void updateUserRes(User user) {
+      this.username = user.getUsername();
+      this.nickname = user.getNickname();
+      this.email = user.getEmail();
+      this.phone = user.getPhone();
+      this.address = user.getAddress();
+      this.role = user.getRole();
+    }
 
   }
 
-  public record DeliveryUserRes(
-      DeliveryType type,
-      String slackId
-  ) {
+  @Getter
+  @AllArgsConstructor
+  @ToString(callSuper = true)
+  public static class DeliveryUserRes extends UserRes {
 
+    private DeliveryType type;
+    private String slackId;
   }
 
-  public record CompanyUserRes(CompanyType type) {
+  @Getter
+  @AllArgsConstructor
+  @ToString(callSuper = true)
+  public static class CompanyUserRes extends UserRes {
 
+    private CompanyType type;
   }
+
 }
