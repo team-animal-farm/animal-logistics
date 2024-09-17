@@ -22,5 +22,11 @@ spring:
         command: down
         timeout: 1m
       file: application/order/docker-compose.yml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+  instance:
+    hostname: localhost
 server:
   port: 8082
