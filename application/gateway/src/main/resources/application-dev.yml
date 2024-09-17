@@ -9,19 +9,6 @@ spring:
         timeout: 1m
       file: application/auth/docker-compose.yml
 
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-
-      routes:
-        - id: auth-service
-          uri: lb://auth-service
-          predicates:
-            - Path=/users
-          filters:
-            - name: OrderServiceLog
 
 eureka:
   client:
