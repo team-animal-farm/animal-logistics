@@ -24,7 +24,6 @@ public class HubDeliveryService {
     @Scheduled(cron = "0 0 8 * * *") // 매일 08:00
     @Transactional
     public void assignHubDeliveryToHubs() {
-        log.info("assignHubDeliveryToHubs");
         // 1. 배송 대기인 주문의 배송 조회
         List<Delivery> deliveryList = deliveryReader.getDeliveryOfWaitingOrderList();
 
