@@ -13,6 +13,8 @@ public class HubResponse {
 
     public record GetHubRes(
         UUID id,
+        String name,
+        Integer sequence,
         Address address,
         Coordinate coordinate,
         List<GetHubManagerRes> hubManagerList,
@@ -28,7 +30,6 @@ public class HubResponse {
         Address address,
         Coordinate coordinate,
         List<GetHubManagerRes> hubManagerList,
-        List<GetHubDeliveryManagerRes> hubDeliveryManagerList,
         List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
         List<GetProviderCompanyManagerRes> providerCompanyManagerList
     ) {
@@ -40,7 +41,6 @@ public class HubResponse {
         Address address,
         Coordinate coordinate,
         List<GetHubManagerRes> hubManagerList,
-        List<GetHubDeliveryManagerRes> hubDeliveryManagerList,
         List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
         List<GetProviderCompanyManagerRes> providerCompanyManagerList
     ) {

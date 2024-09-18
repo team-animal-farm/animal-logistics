@@ -1,12 +1,14 @@
 package animal.application;
 
 import animal.domain.Hub;
+import animal.domain.HubDeliveryManager;
 import animal.domain.HubId;
 import animal.dto.HubRequest.CreateHubReq;
 import animal.dto.HubRequest.UpdateHubReq;
 import animal.dto.HubResponse.CreateHubRes;
 import animal.dto.HubResponse.GetHubRes;
 import animal.dto.HubResponse.UpdateHubRes;
+import animal.infrastructure.HubDeliveryManagerRepository;
 import animal.infrastructure.HubRepository;
 import animal.mapper.HubMapper;
 import exception.GlobalException;
@@ -25,21 +27,26 @@ public class HubService {
 
     private final HubMapper hubMapper;
     private final HubRepository hubRepository;
+    private final HubDeliveryManagerRepository hubDeliveryManagerRepository;
 
     /**
      * 허브 단건 조회
      */
     public GetHubRes getHub(HubId hubId) {
         Hub hub = findHub(hubId);
-        return hubMapper.toGetHubRes(hub);
+        List<HubDeliveryManager> hubDeliveryManagerList = hubDeliveryManagerRepository.findAll();
+        return hubMapper.toGetHubRes(hub, hubDeliveryManagerList);
     }
 
     /**
      * 허브 리스트 조회
      */
     public List<GetHubRes> getHubList() {
-        List<Hub> hubList = hubRepository.findAll();
-        return hubMapper.toGetHubResList(hubList);
+        
+        return hubRepository.findAll()
+            .stream()
+            .map(hub -> hubMapper.toGetHubRes(hub, hubDeliveryManagerRepository.findAll()))
+            .toList();
     }
 
     /**
