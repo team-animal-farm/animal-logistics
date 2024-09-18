@@ -16,4 +16,9 @@ public class RestTemplateConfig {
     public RestTemplate weatherRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean
+    public RestTemplate slackRestTemplate() {
+        return new RestTemplate();
+    }
 }

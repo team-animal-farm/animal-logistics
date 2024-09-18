@@ -52,7 +52,7 @@ public class CompanyDeliveryService {
                 deliveryList.size());
 
             // 배송기사에게 지정된 배송 리스트
-            Map<String, Integer> deliveryDriverMap = new HashMap<>();
+            Map<Integer, Integer> deliveryDriverMap = new HashMap<>();
 
             for (int i = 0; i < deliveryDriver.size(); i++) {
                 for (int j = 0; j <= deliveryList.size() / 10; j++) {
@@ -61,7 +61,7 @@ public class CompanyDeliveryService {
                         break;
                     }
                     // 배달 건에 배달기사 배정
-                    deliveryDriverMap.put(deliveryDriver.get(i).username(), j);
+                    deliveryDriverMap.put(i, j);
 
                     deliveryList.get(delivery).updateDriver(deliveryDriver.get(i).username());
                 }
@@ -69,7 +69,8 @@ public class CompanyDeliveryService {
 
             deliveryDriverMap.forEach((key, value) -> {
                 // 배송기사에게 배송 리스트 전송
-
+                String slackId = deliveryDriver.get(key).slackId();
+                
             });
         });
 
