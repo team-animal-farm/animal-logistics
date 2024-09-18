@@ -1,6 +1,7 @@
 package animal.application.order.application;
 
-import animal.application.order.domain.Delivery;
+import animal.application.order.domain.delivery.Delivery;
+import animal.application.order.domain.delivery.DeliveryStatus;
 import animal.application.order.dto.hub.HubResponse.GetHubRes;
 import animal.application.order.dto.user.UserResponse.GetDeliveryDriver;
 import animal.application.order.infrastructure.hub.HubClient;
@@ -17,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import response.DeliveryStatus;
 import response.ErrorCase;
 import response.UserRole;
 
@@ -39,7 +39,7 @@ public class CompanyDeliveryService {
         // 허브 ID로 조회하는데, 배송 대기 중인 건
         hubIdList.hubIds().forEach(hubId -> {
             // 배송 대기 건 조회
-            List<Delivery> deliveryList = deliveryRepository.findByHubIdAndDeliveryStatus(hubId, DeliveryStatus.COMPANY_READY);
+            List<Delivery> deliveryList = deliveryRepository.findByEndHubIdAndStatus(hubId, DeliveryStatus.ARRIVED_AT_HUB);
 
             int totalDelivery = deliveryList.size();
             // deliveryList 가 null이면 continue

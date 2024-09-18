@@ -75,4 +75,8 @@ public class Delivery {
     public void addDeliveryPath(DeliveryPath deliveryPath) {
         deliveryPathList.add(deliveryPath);
     }
+
+    public void updateDriver(String username) {
+        this.deliveryManager = username;
+    }
 }

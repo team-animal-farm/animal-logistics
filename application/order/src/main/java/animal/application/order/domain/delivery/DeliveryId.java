@@ -1,4 +1,4 @@
-package animal.application.order.domain;
+package animal.application.order.domain.delivery;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
