@@ -1,6 +1,6 @@
 package animal.application.order.application;
 
-import animal.application.order.domain.order.Order;
+import animal.application.order.domain.delivery.Delivery;
 import animal.application.order.dto.OrderResponse.HubInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HubDeliveryService {
 
     private final HubReader hubReader;
-    private final OrderReader orderReader;
+    private final DeliveryReader deliveryReader;
     private final HubDeliveryAssigner hubDeliveryAssigner;
 
     /**
@@ -25,13 +25,13 @@ public class HubDeliveryService {
     @Transactional
     public void assignHubDeliveryToHubs() {
         log.info("assignHubDeliveryToHubs");
-        // 1. 배송 대기인 주문 조회
-        List<Order> waitingOrderList = orderReader.getWaitingOrderList();
+        // 1. 배송 대기인 주문의 배송 조회
+        List<Delivery> deliveryList = deliveryReader.getDeliveryOfWaitingOrderList();
 
         // 2. 배송 담당자 및 허브 조회
         List<HubInfo> hubInfoList = hubReader.read();
 
         // 3. 허브별 배송 담당자 배정
-        hubDeliveryAssigner.assign(waitingOrderList, hubInfoList);
+        hubDeliveryAssigner.assign(deliveryList, hubInfoList);
     }
 }
