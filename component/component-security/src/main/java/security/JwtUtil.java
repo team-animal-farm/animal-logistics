@@ -3,62 +3,90 @@ package security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ServerWebExchange;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
   public static final String AUTHORIZATION_HEADER = "Authorization";
-
   public static final String BEARER_PREFIX = "Bearer ";
+  public static final int ACCESS_EXPIRATION = 60 * 60;
   private final SecretKey secretKey;
   @Value("${spring.application.name}")
   private String issuer;
-  @Value("${jwt.secret.access-expiration}")
-  private long accessExpiration; // 60분
+
 
   public JwtUtil(@Value("${jwt.secret.key}") String secretKey) {
     this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKey));
   }
 
-  public String createToken(String email, UserRole role) {
+
+  public String createToken(String username, UserRole role) {
     return BEARER_PREFIX + Jwts.builder()
-        .claim("email", email)
+        .subject(username)
         .claim("role", role.name())
         .issuer(issuer)
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + accessExpiration))
+        .expiration(new Date(System.currentTimeMillis() + Duration.ofSeconds(ACCESS_EXPIRATION).toMillis()))
         .signWith(secretKey)
         .compact();
   }
+  //todo : globalException처리하고 null로직 모두 삭제
 
   //토큰 유효성 검증
-    /*public Claims validateToken(String token) {
+  private Claims validate(String token) {
+    try {
+      if (token != null) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+      }
+      return null;
+      //todo : SignatureException,MalformedJwtException,ExpiredJwtException 예외처리
+    } catch (Exception e) {
+      log.warn("SignatureException");
+      throw e;
+    }
+  }
 
-    }*/
+  //Claims 만료 여부 확인
+  private boolean checkExpiration(Claims claims) {
+    return claims.getExpiration().after(new Date());
+  }
 
-  // calims  만료 기간 검증
-    /*public boolean validateClaims(Claims claims) {
-        return claims.getExpiration().after(new Date());
-    }*/
+  //token을 claims로 변환
+  public Claims tokenParseClaims(String token) {
+    Claims claims = validate(token);
+    assert claims != null;
+    if (checkExpiration(claims)) {
+      return claims;
+    }
+    return null;
+  }
 
   //jwt 추출
-  public String parseJwt(String bearerToken) {
-    //todo : 필터에서 header의 token을 인자로 넘겨줌으로 수정
-    //String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+  public String parseToken(ServerWebExchange exchange) {
+    String bearerToken = exchange.getRequest().getHeaders().getFirst(AUTHORIZATION_HEADER);
     if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
       return bearerToken.substring(7);
     }
     return null;
   }
 
-  //claims 추출
-  public Claims parseClaims(String token) {
-    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+  public String getUsername(Claims claims) {
+    return claims.getSubject();
   }
+
+  public String getRole(Claims claims) {
+    return (String) claims.get("role");
+  }
+
+
 }
