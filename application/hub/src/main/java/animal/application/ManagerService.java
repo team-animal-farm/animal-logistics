@@ -1,9 +1,9 @@
 package animal.application;
 
 import animal.domain.Hub;
+import animal.domain.HubDeliveryManager;
 import animal.domain.HubId;
 import animal.domain.manager.CompanyDeliveryManager;
-import animal.domain.manager.HubDeliveryManager;
 import animal.domain.manager.HubManager;
 import animal.domain.manager.ProviderCompanyManager;
 import animal.domain.manager.SlackId;
@@ -13,9 +13,11 @@ import animal.dto.ManagerRequest.AddCompanyDeliveryManagerReq;
 import animal.dto.ManagerRequest.AddHubDeliveryManagerReq;
 import animal.dto.ManagerRequest.AddHubManagerReq;
 import animal.dto.ManagerRequest.AddProviderCompanyManagerReq;
+import animal.infrastructure.HubDeliveryManagerRepository;
 import animal.infrastructure.HubRepository;
 import animal.mapper.HubMapper;
 import exception.GlobalException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class ManagerService {
 
     private final HubMapper hubMapper;
     private final HubRepository hubRepository;
+    private final HubDeliveryManagerRepository hubDeliveryManagerRepository;
 
     /**
      * 허브 관리자 추가
@@ -43,25 +46,22 @@ public class ManagerService {
             .build();
 
         hub.addHubManager(hubManager);
+        List<HubDeliveryManager> hubDeliveryManagerList = hubDeliveryManagerRepository.findAll();
 
-        return hubMapper.toGetHubRes(hub);
+        return hubMapper.toGetHubRes(hub, hubDeliveryManagerList);
     }
 
     /**
      * 허브 배송 관리자 추가
      */
-    public GetHubRes addHubDeliveryManager(HubId hubId, AddHubDeliveryManagerReq request) {
-
-        Hub hub = findHub(hubId);
+    public void addHubDeliveryManager(AddHubDeliveryManagerReq request) {
 
         HubDeliveryManager hubDeliveryManager = HubDeliveryManager.builder()
-            .username(Username.of(request.username()))
-            .slackId(SlackId.of(request.slackId()))
+            .username(request.username())
+            .slackId(request.slackId())
             .build();
 
-        hub.addHubDeliveryManager(hubDeliveryManager);
-
-        return hubMapper.toGetHubRes(hub);
+        hubDeliveryManagerRepository.save(hubDeliveryManager);
     }
 
     /**
@@ -77,8 +77,9 @@ public class ManagerService {
             .build();
 
         hub.addCompanyDeliveryManager(companyDeliveryManager);
+        List<HubDeliveryManager> hubDeliveryManagerList = hubDeliveryManagerRepository.findAll();
 
-        return hubMapper.toGetHubRes(hub);
+        return hubMapper.toGetHubRes(hub, hubDeliveryManagerList);
     }
 
     /**
@@ -94,8 +95,9 @@ public class ManagerService {
             .build();
 
         hub.addProviderCompanyManager(providerCompanyManager);
+        List<HubDeliveryManager> hubDeliveryManagerList = hubDeliveryManagerRepository.findAll();
 
-        return hubMapper.toGetHubRes(hub);
+        return hubMapper.toGetHubRes(hub, hubDeliveryManagerList);
     }
 
     private Hub findHub(HubId hubId) {
