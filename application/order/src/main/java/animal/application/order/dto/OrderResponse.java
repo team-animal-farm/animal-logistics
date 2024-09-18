@@ -16,6 +16,8 @@ public class OrderResponse {
 
     public record HubInfo(
         UUID id,
+        String name,
+        Integer sequence,
         Address address,
         Coordinate coordinate,
         List<HubDeliveryManager> hubDeliveryManagerList
