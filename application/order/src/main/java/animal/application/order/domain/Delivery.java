@@ -23,7 +23,7 @@ public class Delivery extends BaseEntity {
     private UUID start_id;
     private UUID destination_id;
     private UUID hubId;
-    private DeliveryStatus status;
+    private DeliveryStatus deliveryStatus;
     private Address address;
     private String recipient;
     private String recipientSlackId;
