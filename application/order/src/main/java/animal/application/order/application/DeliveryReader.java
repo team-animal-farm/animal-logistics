@@ -1,6 +1,6 @@
 package animal.application.order.application;
 
-import animal.application.order.domain.order.Order;
+import animal.application.order.domain.delivery.Delivery;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OrderReader {
+public class DeliveryReader {
 
-    List<Order> getWaitingOrderList() {
-        // TODO : 배송 대기인 주문 조회
+    List<Delivery> getDeliveryOfWaitingOrderList() {
+        // TODO : 배송 대기 주문의 배송 엔티티 조회
         return List.of();
     }
 }
