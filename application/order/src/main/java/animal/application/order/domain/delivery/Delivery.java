@@ -41,6 +41,8 @@ public class Delivery {
     @Column(nullable = false, length = 100)
     private String recipientSlackId;
 
+    private String hubDeliveryManager;
+
     private String deliveryManager;
 
     @OneToMany(mappedBy = "delivery", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
@@ -74,5 +76,9 @@ public class Delivery {
 
     public void addDeliveryPath(DeliveryPath deliveryPath) {
         deliveryPathList.add(deliveryPath);
+    }
+
+    public void updateHubDeliveryManager(String hubDeliveryManager) {
+        this.hubDeliveryManager = hubDeliveryManager;
     }
 }
