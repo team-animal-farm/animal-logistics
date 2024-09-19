@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
     name = "company-service",
     //configuration = CompanyFeignClientConfig.class,
     //fallbackFactory = CompanyFallbackFactory.class,
-    path = "/companys"
+    path = "/companies"
 )
 public interface CompanyClient {
 
-  @GetMapping("/address/{receiveCompanyId}")
-  Address getAddress(@PathVariable UUID receiveCompanyId);
+    @GetMapping("/address/{receiveCompanyId}")
+    Address getAddress(@PathVariable UUID receiveCompanyId);
 
-  @GetMapping("/recipient/{receiveCompanyId}")
-  String getRecipient(@PathVariable UUID receiveCompanyId);
+    @GetMapping("/recipient/{receiveCompanyId}")
+    String getRecipient(@PathVariable UUID receiveCompanyId);
 }
 

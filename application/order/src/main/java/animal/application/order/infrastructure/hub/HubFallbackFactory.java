@@ -1,5 +1,6 @@
 package animal.application.order.infrastructure.hub;
 
+import animal.application.order.client.HubClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
