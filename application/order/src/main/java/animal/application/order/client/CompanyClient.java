@@ -1,4 +1,4 @@
-package animal.application.order.application.order;
+package animal.application.order.client;
 
 
 import animal.application.order.domain.delivery.Address;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
     name = "company-service",
-    //configuration = CompanyFeignClientConfig.class,
-    //fallbackFactory = CompanyFallbackFactory.class,
     path = "/companies"
 )
 public interface CompanyClient {

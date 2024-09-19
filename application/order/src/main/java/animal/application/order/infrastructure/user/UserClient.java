@@ -22,10 +22,9 @@ public interface UserClient {
      *
      * @param hubId    허브 ID
      * @param userRole DELIVERY_COMPANY
-     * @param size     조회할 배송기사 수
      */
     @GetMapping("/users/{hubId}")
-    List<GetDeliveryDriver> getDeliveryDriver(@PathVariable UUID hubId, @RequestParam UserRole userRole, @RequestParam int size);
+    List<GetDeliveryDriver> getDeliveryDriver(@PathVariable UUID hubId, @RequestParam UserRole userRole);
 
 
 }
