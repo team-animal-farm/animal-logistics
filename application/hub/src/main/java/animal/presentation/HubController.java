@@ -9,6 +9,7 @@ import animal.dto.HubResponse.CreateHubRes;
 import animal.dto.HubResponse.GetHubRes;
 import animal.dto.HubResponse.UpdateHubRes;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,5 +84,13 @@ public class HubController {
     @GetMapping("/idList")
     public HubResponse.GetHubIdList getHubIdList() {
         return hubService.getHubIdList();
+    }
+
+    /**
+     * 허브 아이디 반환
+     */
+    @PostMapping("/hubId")
+    public Map<String, UUID> getHubId(@RequestBody Map<String, UUID> map) {
+        return hubService.getHubIdFromCompany(map);
     }
 }

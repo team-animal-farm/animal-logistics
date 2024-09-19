@@ -9,7 +9,7 @@ import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
 import animal.application.order.dto.OrderResponse.GetNode;
 import animal.application.order.dto.OrderResponse.HubNode;
-import animal.application.order.infrastructure.DeliveryRepository;
+import animal.application.order.infrastructure.order.DeliveryRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,12 +22,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeliveryService {
 
-    //todo : 미리 프로그램 실행 전에 가져와야할 듯
 
     private final HubClient hubClient;
     private final CompanyClient companyClient;
     private final DeliveryRepository deliveryRepository;
     private final Random random = new Random();
+
+    List<GetNode> hubList;
 
     public void createDelivery(GetHubIdReq dto, Address address) {
         // 도착허브 출발허브
@@ -35,10 +36,8 @@ public class DeliveryService {
         // 수령인
         String recipient = companyClient.getRecipient(dto.receiveCompanyId());
 
-        // 허브 모든 리스트 받아오기
         List<GetNode> hubList = hubClient.getHubList();
         hubList.sort(Comparator.comparing(GetNode::seq));
-
         List<HubNode> path = new ArrayList<>();
         for (GetNode n : hubList) {
             if (n.HubId() == hubIds.startHubId() || n.HubId() == hubIds.endHubId()) {
@@ -57,7 +56,7 @@ public class DeliveryService {
                 return Double.parseDouble(distanceStr.replaceAll("[^0-9.]", ""));
             })
             .sum();
-
+        //Map<String, Object> map = hubUtil.estimatedData(hubIds);
         // DeliveryPath 생성
         DeliveryPath deliveryPath = DeliveryPath.builder()
             .startHubId(hubIds.startHubId())
@@ -84,6 +83,17 @@ public class DeliveryService {
         Integer randomDistance = random.nextInt(1000) + 1; // 1~1000 미터 랜덤
         String newEstimatedDistance = randomDistance + "m";
         return new HubNode(startId, sequence, newEstimatedTime, newEstimatedDistance);
+    }
+
+    //허브 정보 초기화
+    public void getHubInfo() {
+        // 허브 모든 리스트 받아오기
+        List<GetNode> hubList = hubClient.getHubList();
+        hubList.sort(Comparator.comparing(GetNode::seq));
+
+        //노드에 저장
+        //hubUtil.init(hubList);
+
     }
 
 

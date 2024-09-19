@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: order-service
   datasource:
@@ -22,12 +24,6 @@ spring:
         command: down
         timeout: 1m
       file: application/order/docker-compose.yml
-
-
-
-  main:
-    allow-bean-definition-overriding: true
-
 eureka:
   client:
     service-url:

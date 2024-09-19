@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient(
     name = "hub-service",
-    //configuration = HubFeignClientConfig.class,
-    //fallbackFactory = HubFallbackFactory.class,
     path = "/hubs"
 )
 public interface HubClient {
 
-    //hub의 상품 존재 확인하고 재고 감소
-    @PostMapping("/adjust/{hubId}")
-    List<GetProductRes> adjustInventories(@PathVariable UUID hubId, List<OrderProduct> products);
-
-    @GetMapping("/hubId")
+    //업체가 소속되어 있는 허브 조회
+    @PostMapping("/hubId")
     GetHubIdRes getHubId(GetHubIdReq dto);
+
+    //재고 감소
+    @PostMapping("/{hubId}/inventories/adjust")
+    List<GetProductRes> adjustInventories(@PathVariable UUID hubId, List<OrderProduct> products);
 
     @GetMapping()
     List<GetNode> getHubList();

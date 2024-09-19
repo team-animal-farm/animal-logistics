@@ -3,7 +3,6 @@ package animal.application.order.application;
 import animal.application.order.dto.weather.WeatherInfoRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,8 +21,8 @@ public class WeatherService {
 
     private final RestTemplate weatherRestTemplate;
 
-    @Value("${weather.service.key}")
-    String weatherServiceKey;
+    //@Value("${weather.service.key}")
+    String weatherServiceKey = "dfjkdlsajf;sj";
 
     @Cacheable(cacheNames = "WeatherInfo", key = "args[0]")
     public String getWeatherInfo(String date) {

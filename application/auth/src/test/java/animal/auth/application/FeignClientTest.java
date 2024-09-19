@@ -21,57 +21,57 @@ import security.UserRole;
 @ExtendWith(MockitoExtension.class)
 public class FeignClientTest {
 
-  @Mock
-  UserService userService;
+    @Mock
+    UserService userService;
 
-  @Mock
-  UserRepository userRepository;
+    @Mock
+    UserRepository userRepository;
 
 
-  @Mock
-  HubClient hubClient;
+    @Mock
+    HubClient hubClient;
 
-  @Test
-  @DisplayName("배달담당자 정보 요청")
-  void test1() {
-    String username = "username";
+    @Test
+    @DisplayName("배달담당자 정보 요청")
+    void test1() {
+        String username = "username";
 
-    UserMapper userMapper = new UserMapperImpl();
+        UserMapper userMapper = new UserMapperImpl();
 
-    UserService userService = new UserService(userRepository, userMapper, hubClient);
+        UserService userService = new UserService(userRepository, userMapper, hubClient);
 
-    User user = User.builder().username(username).role(UserRole.DELIVERY_COMPANY).build();
-    given(userRepository.findById(username)).willReturn(Optional.of(user));
-    DeliveryUserRes deliveryUserRes = new DeliveryUserRes(DeliveryType.COMPANY, "slackId");
-    deliveryUserRes.setHubName("강원");
+        User user = User.builder().username(username).role(UserRole.DELIVERY_COMPANY).build();
+        given(userRepository.findById(username)).willReturn(Optional.of(user));
+        DeliveryUserRes deliveryUserRes = new DeliveryUserRes(DeliveryType.COMPANY, "slackId");
+        deliveryUserRes.setHubName("강원");
 
-    given(hubClient.GetDeliveryUserInfo(username)).willReturn(deliveryUserRes);
+        given(hubClient.getDeliveryUserInfo(username)).willReturn(deliveryUserRes);
 
-    UserRes response = userService.getUserInfo(username);
-    System.out.println("response: " + (response).toString());
+        UserRes response = userService.getUserInfo(username);
+        System.out.println("response: " + (response).toString());
 
-  }
+    }
 
-  @Test
-  @DisplayName("업체담당자 정보 요청")
-  void test2() {
-    String username = "username";
+    @Test
+    @DisplayName("업체담당자 정보 요청")
+    void test2() {
+        String username = "username";
 
-    UserMapper userMapper = new UserMapperImpl();
+        UserMapper userMapper = new UserMapperImpl();
 
-    UserService userService = new UserService(userRepository, userMapper, hubClient);
+        UserService userService = new UserService(userRepository, userMapper, hubClient);
 
-    User user = User.builder().username(username).role(UserRole.COMPANY_RECEIVE).build();
-    given(userRepository.findById(username)).willReturn(Optional.of(user));
-    CompanyUserRes companyUserRes = new CompanyUserRes(CompanyType.RECEIVE);
-    companyUserRes.setHubName("강원");
+        User user = User.builder().username(username).role(UserRole.COMPANY_RECEIVE).build();
+        given(userRepository.findById(username)).willReturn(Optional.of(user));
+        CompanyUserRes companyUserRes = new CompanyUserRes(CompanyType.RECEIVE);
+        companyUserRes.setHubName("강원");
 
-    given(hubClient.GetCompanyUserInfo(username)).willReturn(companyUserRes);
+        given(hubClient.getCompanyUserInfo(username)).willReturn(companyUserRes);
 
-    UserRes response = userService.getUserInfo(username);
-    System.out.println("response: " + (response).toString());
+        UserRes response = userService.getUserInfo(username);
+        System.out.println("response: " + (response).toString());
 
-  }
+    }
 
 
 }

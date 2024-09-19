@@ -46,6 +46,8 @@ public class ManagerController {
         @PathVariable("hubId") UUID hubId,
         @RequestBody AddHubDeliveryManagerReq request
     ) {
+
+        log.info("배송 관리자 추가 호출");
         managerService.addHubDeliveryManager(request);
         return CommonResponse.success();
     }
@@ -58,6 +60,8 @@ public class ManagerController {
         @PathVariable("hubId") UUID hubId,
         @RequestBody AddCompanyDeliveryManagerReq request
     ) {
+        log.info("업체 관리자 추가 호출");
+
         GetHubRes response = managerService.addCompanyDeliveryManager(HubId.of(hubId), request);
         return CommonResponse.success(response);
     }

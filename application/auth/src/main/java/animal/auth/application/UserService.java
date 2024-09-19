@@ -34,6 +34,7 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
 
+  //todo : 회원가입 단일 요청으로 관리
 
   //배달 담당자 생성
   @CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = "handleFallback")

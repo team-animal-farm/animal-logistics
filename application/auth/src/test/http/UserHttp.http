@@ -1,6 +1,6 @@
 
 ### Send POST request with json body
-POST http://localhost:8080/auth/delivery/sign-up
+POST http://localhost:19090/auth/delivery/sign-up
 Content-Type: application/json
 
 {
