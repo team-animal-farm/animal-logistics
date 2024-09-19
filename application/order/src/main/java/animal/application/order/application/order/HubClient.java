@@ -2,6 +2,7 @@ package animal.application.order.application.order;
 
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
+import animal.application.order.dto.OrderResponse.GetNode;
 import animal.application.order.dto.OrderResponse.GetProductRes;
 import animal.application.order.dto.OrderResponse.OrderProduct;
 import java.util.List;
@@ -25,4 +26,7 @@ public interface HubClient {
 
     @GetMapping("/hubId")
     GetHubIdRes getHubId(GetHubIdReq dto);
+
+    @GetMapping()
+    List<GetNode> getHubList();
 }

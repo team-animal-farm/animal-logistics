@@ -7,7 +7,14 @@ import animal.application.order.domain.delivery.Delivery;
 import animal.application.order.domain.delivery.DeliveryPath;
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
+import animal.application.order.dto.OrderResponse.GetNode;
+import animal.application.order.dto.OrderResponse.HubNode;
 import animal.application.order.infrastructure.DeliveryRepository;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,33 +22,69 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeliveryService {
 
-  private final HubClient hubClient;
-  private final CompanyClient companyClient;
-  private final DeliveryRepository deliveryRepository;
+    //todo : 미리 프로그램 실행 전에 가져와야할 듯
 
-  public void CreateDelivery(GetHubIdReq dto, Address address) {
-    //도착허브 출발허브
-    GetHubIdRes hubIds = hubClient.getHubId(dto);
-    //수령인
-    String recipient = companyClient.getRecipient(dto.receiveCompanyId());
+    private final HubClient hubClient;
+    private final CompanyClient companyClient;
+    private final DeliveryRepository deliveryRepository;
+    private final Random random = new Random();
 
-    //todo : mapper로 관리
+    public void createDelivery(GetHubIdReq dto, Address address) {
+        // 도착허브 출발허브
+        GetHubIdRes hubIds = hubClient.getHubId(dto);
+        // 수령인
+        String recipient = companyClient.getRecipient(dto.receiveCompanyId());
 
-    //todo : map api와 재귀적 탐색으로 최적화된 예상 시간, 거리를 넣은 값으로 DeliveryPath생성하기
-    DeliveryPath deliveryPath = DeliveryPath.builder()
-        .startHubId(hubIds.startHubId())
-        .endHubId(hubIds.endHubId())
-        .build();
+        // 허브 모든 리스트 받아오기
+        List<GetNode> hubList = hubClient.getHubList();
+        hubList.sort(Comparator.comparing(GetNode::seq));
 
-    Delivery delivery = Delivery.builder()
-        .startHubId(dto.providerCompanyId())
-        .endHubId(dto.receiveCompanyId())
-        .address(address)
-        .recipient(recipient)
-        .deliveryPath(deliveryPath)
-        .build();
+        List<HubNode> path = new ArrayList<>();
+        for (GetNode n : hubList) {
+            if (n.HubId() == hubIds.startHubId() || n.HubId() == hubIds.endHubId()) {
+                HubNode node = createHubNode(n.HubId(), n.seq());
+                path.add(node);
+            }
+        }
+        // 총 예상 시간과 거리 계산
+        int totalEstimatedTime = path.stream()
+            .mapToInt(HubNode::estimatedTime)
+            .sum();
 
-    deliveryRepository.save(delivery);
-  }
+        double totalEstimatedDistance = path.stream()
+            .mapToDouble(hubNode -> {
+                String distanceStr = hubNode.estimatedDistance();
+                return Double.parseDouble(distanceStr.replaceAll("[^0-9.]", ""));
+            })
+            .sum();
+
+        // DeliveryPath 생성
+        DeliveryPath deliveryPath = DeliveryPath.builder()
+            .startHubId(hubIds.startHubId())
+            .endHubId(hubIds.endHubId())
+            .estimatedDistance(totalEstimatedDistance)
+            .estimatedTime(totalEstimatedTime)
+            .build();
+
+        // Delivery 생성 및 저장
+        Delivery delivery = Delivery.builder()
+            .startHubId(dto.providerCompanyId())
+            .endHubId(dto.receiveCompanyId())
+            .address(address)
+            .recipient(recipient)
+            .deliveryPath(deliveryPath)
+            .build();
+
+        deliveryRepository.save(delivery);
+    }
+
+
+    private HubNode createHubNode(UUID startId, Integer sequence) {
+        Integer newEstimatedTime = random.nextInt(121); // 0~120 분 랜덤
+        Integer randomDistance = random.nextInt(1000) + 1; // 1~1000 미터 랜덤
+        String newEstimatedDistance = randomDistance + "m";
+        return new HubNode(startId, sequence, newEstimatedTime, newEstimatedDistance);
+    }
+
 
 }
