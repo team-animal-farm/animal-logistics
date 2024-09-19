@@ -34,10 +34,11 @@ public class Delivery {
 
     private Address address;
 
+    //업체명
     @Column(nullable = false, length = 100)
     private String recipient;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String recipientSlackId;
 
     private String hubDeliveryManager;
@@ -51,18 +52,19 @@ public class Delivery {
     private Delivery(
         UUID startHubId,
         UUID endHubId,
-        DeliveryStatus status,
         Address address,
         String recipient,
         String recipientSlackId,
+        DeliveryPath deliveryPath,
         String deliveryManager
     ) {
         this.startHubId = startHubId;
         this.endHubId = endHubId;
-        this.status = status;
+        this.status = DeliveryStatus.WAITING_AT_HUB;;
         this.address = address;
         this.recipient = recipient;
         this.recipientSlackId = recipientSlackId;
+        this.deliveryPath = deliveryPath;
         this.deliveryManager = deliveryManager;
     }
 
