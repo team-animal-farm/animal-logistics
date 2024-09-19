@@ -18,35 +18,33 @@ import response.CommonResponse.CommonEmptyRes;
 @RequestMapping("/auth")
 public class AuthController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  /**
-   * 배송담당자 회원가입
-   */
-  @PostMapping("/delivery/sign-up")
-  public CommonResponse<CommonEmptyRes> createDeliveryUser(@Valid @RequestBody UserRequest.SignUpDeliveryReq request) {
-    userService.createDeliveryUser(request);
-    return CommonResponse.success();
-  }
+    /**
+     * 배송담당자 회원가입
+     */
+    @PostMapping("/delivery/sign-up")
+    public CommonResponse<CommonEmptyRes> createDeliveryUser(@Valid @RequestBody UserRequest.SignUpDeliveryReq request) {
+        userService.createDeliveryUser(request);
+        return CommonResponse.success();
+    }
 
-  /**
-   * 업체 회원가입
-   */
-  @PostMapping("/company/sign-up")
-  public CommonResponse<CommonEmptyRes> createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
-    userService.createCompanyUser(request);
-    return CommonResponse.success();
-  }
+    /**
+     * 업체 회원가입
+     */
+    @PostMapping("/company/sign-up")
+    public CommonResponse<CommonEmptyRes> createCompanyUser(@Valid @RequestBody UserRequest.SignUpCompanyReq request) {
+        userService.createCompanyUser(request);
+        return CommonResponse.success();
+    }
 
-  /**
-   * 로그인
-   */
-  @PostMapping("/sign-in")
-  public CommonResponse<String> login(SignInUserReq request) {
-    var token = userService.loginUser(request);
-    return CommonResponse.success(token);
+    /**
+     * 로그인
+     */
+    @PostMapping("/sign-in")
+    public CommonResponse<String> login(SignInUserReq request) {
+        var token = userService.loginUser(request);
+        return CommonResponse.success(token);
 
-  }
-
-
+    }
 }
