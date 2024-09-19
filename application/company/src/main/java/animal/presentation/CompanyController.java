@@ -5,6 +5,7 @@ import animal.domain.CompanyId;
 import animal.dto.CompanyRequest;
 import animal.dto.CompanyRequest.AddStockReq;
 import animal.dto.CompanyRequest.CreateCompanyReq;
+import animal.dto.CompanyResponse;
 import animal.dto.CompanyResponse.AddCompanyRes;
 import animal.dto.CompanyResponse.CreateCompanyRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
@@ -96,5 +97,12 @@ public class CompanyController {
         return companyService.addStock(CompanyId.of(companyId), addStockReq);
     }
 
+    /**
+     * 업체 주소 반환 API
+     */
+    @GetMapping("/{companyId}/address")
+    public CompanyResponse.GetCompanyAddressRes getCompanyAddress(@PathVariable UUID companyId) {
+        return companyService.getCompanyAddress(CompanyId.of(companyId));
+    }
 
 }

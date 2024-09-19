@@ -63,5 +63,10 @@ public class OrderResponse {
 
     }
 
+    public record GetHubRes(
+        List<UUID> hubIds
+    ) {
+
+    }
 
 }

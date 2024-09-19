@@ -4,6 +4,7 @@ import animal.auth.domain.Address;
 import animal.auth.domain.CompanyType;
 import animal.auth.domain.DeliveryType;
 import animal.auth.domain.User;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,52 +13,59 @@ import security.UserRole;
 
 public class UserResponse {
 
-  @Getter
-  @Setter
-  @ToString(callSuper = true)
-  public abstract static class UserRes {
+    @Getter
+    @Setter
+    @ToString(callSuper = true)
+    public abstract static class UserRes {
 
-    protected String username;
+        protected String username;
 
-    protected String nickname;
+        protected String nickname;
 
-    protected String email;
+        protected String email;
 
-    protected String phone;
+        protected String phone;
 
-    protected Address address;
+        protected Address address;
 
-    protected UserRole role;
+        protected UserRole role;
 
-    //허브 이름을 반환
-    protected String hubName;
+        //허브 이름을 반환
+        protected String hubName;
 
-    public void updateUserRes(User user) {
-      this.username = user.getUsername();
-      this.nickname = user.getNickname();
-      this.email = user.getEmail();
-      this.phone = user.getPhone();
-      this.address = user.getAddress();
-      this.role = user.getRole();
+        public void updateUserRes(User user) {
+            this.username = user.getUsername();
+            this.nickname = user.getNickname();
+            this.email = user.getEmail();
+            this.phone = user.getPhone();
+            this.address = user.getAddress();
+            this.role = user.getRole();
+        }
+
     }
 
-  }
+    @Getter
+    @AllArgsConstructor
+    @ToString(callSuper = true)
+    public static class DeliveryUserRes extends UserRes {
 
-  @Getter
-  @AllArgsConstructor
-  @ToString(callSuper = true)
-  public static class DeliveryUserRes extends UserRes {
+        private DeliveryType type;
+        private String slackId;
+    }
 
-    private DeliveryType type;
-    private String slackId;
-  }
+    @Getter
+    @AllArgsConstructor
+    @ToString(callSuper = true)
+    public static class CompanyUserRes extends UserRes {
 
-  @Getter
-  @AllArgsConstructor
-  @ToString(callSuper = true)
-  public static class CompanyUserRes extends UserRes {
+        private CompanyType type;
+    }
 
-    private CompanyType type;
-  }
+    public record GetDeliveryDriverRes(
+        String username,
+        UUID hubId,
+        String slackId
+    ) {
 
+    }
 }

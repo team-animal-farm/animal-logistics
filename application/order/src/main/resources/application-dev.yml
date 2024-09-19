@@ -22,6 +22,12 @@ spring:
         command: down
         timeout: 1m
       file: application/order/docker-compose.yml
+
+
+
+  main:
+    allow-bean-definition-overriding: true
+
 eureka:
   client:
     service-url:
@@ -30,3 +36,18 @@ eureka:
     hostname: localhost
 server:
   port: 8082
+
+
+weather:
+  service:
+    key: ${WEATHER_KEY}
+
+gemini:
+  api:
+    key: ${GEMINI_KEY}
+
+
+slack:
+  incoming-hook:
+    url: https://hooks.slack.com/services/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
+

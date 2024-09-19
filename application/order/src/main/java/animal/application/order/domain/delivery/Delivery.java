@@ -82,5 +82,6 @@ public class Delivery {
 
     public void updateDriver(String username) {
         this.deliveryManager = username;
+        this.status = DeliveryStatus.DELIVERING;
     }
 }

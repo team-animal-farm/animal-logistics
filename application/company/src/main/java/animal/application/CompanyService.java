@@ -8,6 +8,7 @@ import animal.dto.CompanyRequest.UpdateCompanyReq;
 import animal.dto.CompanyResponse;
 import animal.dto.CompanyResponse.AddCompanyRes;
 import animal.dto.CompanyResponse.CreateCompanyRes;
+import animal.dto.CompanyResponse.GetCompanyAddressRes;
 import animal.dto.CompanyResponse.GetCompanyRes;
 import animal.infrastructure.CompanyRepository;
 import animal.mapper.CompanyMapper;
@@ -78,7 +79,12 @@ public class CompanyService {
 
     public Page<GetCompanyRes> searchCompany(String companyName, CompanyType companyType, Pageable pageable) {
         Page<Company> companyList = companyRepository.findCompany(companyName, companyType, pageable);
-        
+
         return companyList.map(companyMapper::toDto);
+    }
+
+    public GetCompanyAddressRes getCompanyAddress(CompanyId companyId) {
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND));
+        return new GetCompanyAddressRes(company.getAddress());
     }
 }

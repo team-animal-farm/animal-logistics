@@ -6,12 +6,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import security.JwtUtil;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"security", "animal.auth"})
 @Import(JwtUtil.class)
 @EnableFeignClients
 public class AuthApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AuthApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AuthApplication.class, args);
+    }
 }
