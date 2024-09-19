@@ -5,6 +5,7 @@
 ## 목차
 
 - [🐥 컨벤션 가이드](#-컨벤션-가이드)
+- [🐒 구성원](#-구성원)
 - [🐶 템플릿 사용 방법](#-템플릿-사용-방법)
 - [🐸 실행 방법](#-실행-방법)
 - [🐹 개발 환경](#-개발-환경)
@@ -18,18 +19,37 @@
 
 - [여기](./conventions)를 참고해주세요.
 
+## 🐒 구성원
+
+| 이름                                         | 역할 분담                   |
+|--------------------------------------------|-------------------------|
+| [김재윤](https://github.com/lycoris62)        | 허브 관리, 허브 배송, 인프라       |
+| [박주창](https://github.com/shurona)          | 인증 및 인가, 주문 관리          |
+| [윤선미](https://github.com/korean-jindo-dog) | 업체 관리, 업체 배송, 외부 API 연동 |
+
 ## 🐸 실행 방법
 
 1. 아래의 환경 변수 설정
     ```dotenv
-   
+   # application의 order 모듈에서 사용하는 환경변수 입니다. 
+   WEATHER_KEY
+   GEMINI_KEY
     ```
     - `구성 편집` -> `빌드 및 실행` -> `옵션 수정` -> `환경 변수` 선택 -> 환경 변수에 아래의 형식으로 작성
-    - `키1=값1;키2=값2`
-2. 프로젝트에 맞게 `docker-compose.yml` 수정
-3. 도커 실행
-4. 애플리케이션 모듈의 스프링 실행
+    - `WEATHER_KEY=값1;WEATHER_KEY=값2`
+2. 도커 실행
+3. 각 애플리케이션 모듈의 스프링 실행
     - `docker compose support` 라이브러리가 자동으로 컨테이너를 실행 및 종료합니다.
+
+### 🦆 엔드포인트 (스웨거 UI)
+
+1. [게이트웨이](http://localhost:8080)
+2. [허브](http://localhost:8081/swagger-ui/index.html)
+3. [주문](http://localhost:8082/swagger-ui/index.html)
+4. [업체](http://localhost:8083/swagger-ui/index.html)
+5. [인증](http://localhost:8084/swagger-ui/index.html)
+6. [알림](http://localhost:8085/swagger-ui/index.html)
+7. [유레카](http://localhost:19090/swagger-ui/index.html)
 
 ## 🐹 개발 환경
 
@@ -51,6 +71,9 @@
 - Spring Security
 - Spring Data Jpa
 - Spring Data Redis
+- Eureka
+- Openfeign
+- Actuator
 - jjwt 0.12.6
 - QueryDSL 5.0.0
 - mapStruct 1.5.5.Final
@@ -61,18 +84,28 @@
 
 ## 🐰 프로젝트 상세
 
-> 여기에 프로젝트 상세 소개를 작성하시면 됩니다.
+### 이벤트 스토밍 및 도메인 주도 설계
+
+![EventStorming](./docs/images/animal-farm-event-storming.png)
+
+![ddd](./docs/images/animal-farm-ddd.png)
+
+### HTTP 파일로 API 테스트 자동화
+
+- [HUB HTTP 테스트](./application/hub/http/hub-api.http)
+
+### 도커 컴포즈 서포트
+
+- 도커 컴포즈 서포트를 활용하여 팀원 간 환경 설정 통일
 
 ## 🐳 ERD
 
-![ERD](./docs/images/animal-farm-v1.png)
+![ERD](./docs/images/animal-farm-v2.png)
 
 - [ErdCloud](https://www.erdcloud.com/d/3PmxD7wzwzgkzgrib)
 
 ## 🐙 API docs
 
-- [Swagger UI](https://www.google.co.kr/)
-
 ## 🐬 인프라 구조
 
-![Infra](./docs/images/sample-squirrel.jpg)
+![Infra](./docs/images/animal-farm-infra-v1.png)
