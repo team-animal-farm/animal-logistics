@@ -29,6 +29,9 @@ dependencies {
     // docker compose support
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
     implementation(project(':component:component-security'))
     implementation(project(':component:component-jpa'))
     implementation(project(':component:component-exception'))
