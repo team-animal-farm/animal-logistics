@@ -29,4 +29,10 @@ public class CompanyResponse {
     ) {
 
     }
+
+    public record GetCompanyAddressRes(
+        Address address
+    ) {
+
+    }
 }
