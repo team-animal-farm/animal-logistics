@@ -3,6 +3,7 @@ package animal.application.order.application;
 import animal.application.order.domain.delivery.Delivery;
 import animal.application.order.domain.delivery.DeliveryStatus;
 import animal.application.order.dto.hub.HubResponse.GetHubRes;
+import animal.application.order.dto.slack.SlackMessageReq;
 import animal.application.order.dto.user.UserResponse.GetDeliveryDriver;
 import animal.application.order.infrastructure.hub.HubClient;
 import animal.application.order.infrastructure.order.DeliveryRepository;
@@ -10,6 +11,7 @@ import animal.application.order.infrastructure.user.UserClient;
 import exception.GlobalException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +30,16 @@ public class CompanyDeliveryService {
 
     private final DeliveryRepository deliveryRepository;
     private final GeminiService geminiService;
+    private final SlackService slackService;
     private final WeatherService weatherService;
     private final HubClient hubClient;
     private final UserClient userClient;
 
-    @Scheduled(cron = "0 0 6 * * *") // 매일 06:00
+    @Scheduled(cron = "*/30 * * * * *") // 매일 06:00
     public void assignCompanyDeliveryToReceiver() {
+        log.info("배송기사에게 배송 리스트 할당");
         // 허브 ID 조회
-        GetHubRes hubIdList = hubClient.getHubId();
+        GetHubRes hubIdList = hubClient.getHubIdList();
         // 허브 ID로 조회하는데, 배송 대기 중인 건
         hubIdList.hubIds().forEach(hubId -> {
             // 배송 대기 건 조회
@@ -52,7 +56,7 @@ public class CompanyDeliveryService {
                 deliveryList.size());
 
             // 배송기사에게 지정된 배송 리스트
-            Map<Integer, Integer> deliveryDriverMap = new HashMap<>();
+            Map<Integer, List<Integer>> deliveryDriverMap = new HashMap<>();
 
             for (int i = 0; i < deliveryDriver.size(); i++) {
                 for (int j = 0; j <= deliveryList.size() / 10; j++) {
@@ -61,8 +65,12 @@ public class CompanyDeliveryService {
                         break;
                     }
                     // 배달 건에 배달기사 배정
-                    deliveryDriverMap.put(i, j);
+                    deliveryDriverMap.putIfAbsent(i, new ArrayList<>());
 
+                    // 해당 key의 리스트에 값 추가
+                    deliveryDriverMap.get(i).add(j);
+
+                    // 담당 배송기사 update
                     deliveryList.get(delivery).updateDriver(deliveryDriver.get(i).username());
                 }
             }
@@ -70,12 +78,23 @@ public class CompanyDeliveryService {
             deliveryDriverMap.forEach((key, value) -> {
                 // 배송기사에게 배송 리스트 전송
                 String slackId = deliveryDriver.get(key).slackId();
-                
+                List<Integer> deliveryListIndex = value;
+                StringBuilder message = new StringBuilder();
+                message.append("오늘 배송할 리스트는 다음과 같습니다.\n");
+                int num = 1;
+                for (int index : deliveryListIndex) {
+                    // 배송지: 주소
+                    message.append(num).append(". 배송지: ").append(deliveryList.get(index).getAddress()).append("\n");
+                    num++;
+                }
+                // Slack 전송
+                slackService.sendSlackMessage(SlackMessageReq.builder()
+                    .message(message.toString())
+                    .slackId(slackId)
+                    .build());
+                // TODO: 4. 거리, 예상 시간 계산 후 업데이트
             });
         });
-
-        // 4. 거리, 예상 시간 계산 후 업데이트
-        // 5. Slack 알림 전송
     }
 
     @Transactional
