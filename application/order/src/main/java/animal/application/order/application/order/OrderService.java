@@ -55,8 +55,6 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        GetHubIdReq hubIdDto = orderMapper.toGetHubIdReq(dto);
-
         //배달
         deliveryService.createDelivery(hubIdDto, address);
 

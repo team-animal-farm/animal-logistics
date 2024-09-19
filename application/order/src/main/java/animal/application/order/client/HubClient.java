@@ -2,6 +2,7 @@ package animal.application.order.client;
 
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
+import animal.application.order.dto.OrderResponse.GetNode;
 import animal.application.order.dto.OrderResponse.GetProductRes;
 import animal.application.order.dto.OrderResponse.HubData;
 import animal.application.order.dto.OrderResponse.OrderProduct;
@@ -27,12 +28,16 @@ public interface HubClient {
     @GetMapping
     HubData getHubs();
 
-    //hub의 상품 존재 확인하고 재고 감소
-    @PostMapping("/adjust/{hubId}")
+    //업체가 소속되어 있는 허브 조회
+    @PostMapping("/hubId")
+    GetHubIdRes getHubId(GetHubIdReq dto);
+
+    //재고 감소
+    @PostMapping("/{hubId}/inventories/adjust")
     List<GetProductRes> adjustInventories(@PathVariable UUID hubId, List<OrderProduct> products);
 
-    @GetMapping("/hubId")
-    GetHubIdRes getHubID(GetHubIdReq dto);
+    @GetMapping()
+    List<GetNode> getHubList();
 
     /**
      * 모든 허브 ID List 조회

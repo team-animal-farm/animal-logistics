@@ -1,12 +1,12 @@
 
-### Send POST request with json body
-POST http://localhost:19090/auth/delivery/sign-up
+### 회원가입
+POST {{URL}}/auth/delivery/sign-up
 Content-Type: application/json
 
 {
-  "username": "john_doe",
+  "username": "john_d22331",
   "nickname": "johnny",
-  "email": "john@example.com",
+  "email": "john232@example.com",
   "phone": "010-1234-5678",
   "password": "Passw0rd!",
   "hubId": "424b0fae-b2dd-4a9e-8844-46b64c40d1e0",
@@ -16,9 +16,15 @@ Content-Type: application/json
     "detailAddress": "Suite 789",
     "zipcode": "56789"
   },
-  "type": "PROVIDER"
+  "type": "HUB",
+  "slackId": "wywudkjl"
 }
 
+> {%
+
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
+
 ### GET request with a header
-GET http://localhost:19090/users/list
+GET {{URL}}/users/list
 Accept: application/json

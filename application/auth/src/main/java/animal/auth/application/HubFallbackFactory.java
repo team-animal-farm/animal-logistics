@@ -1,7 +1,6 @@
 package animal.auth.application;
 
 import animal.auth.dto.UserRequest.SignUpCompanyReq;
-import animal.auth.dto.UserRequest.SignUpDeliveryReq;
 import animal.auth.dto.UserRequest.UpdateDeliveryUserReq;
 import animal.auth.dto.UserResponse.CompanyUserRes;
 import animal.auth.dto.UserResponse.DeliveryUserRes;
@@ -21,7 +20,7 @@ public class HubFallbackFactory implements FallbackFactory<HubClient> {
     public HubClient create(Throwable cause) {
         return new HubClient() {
             @Override
-            public void createDeliveryUser(UUID hubId, SignUpDeliveryReq dto) {
+            public void createDeliveryUser(UUID hubId, UpdateDeliveryUserReq dto) {
                 log.warn("###Fallback 호출-createDeliveryUser 오류 발생 원인  :{}", cause.getMessage());
                 handleFeignException(cause);
             }

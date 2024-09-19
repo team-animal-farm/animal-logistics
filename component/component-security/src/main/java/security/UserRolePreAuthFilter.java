@@ -26,6 +26,7 @@ public class UserRolePreAuthFilter extends OncePerRequestFilter {
 
         if (request.getRequestURI().startsWith("/auth")) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         String username = request.getHeader("X-User-Name");

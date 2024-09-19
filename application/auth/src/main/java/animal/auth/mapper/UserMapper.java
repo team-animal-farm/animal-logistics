@@ -20,6 +20,8 @@ public interface UserMapper {
 
   UpdateDeliveryUserReq toUpdateDeliveryUserReq(ModifyDeliveryUserReq modifyDeliveryUserReq);
 
-  UserRes toUserRes(User user);
+    GetDeliveryDriverRes toGetDeliveryDriver(User user);
+
+    UserRes toUserRes(User user);
 
 }

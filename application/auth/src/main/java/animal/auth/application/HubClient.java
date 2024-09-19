@@ -25,8 +25,8 @@ public interface HubClient {
     /**
      * 배달담당자 등록 요청
      */
-    @PostMapping("/{hubId}/managers/delivery-user")
-    void createDeliveryUser(@PathVariable UUID hubId, @RequestBody UserRequest.SignUpDeliveryReq dto);
+    @PostMapping("/{hubId}/managers/hub-delivery")
+    void createDeliveryUser(@PathVariable UUID hubId, @RequestBody UserRequest.UpdateDeliveryUserReq dto);
 
     /**
      * 배달담당자 데이터 요청
@@ -45,7 +45,7 @@ public interface HubClient {
     /**
      * 업체 등록 요청
      */
-    @PostMapping("/{hubId}/managers/company-user")
+    @PostMapping("/{hubId}/managers/company-delivery")
     void createCompanyUser(@PathVariable UUID hubId, @RequestBody UserRequest.SignUpCompanyReq dto);
 
     /**

@@ -1,7 +1,7 @@
 package animal.application.order.application;
 
-import animal.application.order.application.order.CompanyClient;
-import animal.application.order.application.order.HubClient;
+import animal.application.order.client.CompanyClient;
+import animal.application.order.client.HubClient;
 import animal.application.order.domain.delivery.Address;
 import animal.application.order.domain.delivery.Delivery;
 import animal.application.order.domain.delivery.DeliveryPath;

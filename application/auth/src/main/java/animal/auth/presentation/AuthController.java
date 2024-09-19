@@ -42,7 +42,7 @@ public class AuthController {
      * 로그인
      */
     @PostMapping("/sign-in")
-    public CommonResponse<String> login(SignInUserReq request) {
+    public CommonResponse<String> login(@RequestBody SignInUserReq request) {
         var token = userService.loginUser(request);
         return CommonResponse.success(token);
 
