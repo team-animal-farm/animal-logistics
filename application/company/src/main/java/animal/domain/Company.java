@@ -24,43 +24,43 @@ import response.CompanyType;
 @Table(name = "p_company")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company extends BaseEntity {
+        
+  @EmbeddedId
+  private final CompanyId id = new CompanyId();
 
-    @EmbeddedId
-    private final CompanyId id = new CompanyId();
+  private String username;
+  private String name;
 
-    private String username;
-    private String name;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
+  private CompanyStatus companyStatus;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private CompanyStatus companyStatus;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
+  private CompanyType companyType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private CompanyType companyType;
+  @Embedded
+  private Address address;
 
-    @Embedded
-    private Address address;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+  private List<Product> products = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    private List<Product> products = new ArrayList<>();
+  @Builder
+  private Company(String username, String name, CompanyType companyType, Address address) {
+    this.username = username;
+    this.name = name;
+    this.companyStatus = CompanyStatus.OPENED;
+    this.companyType = companyType;
+    this.address = address;
+  }
 
-    @Builder
-    private Company(String username, String name, CompanyType companyType, Address address) {
-        this.username = username;
-        this.name = name;
-        this.companyStatus = CompanyStatus.OPENED;
-        this.companyType = companyType;
-        this.address = address;
-    }
+  public void updateCompany(String name, CompanyStatus companyStatus, Address address) {
+    this.name = name;
+    this.companyStatus = companyStatus;
+    this.address = address;
+  }
 
-    public void updateCompany(String name, CompanyStatus companyStatus, Address address) {
-        this.name = name;
-        this.companyStatus = companyStatus;
-        this.address = address;
-    }
-
-    public void addProduct(Product product) {
-        this.products.add(product);
-    }
+  public void addProduct(Product product) {
+    this.products.add(product);
+  }
 }

@@ -98,5 +98,12 @@ public class UserRequest {
 
   }
 
+  public record SignInUserReq(
+      String username,
+      String password
+  ) {
+
+  }
+
 
 }

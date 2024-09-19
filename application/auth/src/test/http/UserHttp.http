@@ -1,3 +1,24 @@
+
+### Send POST request with json body
+POST http://localhost:8080/auth/delivery/sign-up
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "nickname": "johnny",
+  "email": "john@example.com",
+  "phone": "010-1234-5678",
+  "password": "Passw0rd!",
+  "hubId": "424b0fae-b2dd-4a9e-8844-46b64c40d1e0",
+  "role": "COMPANY_SUPPLY",
+  "address": {
+    "roadAddress": "123 Business St",
+    "detailAddress": "Suite 789",
+    "zipcode": "56789"
+  },
+  "type": "PROVIDER"
+}
+
 ### GET request with a header
-GET http://localhost:8084/users/hi
+GET http://localhost:19090/users/list
 Accept: application/json

@@ -1,17 +1,15 @@
 package animal.auth.infrastructure;
 
 import animal.auth.domain.User;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import security.UserRole;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
-    boolean existsByEmail(String email);
+  boolean existsByEmail(String email);
 
-    Optional<User> findByEmail(String email);
+  Page<User> findAllByHubId(UUID hubId, Pageable pageable);
 
-    List<User> findByHubIdAndRole(UUID hubId, UserRole role);
 }

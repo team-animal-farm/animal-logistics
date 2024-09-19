@@ -33,8 +33,9 @@ public enum ErrorCase {
 
   HUB_SERVICE_FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, 2004, "hub 서비스 장애로 통신할 수 없습니다."),
 
-    // 존재하지 않는 상품 404
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다."),
+
+  // 존재하지 않는 상품 404
+  PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "상품을 찾을 수 없습니다."),
 
 
   /* 업체 3000번대 */
