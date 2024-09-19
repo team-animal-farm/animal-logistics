@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DeliveryRepository extends JpaRepository<Delivery, UUID> {
 
     List<Delivery> findByEndHubIdAndStatus(UUID hubId, DeliveryStatus deliveryStatus);
+
+    List<Delivery> findAllByStatus(DeliveryStatus deliveryStatus);
 }

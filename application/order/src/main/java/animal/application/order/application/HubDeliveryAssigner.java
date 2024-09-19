@@ -19,7 +19,9 @@ public class HubDeliveryAssigner {
 
         for (int i = 0; i < deliveryList.size(); i++) {
             Delivery delivery = deliveryList.get(i);
+            // 배송 담당자 지정
             delivery.updateHubDeliveryManager(hubDeliveryManagerList.get(i % count).getUsername());
+            // 도착 허브에 도착한 것으로 변경
             delivery.updateDeliveryStatus(DeliveryStatus.ARRIVED_AT_HUB);
         }
     }
