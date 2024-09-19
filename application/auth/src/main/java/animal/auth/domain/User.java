@@ -54,4 +54,8 @@ public class User extends BaseEntity {
     this.phone = dto.getPhone();
     this.address = dto.getAddress();
   }
+
+  public void endCoderPassword(String password) {
+    this.password = password;
+  }
 }
