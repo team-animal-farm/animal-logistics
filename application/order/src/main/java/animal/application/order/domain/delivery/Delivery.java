@@ -6,9 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -45,11 +44,8 @@ public class Delivery {
 
     private String deliveryManager;
 
-    @OneToMany(mappedBy = "delivery", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private List<HubPath> hubPathList;
-
-    @OneToMany(mappedBy = "delivery", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private List<DeliveryPath> deliveryPathList;
+    @OneToOne(mappedBy = "delivery", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private DeliveryPath deliveryPath;
 
     @Builder
     private Delivery(
@@ -70,15 +66,15 @@ public class Delivery {
         this.deliveryManager = deliveryManager;
     }
 
-    public void addHubPath(HubPath hubPath) {
-        hubPathList.add(hubPath);
-    }
-
-    public void addDeliveryPath(DeliveryPath deliveryPath) {
-        deliveryPathList.add(deliveryPath);
+    public void updateDeliveryPath(DeliveryPath deliveryPath) {
+        this.deliveryPath = deliveryPath;
     }
 
     public void updateHubDeliveryManager(String hubDeliveryManager) {
         this.hubDeliveryManager = hubDeliveryManager;
+    }
+
+    public void updateDeliveryStatus(DeliveryStatus status) {
+        this.status = status;
     }
 }

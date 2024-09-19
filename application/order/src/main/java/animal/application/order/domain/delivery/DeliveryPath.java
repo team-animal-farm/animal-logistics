@@ -3,7 +3,7 @@ package animal.application.order.domain.delivery;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -34,7 +34,7 @@ public class DeliveryPath {
 
     private Integer actualTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Delivery delivery;
 
     @Builder

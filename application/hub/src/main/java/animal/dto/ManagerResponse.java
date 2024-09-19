@@ -1,5 +1,7 @@
 package animal.dto;
 
+import java.util.UUID;
+
 public class ManagerResponse {
 
     public record GetHubManagerRes(
@@ -24,7 +26,8 @@ public class ManagerResponse {
 
     public record GetProviderCompanyManagerRes(
         String username,
-        String slackId
+        String slackId,
+        UUID companyId
     ) {
 
     }

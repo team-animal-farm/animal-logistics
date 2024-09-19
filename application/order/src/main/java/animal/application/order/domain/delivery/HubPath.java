@@ -2,9 +2,7 @@ package animal.application.order.domain.delivery;
 
 import animal.jpa.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -19,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class HubPath extends BaseEntity {
 
     @Id
-    private final UUID id = UUID.randomUUID();
+    private UUID startHubId;
 
     private UUID endHubId;
 
@@ -27,15 +25,14 @@ public class HubPath extends BaseEntity {
 
     private String pathName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Delivery delivery;
-
     @Builder
     private HubPath(
+        UUID startHubId,
         UUID endHubId,
         Integer estimatedTime,
         String pathName
     ) {
+        this.startHubId = startHubId;
         this.endHubId = endHubId;
         this.estimatedTime = estimatedTime;
         this.pathName = pathName;
