@@ -79,4 +79,8 @@ public class Delivery {
     public void updateDeliveryStatus(DeliveryStatus status) {
         this.status = status;
     }
+
+    public void updateDriver(String username) {
+        this.deliveryManager = username;
+    }
 }

@@ -8,6 +8,7 @@ import animal.dto.ManagerResponse.GetHubManagerRes;
 import animal.dto.ManagerResponse.GetProviderCompanyManagerRes;
 import java.util.List;
 import java.util.UUID;
+import lombok.Builder;
 
 public class HubResponse {
 
@@ -43,6 +44,13 @@ public class HubResponse {
         List<GetHubManagerRes> hubManagerList,
         List<GetCompanyDeliveryManagerRes> companyDeliveryManagerList,
         List<GetProviderCompanyManagerRes> providerCompanyManagerList
+    ) {
+
+    }
+
+    @Builder
+    public record GetHubIdList(
+        List<UUID> hubIds
     ) {
 
     }

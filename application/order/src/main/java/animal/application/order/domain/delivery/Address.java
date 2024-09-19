@@ -7,12 +7,14 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 @Getter
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Address {
 
     @Column(name = "road_address", nullable = false)

@@ -6,6 +6,7 @@ import animal.domain.HubId;
 import animal.dto.HubRequest.CreateHubReq;
 import animal.dto.HubRequest.UpdateHubReq;
 import animal.dto.HubResponse.CreateHubRes;
+import animal.dto.HubResponse.GetHubIdList;
 import animal.dto.HubResponse.GetHubRes;
 import animal.dto.HubResponse.UpdateHubRes;
 import animal.infrastructure.HubDeliveryManagerRepository;
@@ -85,5 +86,12 @@ public class HubService {
     private Hub findHub(HubId hubId) {
         return hubRepository.findById(hubId)
             .orElseThrow(() -> new GlobalException(ErrorCase.HUB_NOT_FOUND));
+    }
+
+    public GetHubIdList getHubIdList() {
+        // ID만 가져오기
+        return GetHubIdList.builder()
+            .hubIds(hubRepository.findAll().stream().map(hub -> hub.getId().getId()).toList())
+            .build();
     }
 }
