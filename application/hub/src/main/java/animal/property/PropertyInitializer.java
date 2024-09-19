@@ -1,6 +1,8 @@
 package animal.property;
 
 import animal.domain.Hub;
+import animal.domain.HubDeliveryManager;
+import animal.infrastructure.HubDeliveryManagerRepository;
 import animal.infrastructure.HubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,6 +17,7 @@ public class PropertyInitializer implements InitializingBean {
 
     private final HubPropertyList hubPropertyList;
     private final HubRepository hubRepository;
+    private final HubDeliveryManagerRepository hubDeliveryManagerRepository;
 
     @Override
     @Transactional
@@ -29,6 +32,14 @@ public class PropertyInitializer implements InitializingBean {
                 .build();
 
             hubRepository.save(hub);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            HubDeliveryManager manager = HubDeliveryManager.builder()
+                .username("hub-" + i)
+                .slackId("slack-" + i)
+                .build();
+            hubDeliveryManagerRepository.save(manager);
         }
     }
 }

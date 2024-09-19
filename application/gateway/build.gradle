@@ -11,8 +11,17 @@ repositories {
 
 
 dependencies {
+    testImplementation 'io.projectreactor:reactor-test'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     //gateway
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    //implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+    implementation(project(':component:component-security'))
 
 }
 

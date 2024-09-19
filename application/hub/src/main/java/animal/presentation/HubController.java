@@ -4,6 +4,7 @@ import animal.application.HubService;
 import animal.domain.HubId;
 import animal.dto.HubRequest.CreateHubReq;
 import animal.dto.HubRequest.UpdateHubReq;
+import animal.dto.HubResponse;
 import animal.dto.HubResponse.CreateHubRes;
 import animal.dto.HubResponse.GetHubRes;
 import animal.dto.HubResponse.UpdateHubRes;
@@ -77,5 +78,10 @@ public class HubController {
     public CommonResponse<CommonEmptyRes> deleteHub(@PathVariable("hubId") UUID hubId) {
         hubService.deleteHub(HubId.of(hubId));
         return CommonResponse.success();
+    }
+
+    @GetMapping("/idList")
+    public HubResponse.GetHubIdList getHubIdList() {
+        return hubService.getHubIdList();
     }
 }

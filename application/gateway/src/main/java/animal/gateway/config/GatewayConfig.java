@@ -3,19 +3,17 @@ package animal.gateway.config;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class GatewayConfig {
 
   @Bean
   public RouteLocator customRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
-        .route("auth-service", r -> r.path("/users/**")
-            //.filters()
+        .route("auth-service", r -> r.path("/users/**", "/auth/**")
             .uri("lb://auth-service")
         )
-        .route("company-service", r -> r.path("/companys/**")
+        .route("company-service", r -> r.path("/companies/**")
             .uri("lb://company-service")
         )
         .route("hub-service", r -> r.path("/hubs/**")

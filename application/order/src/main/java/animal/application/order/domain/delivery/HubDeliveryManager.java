@@ -1,4 +1,4 @@
-package animal.domain.manager;
+package animal.application.order.domain.delivery;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
@@ -14,14 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HubDeliveryManager {
 
-    @Embedded
-    private Username username;
+    private String username;
 
     @Embedded
-    private SlackId slackId;
+    private String slackId;
 
     @Builder
-    private HubDeliveryManager(Username username, SlackId slackId) {
+    private HubDeliveryManager(String username, String slackId) {
         this.username = username;
         this.slackId = slackId;
     }

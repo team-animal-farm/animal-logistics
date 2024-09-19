@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import response.CommonResponse;
+import response.CommonResponse.CommonEmptyRes;
 
 @Slf4j
 @RestController
@@ -41,12 +42,12 @@ public class ManagerController {
      * 허브 배송 관리자 추가
      */
     @PostMapping("/hub-delivery")
-    public CommonResponse<GetHubRes> addHubDeliveryManager(
+    public CommonResponse<CommonEmptyRes> addHubDeliveryManager(
         @PathVariable("hubId") UUID hubId,
         @RequestBody AddHubDeliveryManagerReq request
     ) {
-        GetHubRes response = managerService.addHubDeliveryManager(HubId.of(hubId), request);
-        return CommonResponse.success(response);
+        managerService.addHubDeliveryManager(request);
+        return CommonResponse.success();
     }
 
     /**

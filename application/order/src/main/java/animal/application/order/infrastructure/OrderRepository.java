@@ -1,9 +1,10 @@
 package animal.application.order.infrastructure;
 
-import animal.application.order.domain.delivery.Delivery;
+import animal.application.order.domain.order.Order;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DeliveryRepository extends JpaRepository<Delivery, UUID> {
+public interface OrderRepository extends JpaRepository<Order, UUID> {
+
 
 }

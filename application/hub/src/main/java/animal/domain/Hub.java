@@ -1,7 +1,6 @@
 package animal.domain;
 
 import animal.domain.manager.CompanyDeliveryManager;
-import animal.domain.manager.HubDeliveryManager;
 import animal.domain.manager.HubManager;
 import animal.domain.manager.ProviderCompanyManager;
 import animal.jpa.BaseEntity;
@@ -52,10 +51,6 @@ public class Hub extends BaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "p_hub_managaer", joinColumns = @JoinColumn(name = "hub_manager_id"))
     private List<HubManager> hubManagerList = new ArrayList<>();
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "p_hub_delivery_managaer", joinColumns = @JoinColumn(name = "hub_delivery_manager_id"))
-    private List<HubDeliveryManager> hubDeliveryManagerList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "p_company_delivery_managaer", joinColumns = @JoinColumn(name = "company_delivery_manager_id"))
@@ -110,13 +105,6 @@ public class Hub extends BaseEntity {
      */
     public void addHubManager(HubManager hubManager) {
         hubManagerList.add(hubManager);
-    }
-
-    /**
-     * 허브 배송 매니저 추가
-     */
-    public void addHubDeliveryManager(HubDeliveryManager hubDeliveryManager) {
-        hubDeliveryManagerList.add(hubDeliveryManager);
     }
 
     /**

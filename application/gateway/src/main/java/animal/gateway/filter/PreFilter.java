@@ -6,12 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import security.JwtUtil;
 
-@Component
+
 @RequiredArgsConstructor
 public class PreFilter implements GlobalFilter, Ordered {
 
@@ -24,7 +23,7 @@ public class PreFilter implements GlobalFilter, Ordered {
     logger.info("Pre filter :Request URI is" + path);
 
     //회원가입과 로그인 시 토큰 검증 하지 않음.
-    if (path.equals("/products/sign-in") || path.equals("/orders/sign-out") || path.equals("/orders/sign-in")) {
+    if (path.equals("/auth/**")) {
       return chain.filter(exchange);
     }
     //토큰 추출
@@ -34,7 +33,6 @@ public class PreFilter implements GlobalFilter, Ordered {
     Claims claims = jwtUtil.tokenParseClaims(token);
 
     //헤더에 값을 추가
-    //todo : 따로 filter로 관리할 수 있음.
     exchange.getRequest().mutate()
         .header("X-User-Name", jwtUtil.getUsername(claims))
         .header("X-User-Roles", jwtUtil.getRole(claims))
