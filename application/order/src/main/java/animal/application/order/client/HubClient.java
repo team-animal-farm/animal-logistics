@@ -5,6 +5,7 @@ import animal.application.order.dto.OrderResponse.GetHubIdRes;
 import animal.application.order.dto.OrderResponse.GetProductRes;
 import animal.application.order.dto.OrderResponse.HubData;
 import animal.application.order.dto.OrderResponse.OrderProduct;
+import animal.application.order.dto.hub.HubResponse.GetHubIdListRes;
 import animal.application.order.dto.hub.HubResponse.GetHubRes;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import response.CommonResponse;
 
 @FeignClient(
     name = "hub-service",
@@ -36,7 +38,11 @@ public interface HubClient {
      * 모든 허브 ID List 조회
      */
     @GetMapping("/idList")
-    GetHubRes getHubIdList();
+    GetHubIdListRes getHubIdList();
 
-
+    /**
+     * 허브 ID로 허브 조회
+     */
+    @GetMapping("/{hubId}")
+    CommonResponse<GetHubRes> getHub(@PathVariable("hubId") UUID hubId);
 }

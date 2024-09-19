@@ -38,4 +38,6 @@ public class SlackService {
             throw new GlobalException(ErrorCase.SYSTEM_ERROR);
         }
     }
+
+
 }

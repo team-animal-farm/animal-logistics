@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import response.UserRole;
 
@@ -24,8 +25,8 @@ public interface UserClient {
      * @param userRole DELIVERY_COMPANY
      */
     @GetMapping("/users/{hubId}")
-    List<GetDeliveryDriver> getDeliveryDriver(@PathVariable UUID hubId, @RequestParam UserRole userRole);
-
+    List<GetDeliveryDriver> getDeliveryDriver(@PathVariable UUID hubId, @RequestParam UserRole userRole,
+        @RequestHeader("X-User-Name") String userName, @RequestHeader("X-User-Roles") UserRole roles);
 
 }
 
