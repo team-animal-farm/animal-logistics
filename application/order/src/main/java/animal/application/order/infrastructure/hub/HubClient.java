@@ -15,8 +15,8 @@ public interface HubClient {
     /**
      * 모든 허브 ID List 조회
      */
-    @GetMapping("/hubs")
-    HubResponse.GetHubRes getHubId();
+    @GetMapping("/hubs/idList")
+    HubResponse.GetHubRes getHubIdList();
 
 
 }
