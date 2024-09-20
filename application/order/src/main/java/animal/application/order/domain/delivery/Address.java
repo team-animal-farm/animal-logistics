@@ -17,13 +17,13 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @ToString
 public class Address {
 
-    @Column(name = "road_address", nullable = false)
+    @Column(name = "road_address", nullable = true)
     private String roadAddress;
 
-    @Column(name = "detail_address", nullable = false)
+    @Column(name = "detail_address", nullable = true)
     private String detailAddress;
 
-    @Column(name = "zipcode", length = 100, nullable = false)
+    @Column(name = "zipcode", length = 100, nullable = true)
     private String zipcode;
 
     @Builder

@@ -5,6 +5,8 @@ import animal.application.order.domain.delivery.Coordinate;
 import animal.application.order.domain.delivery.HubDeliveryManager;
 import java.util.List;
 import java.util.UUID;
+import response.CompanyStatus;
+import response.CompanyType;
 
 public class OrderResponse {
 
@@ -82,6 +84,16 @@ public class OrderResponse {
 
     public record GetHubRes(
         List<UUID> hubIds
+    ) {
+
+    }
+
+    public record GetCompanyRes(
+        String username,
+        String name,
+        CompanyType companyType,
+        CompanyStatus companyStatus,
+        Address address
     ) {
 
     }

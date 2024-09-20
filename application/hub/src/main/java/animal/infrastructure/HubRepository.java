@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface HubRepository extends JpaRepository<Hub, HubId> {
 
-
     //companyId
     @Query("SELECT h FROM Hub h JOIN h.providerCompanyManagerList pcm WHERE pcm.companyId = :companyId")
     Optional<Hub> findByCompanyId(@Param("companyId") UUID companyId);

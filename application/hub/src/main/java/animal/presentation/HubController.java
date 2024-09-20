@@ -91,6 +91,7 @@ public class HubController {
      */
     @PostMapping("/hubId")
     public Map<String, UUID> getHubId(@RequestBody Map<String, UUID> map) {
+        log.info("허브 아이디 반환");
         return hubService.getHubIdFromCompany(map);
     }
 }

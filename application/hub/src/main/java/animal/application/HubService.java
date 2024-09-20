@@ -109,8 +109,8 @@ public class HubService {
             .getId().getId();
 
         Map<String, UUID> resultMap = new HashMap<>();
-        resultMap.put("receiveHubId", receiveHubId);
-        resultMap.put("providerHubId", providerHubId);
+        resultMap.put("endHubId", receiveHubId);
+        resultMap.put("startHubId", providerHubId);
 
         return resultMap;
     }
