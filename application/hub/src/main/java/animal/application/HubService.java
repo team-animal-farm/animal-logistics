@@ -13,7 +13,10 @@ import animal.infrastructure.HubDeliveryManagerRepository;
 import animal.infrastructure.HubRepository;
 import animal.mapper.HubMapper;
 import exception.GlobalException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,7 +46,7 @@ public class HubService {
      * 허브 리스트 조회
      */
     public List<GetHubRes> getHubList() {
-        
+
         return hubRepository.findAll()
             .stream()
             .map(hub -> hubMapper.toGetHubRes(hub, hubDeliveryManagerRepository.findAll()))
@@ -94,4 +97,22 @@ public class HubService {
             .hubIds(hubRepository.findAll().stream().map(hub -> hub.getId().getId()).toList())
             .build();
     }
+
+    public Map<String, UUID> getHubIdFromCompany(Map<String, UUID> map) {
+        // hub에 소속된 company 찾기
+        UUID receiveHubId = hubRepository.findByCompanyId(map.get("receiveCompanyId"))
+            .orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND))
+            .getId().getId();
+
+        UUID providerHubId = hubRepository.findByCompanyId(map.get("providerCompanyId"))
+            .orElseThrow(() -> new GlobalException(ErrorCase.COMPANY_NOT_FOUND))
+            .getId().getId();
+
+        Map<String, UUID> resultMap = new HashMap<>();
+        resultMap.put("receiveHubId", receiveHubId);
+        resultMap.put("providerHubId", providerHubId);
+
+        return resultMap;
+    }
+
 }

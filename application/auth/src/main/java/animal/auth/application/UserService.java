@@ -4,7 +4,10 @@ import animal.auth.domain.User;
 import animal.auth.dto.UserRequest;
 import animal.auth.dto.UserRequest.ModifyDeliveryUserReq;
 import animal.auth.dto.UserRequest.ModifyUserReq;
-import animal.auth.dto.UserResponse.GetDeliveryDriverRes;
+import animal.auth.dto.UserRequest.SignInUserReq;
+import animal.auth.dto.UserRequest.SignUpCompanyReq;
+import animal.auth.dto.UserRequest.SignUpDeliveryReq;
+import animal.auth.dto.UserRequest.UpdateDeliveryUserReq;
 import animal.auth.dto.UserResponse.UserRes;
 import animal.auth.infrastructure.UserRepository;
 import animal.auth.mapper.UserMapper;
@@ -12,14 +15,14 @@ import exception.GlobalException;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.annotation.PostConstruct;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import response.ErrorCase;
-import security.UserRole;
+import security.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -32,35 +35,53 @@ public class UserService {
     private final UserMapper userMapper;
     private final HubClient hubClient;
     private final CircuitBreakerRegistry circuitBreakerRegistry;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
+    //todo : 회원가입 단일 요청으로 관리
 
     //배달 담당자 생성
     @CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = "handleFallback")
-    public void createDeliveryUser(UserRequest.SignUpDeliveryReq dto) {
+    public void createDeliveryUser(SignUpDeliveryReq dto) {
 
-        //encodePassword.encodingPassword(passwordEncoder.encode(dto.getPassword()));
+        String password = passwordEncoder.encode(dto.getPassword());
 
         checkEmail(dto.getEmail());
 
-        hubClient.createDeliveryUser(dto);
+        UpdateDeliveryUserReq request = new UpdateDeliveryUserReq(dto.getUsername(), dto.getSlackId());
+        hubClient.createDeliveryUser(dto.getHubId(), request);
 
         User user = userMapper.from(dto);
+        user.endCoderPassword(password);
         userRepository.save(user);
     }
 
 
     //업체 담당자 생성
     @CircuitBreaker(name = CIRCUIT_BREAKER_NAME, fallbackMethod = "handleFallback")
-    public void createCompanyUser(UserRequest.SignUpCompanyReq dto) {
+    public void createCompanyUser(SignUpCompanyReq dto) {
 
-        //encodePassword.encodingPassword(passwordEncoder.encode(dto.getPassword()));
+        String password = passwordEncoder.encode(dto.getPassword());
 
         checkEmail(dto.getEmail());
 
-        hubClient.createCompanyUser(dto);
+        hubClient.createCompanyUser(dto.getHubId(), dto);
 
         User user = userMapper.from(dto);
+        user.endCoderPassword(password);
         userRepository.save(user);
+    }
+
+    //로그인
+    public String loginUser(SignInUserReq dto) {
+
+        User user = findUserByUsername(dto.username());
+
+        if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
+            throw new GlobalException(ErrorCase.USER_NOT_FOUND);
+        }
+
+        return jwtUtil.createToken(user.getUsername(), user.getRole());
     }
 
 
@@ -70,15 +91,20 @@ public class UserService {
 
         User user = findUserByUsername(username);
 
-        UserRes response = user.getRole().isDeliveryRole() ? hubClient.GetDeliveryUserInfo(user.getUsername())
-            : hubClient.GetCompanyUserInfo(user.getUsername());
+        UserRes response = user.getRole().isDeliveryRole() ? hubClient.getDeliveryUserInfo(user.getUsername())
+            : hubClient.getCompanyUserInfo(user.getUsername());
 
         userMapper.updateUserFields(user, response);
         return response;
     }
 
-    public void getUserList(Pageable pageable) {
+    //사용자 리스트 조회
+    public Page<UserRes> getUserList(Pageable pageable, String username) {
 
+        User user = findUserByUsername(username);
+
+        Page<User> userPage = userRepository.findAllByHubId(user.getHubId(), pageable);
+        return userPage.map(userMapper::toUserRes);
     }
 
     //사용자 정보 수정
@@ -89,7 +115,7 @@ public class UserService {
 
         if (user.getRole().isDeliveryRole()) {
             UserRequest.UpdateDeliveryUserReq request = userMapper.toUpdateDeliveryUserReq((ModifyDeliveryUserReq) dto);
-            hubClient.ModifyDeliveryUser(username, request);
+            hubClient.modifyDeliveryUser(username, request);
         }
 
         user.updateInfo(dto);
@@ -100,7 +126,7 @@ public class UserService {
     public void deleteUser(String username) {
         User user = findUserByUsername(username);
 
-        hubClient.DeleteUser(username);
+        hubClient.deleteUser(username);
 
         user.delete(username);
     }
@@ -131,9 +157,4 @@ public class UserService {
         throw new GlobalException(ErrorCase.HUB_SERVICE_FAILURE);
     }
 
-    public List<GetDeliveryDriverRes> getDeliveryDriver(UUID hubId, UserRole userRole) {
-        List<User> driverList = userRepository.findByHubIdAndRole(hubId, userRole);
-        return driverList.stream().map(userMapper::toGetDeliveryDriver).toList();
-    }
 }
-

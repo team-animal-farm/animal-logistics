@@ -8,6 +8,7 @@ import animal.application.order.domain.order.Order;
 import animal.application.order.domain.order.OrderList;
 import animal.application.order.dto.OrderResponse;
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
+import animal.application.order.dto.OrderResponse.GetHubIdRes;
 import animal.application.order.dto.OrderResponse.GetProductRes;
 import animal.application.order.infrastructure.OrderRepository;
 import animal.application.order.mapper.OrderListMapper;
@@ -29,8 +30,12 @@ public class OrderService {
 
     public void createOrder(OrderResponse.CreateOrderReq dto) {
 
+        GetHubIdReq hubIdDto = orderMapper.toGetHubIdReq(dto);
+
+        // 도착허브 출발허브
+        GetHubIdRes hubIds = hubClient.getHubId(hubIdDto);
         //재고 감소
-        List<GetProductRes> productList = hubClient.adjustInventories(dto.providerCompanyId(), dto.products());
+        List<GetProductRes> productList = hubClient.adjustInventories(hubIds.startHubId(), dto.products());
         //수령업체 주소
         Address address = companyClient.getAddress(dto.receiveCompanyId());
         //주문 생성
@@ -50,10 +55,8 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        GetHubIdReq hubIdDto = orderMapper.toGetHubIdReq(dto);
-
         //배달
-        deliveryService.CreateDelivery(hubIdDto, address);
+        deliveryService.createDelivery(hubIdDto, address);
 
     }
 

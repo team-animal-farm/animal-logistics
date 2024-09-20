@@ -12,13 +12,16 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = SPRING)
 public interface UserMapper {
 
-    User from(SignUpUserReq SignUpUserReq);
+  User from(SignUpUserReq SignUpUserReq);
 
-    default void updateUserFields(User user, UserRes userRes) {
-        userRes.updateUserRes(user);
-    }
+  default void updateUserFields(User user, UserRes userRes) {
+    userRes.updateUserRes(user);
+  }
 
-    UpdateDeliveryUserReq toUpdateDeliveryUserReq(ModifyDeliveryUserReq modifyDeliveryUserReq);
+  UpdateDeliveryUserReq toUpdateDeliveryUserReq(ModifyDeliveryUserReq modifyDeliveryUserReq);
 
     GetDeliveryDriverRes toGetDeliveryDriver(User user);
+
+    UserRes toUserRes(User user);
+
 }

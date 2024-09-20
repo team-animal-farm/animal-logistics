@@ -26,11 +26,11 @@ public class DeliveryPath {
 
     private UUID endHubId;
 
-    private Integer estimatedDistance;
+    private Double estimatedDistance;
 
     private Integer estimatedTime;
 
-    private Integer actualDistance;
+    private Double actualDistance;
 
     private Integer actualTime;
 
@@ -42,9 +42,9 @@ public class DeliveryPath {
         Integer sequence,
         UUID startHubId,
         UUID endHubId,
-        Integer estimatedDistance,
+        Double estimatedDistance,
         Integer estimatedTime,
-        Integer actualDistance,
+        Double actualDistance,
         Integer actualTime
     ) {
         this.sequence = sequence;

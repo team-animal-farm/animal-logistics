@@ -43,8 +43,6 @@ subprojects {
 
 
     dependencies { // 모든 하위 모듈에 이 설정을 적용
-        // spring
-        //implementation 'org.springframework.boot:spring-boot-starter'
 
         if (project.name != 'gateway') {
             // spring web mvc
@@ -52,12 +50,6 @@ subprojects {
             implementation 'org.springframework.boot:spring-boot-starter-web'
 
         }
-
-        /* if (project.name != 'gateway') {
-             // spring web mvc
-             implementation 'org.springframework.boot:spring-boot-starter-web'
-         }*/
-
 
         // lombok
         compileOnly 'org.projectlombok:lombok'

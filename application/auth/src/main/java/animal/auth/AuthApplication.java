@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import security.JwtUtil;
+import security.UserRolePreAuthFilter;
 
-@SpringBootApplication(scanBasePackages = {"security", "animal.auth"})
-@Import(JwtUtil.class)
+@SpringBootApplication
+@Import({JwtUtil.class, UserRolePreAuthFilter.class})
 @EnableFeignClients
 public class AuthApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(AuthApplication.class, args);
+  }
 }

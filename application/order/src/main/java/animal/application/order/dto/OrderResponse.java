@@ -63,6 +63,23 @@ public class OrderResponse {
 
     }
 
+    public record GetNode(
+        UUID HubId,
+        Integer seq
+    ) {
+
+    }
+
+    public record HubNode(
+        UUID startId,
+        Integer sequence,
+        Integer estimatedTime,
+        String estimatedDistance
+    ) {
+
+
+    }
+
     public record GetHubRes(
         List<UUID> hubIds
     ) {

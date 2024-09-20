@@ -5,7 +5,6 @@ import animal.application.order.dto.gemini.GeminiRes;
 import exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -19,8 +18,8 @@ public class GeminiService {
 
     private final RestTemplate geminiRestTemplate;
 
-    @Value("${gemini.api.key}")
-    String geminiApiKey;
+    //@Value("${gemini.api.key}")
+    String geminiApiKey = "dfjksajfklj;jf";
 
     //    @Cacheable(cacheNames = "WeatherSummary", key = "args[1]")
     public String getGeminiSummary(String requestPrompt, String date) {
