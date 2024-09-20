@@ -2,6 +2,9 @@ package animal.property;
 
 import animal.domain.Hub;
 import animal.domain.HubDeliveryManager;
+import animal.domain.manager.CompanyDeliveryManager;
+import animal.domain.manager.SlackId;
+import animal.domain.manager.Username;
 import animal.infrastructure.HubDeliveryManagerRepository;
 import animal.infrastructure.HubRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +27,18 @@ public class PropertyInitializer implements InitializingBean {
     public void afterPropertiesSet() {
         for (HubProperty hubProperty : hubPropertyList.list()) {
 
-            Hub hub = Hub.builder()
+            Hub hub = hubRepository.save(Hub.builder()
                 .name(hubProperty.name())
                 .address(hubProperty.address())
                 .coordinate(hubProperty.coordinate())
                 .sequence(sequence++)
-                .build();
+                .build());
+
+            hub.addCompanyDeliveryManager(
+                CompanyDeliveryManager.builder()
+                    .username(Username.of("cdm" + sequence))
+                    .slackId(SlackId.of("cdm" + sequence))
+                    .build());
 
             hubRepository.save(hub);
         }
