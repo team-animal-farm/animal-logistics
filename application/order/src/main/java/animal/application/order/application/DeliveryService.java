@@ -30,11 +30,10 @@ public class DeliveryService {
 
     List<GetNode> hubList;
 
-    public void createDelivery(GetHubIdReq dto, Address address) {
-        // 도착허브 출발허브
-        GetHubIdRes hubIds = hubClient.getHubId(dto);
+    public void createDelivery(GetHubIdReq dto, Address address, GetHubIdRes hubIds) {
+
         // 수령인
-        String recipient = companyClient.getRecipient(dto.receiveCompanyId());
+        // String recipient = companyClient.getRecipient(dto.receiveCompanyId());
 
         List<GetNode> hubList = hubClient.getHubList();
         hubList.sort(Comparator.comparing(GetNode::seq));
@@ -70,7 +69,7 @@ public class DeliveryService {
             .startHubId(dto.providerCompanyId())
             .endHubId(dto.receiveCompanyId())
             .address(address)
-            .recipient(recipient)
+            .recipient("recipient")
             .deliveryPath(deliveryPath)
             .build();
 

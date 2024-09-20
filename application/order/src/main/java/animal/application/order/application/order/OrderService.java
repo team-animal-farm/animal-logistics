@@ -3,13 +3,12 @@ package animal.application.order.application.order;
 import animal.application.order.application.DeliveryService;
 import animal.application.order.client.CompanyClient;
 import animal.application.order.client.HubClient;
-import animal.application.order.domain.delivery.Address;
 import animal.application.order.domain.order.Order;
 import animal.application.order.domain.order.OrderList;
 import animal.application.order.dto.OrderResponse;
+import animal.application.order.dto.OrderResponse.GetCompanyRes;
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
-import animal.application.order.dto.OrderResponse.GetProductRes;
 import animal.application.order.infrastructure.OrderRepository;
 import animal.application.order.mapper.OrderListMapper;
 import animal.application.order.mapper.OrderMapper;
@@ -35,14 +34,14 @@ public class OrderService {
         // 도착허브 출발허브
         GetHubIdRes hubIds = hubClient.getHubId(hubIdDto);
         //재고 감소
-        List<GetProductRes> productList = hubClient.adjustInventories(hubIds.startHubId(), dto.products());
+        //hubClient.adjustInventories(hubIds.startHubId(), dto.products());
         //수령업체 주소
-        Address address = companyClient.getAddress(dto.receiveCompanyId());
+        GetCompanyRes company = companyClient.getAddress(dto.receiveCompanyId());
         //주문 생성
         // todo : dto하고 받은 정보로 order생성,header의 username
-        Order order = orderMapper.toOrder(dto, "username", address);
-
-        List<OrderList> orderList = productList.stream()
+        Order order = orderMapper.toOrder(dto, "username", company.address());
+        orderRepository.save(order);
+        List<OrderList> orderList = dto.products().stream()
             .map(res -> {
                 OrderList product = orderListMapper.toOrderList(res); // OrderList로 변환
                 product.updateReceiveCompany(dto.providerCompanyId()); // product의 receiveCompany 사용
@@ -51,12 +50,9 @@ public class OrderService {
             .toList();
 
         //주문
-        order.addOrderList(orderList);
+        //order.addOrderList(orderList);
 
-        orderRepository.save(order);
-
-        //배달
-        deliveryService.createDelivery(hubIdDto, address);
+        deliveryService.createDelivery(hubIdDto, company.address(), hubIds);
 
     }
 

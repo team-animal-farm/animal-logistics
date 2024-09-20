@@ -94,6 +94,14 @@ public class InventoryController {
         return CommonResponse.success(response);
     }
 
+    @PatchMapping("/adjustlist")
+    public CommonResponse<CommonEmptyRes> adjustInventoryList(
+        @PathVariable("hubId") UUID hubId,
+        @RequestBody List<AdjustInventoryReq> adjustInventoryListReq
+    ) {
+        return CommonResponse.success();
+    }
+
     /**
      * 재고 삭제
      */
