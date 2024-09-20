@@ -1,12 +1,12 @@
 
 ### 회원가입
-POST {{URL}}/auth/delivery/sign-up
+POST http://localhost:8084/auth/delivery/sign-up
 Content-Type: application/json
 
 {
-  "username": "john_d22331",
+  "username": "john_d22331dfdf",
   "nickname": "johnny",
-  "email": "john232@example.com",
+  "email": "john232ff@example.com",
   "phone": "010-1234-5678",
   "password": "Passw0rd!",
   "hubId": "424b0fae-b2dd-4a9e-8844-46b64c40d1e0",
@@ -25,6 +25,16 @@ Content-Type: application/json
   client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
 %}
 
-### GET request with a header
-GET {{URL}}/users/list
-Accept: application/json
+### 로그인
+POST http://localhost:8084/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "john_doe22",
+  "password": "Passw0rd!"
+}
+
+> {%
+
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}
