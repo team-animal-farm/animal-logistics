@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import response.ErrorCase;
@@ -27,6 +29,7 @@ import response.ErrorCase;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "cache:hubs")
 public class HubService {
 
     private final HubMapper hubMapper;
@@ -36,6 +39,7 @@ public class HubService {
     /**
      * 허브 단건 조회
      */
+    @Cacheable(key = "#hubId.id", unless = "#result == null")
     public GetHubRes getHub(HubId hubId) {
         Hub hub = findHub(hubId);
         List<HubDeliveryManager> hubDeliveryManagerList = hubDeliveryManagerRepository.findAll();
@@ -45,6 +49,7 @@ public class HubService {
     /**
      * 허브 리스트 조회
      */
+    @Cacheable(key = "'all'")
     public List<GetHubRes> getHubList() {
 
         return hubRepository.findAll()
