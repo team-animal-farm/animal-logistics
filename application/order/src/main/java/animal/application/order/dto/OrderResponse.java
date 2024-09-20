@@ -66,8 +66,8 @@ public class OrderResponse {
     }
 
     public record GetNode(
-        UUID HubId,
-        Integer seq
+        UUID id,
+        Integer sequence
     ) {
 
     }

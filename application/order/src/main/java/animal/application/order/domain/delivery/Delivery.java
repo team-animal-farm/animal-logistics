@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -34,8 +35,7 @@ public class Delivery {
 
     private Address address;
 
-    //업체명
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String recipient;
 
     @Column(length = 100)
@@ -45,7 +45,9 @@ public class Delivery {
 
     private String deliveryManager;
 
-    @OneToOne(mappedBy = "delivery", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    // Delivery가 연관관계 주체가 되도록 수정
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "delivery_path_id") // 외래 키가 저장될 컬럼
     private DeliveryPath deliveryPath;
 
     @Builder
@@ -60,7 +62,7 @@ public class Delivery {
     ) {
         this.startHubId = startHubId;
         this.endHubId = endHubId;
-        this.status = DeliveryStatus.WAITING_AT_HUB;;
+        this.status = DeliveryStatus.WAITING_AT_HUB;
         this.address = address;
         this.recipient = recipient;
         this.recipientSlackId = recipientSlackId;
@@ -70,6 +72,7 @@ public class Delivery {
 
     public void updateDeliveryPath(DeliveryPath deliveryPath) {
         this.deliveryPath = deliveryPath;
+        deliveryPath.setDelivery(this); // 연관관계 편의 메소드 추가
     }
 
     public void updateHubDeliveryManager(String hubDeliveryManager) {
@@ -85,3 +88,4 @@ public class Delivery {
         this.status = DeliveryStatus.DELIVERING;
     }
 }
+
