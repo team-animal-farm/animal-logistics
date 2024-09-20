@@ -15,6 +15,11 @@ spring:
         show_sql: true # sql 로깅
         format_sql: true # SQL 문 정렬하여 출력
         highlight_sql: true # SQL 문 색 부여
+  data:
+    redis:
+      port: 63790
+      host: localhost
+      password:
   h2:
     console:
       enabled: true
