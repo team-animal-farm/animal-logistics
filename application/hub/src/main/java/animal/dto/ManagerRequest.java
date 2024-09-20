@@ -1,5 +1,7 @@
 package animal.dto;
 
+import java.util.UUID;
+
 public class ManagerRequest {
 
     public record AddHubManagerReq(
@@ -24,7 +26,8 @@ public class ManagerRequest {
 
     public record AddProviderCompanyManagerReq(
         String username,
-        String slackId
+        String slackId,
+        UUID companyId
     ) {
 
     }
