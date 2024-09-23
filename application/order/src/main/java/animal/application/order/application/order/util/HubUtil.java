@@ -79,7 +79,7 @@ public class HubUtil {
             Random random = new Random();
             Integer newEstimatedTime = random.nextInt(121); // 0~120 분 랜덤
             Integer newEstimatedDistance = random.nextInt(1000) + 1; // 1~1000 미터 랜덤
-            HubNode cur = new HubNode(n.HubId(), n.seq(), newEstimatedTime, newEstimatedDistance);
+            HubNode cur = new HubNode(n.id(), n.sequence(), newEstimatedTime, newEstimatedDistance);
 
             if (pre != null) {
                 pre.setRt(cur);

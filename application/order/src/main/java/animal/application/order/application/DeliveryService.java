@@ -9,6 +9,8 @@ import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
 import animal.application.order.dto.OrderResponse.GetNode;
 import animal.application.order.dto.OrderResponse.HubNode;
+import animal.application.order.dto.hub.HubResponse.GetHubRes;
+import animal.application.order.infrastructure.order.DeliveryPathRepository;
 import animal.application.order.infrastructure.order.DeliveryRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,6 +28,7 @@ public class DeliveryService {
     private final HubClient hubClient;
     private final CompanyClient companyClient;
     private final DeliveryRepository deliveryRepository;
+    private final DeliveryPathRepository deliveryPathRepository;
     private final Random random = new Random();
 
     List<GetNode> hubList;
@@ -35,12 +38,12 @@ public class DeliveryService {
         // 수령인
         // String recipient = companyClient.getRecipient(dto.receiveCompanyId());
 
-        List<GetNode> hubList = hubClient.getHubList();
-        hubList.sort(Comparator.comparing(GetNode::seq));
+        List<GetHubRes> hubList = hubClient.getHubList().getData();
+        hubList.sort(Comparator.comparing(GetHubRes::sequence));
         List<HubNode> path = new ArrayList<>();
-        for (GetNode n : hubList) {
-            if (n.HubId() == hubIds.startHubId() || n.HubId() == hubIds.endHubId()) {
-                HubNode node = createHubNode(n.HubId(), n.seq());
+        for (GetHubRes n : hubList) {
+            if (n.id() == hubIds.startHubId() || n.id() == hubIds.endHubId()) {
+                HubNode node = createHubNode(n.id(), n.sequence());
                 path.add(node);
             }
         }
@@ -63,6 +66,7 @@ public class DeliveryService {
             .estimatedDistance(totalEstimatedDistance)
             .estimatedTime(totalEstimatedTime)
             .build();
+        deliveryPathRepository.save(deliveryPath);
 
         // Delivery 생성 및 저장
         Delivery delivery = Delivery.builder()
@@ -73,6 +77,7 @@ public class DeliveryService {
             .deliveryPath(deliveryPath)
             .build();
 
+        delivery.updateDeliveryPath(deliveryPath);
         deliveryRepository.save(delivery);
     }
 
@@ -86,12 +91,12 @@ public class DeliveryService {
 
     //허브 정보 초기화
     public void getHubInfo() {
-        // 허브 모든 리스트 받아오기
+        /*// 허브 모든 리스트 받아오기
         List<GetNode> hubList = hubClient.getHubList();
-        hubList.sort(Comparator.comparing(GetNode::seq));
+        hubList.sort(Comparator.comparing(GetNode::sequence));
 
         //노드에 저장
-        //hubUtil.init(hubList);
+        hubUtil.init(hubList);*/
 
     }
 
