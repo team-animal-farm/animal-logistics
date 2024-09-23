@@ -1,0 +1,20 @@
+### 주문 생성,배달 생성
+POST http://localhost:8082/orders
+Content-Type: application/json
+
+{
+  "receiveCompanyId": "e6f0c1e3-3c1c-4c1b-8e63-1c6eeb0cfa4f",
+  "providerCompanyId": "d5f0e2f4-ec6a-4c9d-8b79-3e1e9b6a09a2",
+  "products": [
+    {
+      "productId": "d5f0e2f4-ec6a-4c9d-8b79-3e1e9b6a09a2",
+      "quantity": 10
+    }
+  ],
+  "comment": "빠른 배송 부탁드립니다."
+}
+
+> {%
+
+  client.test("성공 응답은 200", () => client.assert(response.status === 200, "응답 상태가 200이어야 합니다."));
+%}

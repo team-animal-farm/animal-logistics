@@ -2,7 +2,6 @@ package animal.application.order.client;
 
 import animal.application.order.dto.OrderResponse.GetHubIdReq;
 import animal.application.order.dto.OrderResponse.GetHubIdRes;
-import animal.application.order.dto.OrderResponse.GetNode;
 import animal.application.order.dto.OrderResponse.HubData;
 import animal.application.order.dto.OrderResponse.OrderProduct;
 import animal.application.order.dto.hub.HubResponse.GetHubIdListRes;
@@ -35,8 +34,8 @@ public interface HubClient {
     @PostMapping("/{hubId}/inventories/adjustlist")
     void adjustInventories(@PathVariable UUID hubId, List<OrderProduct> products);
 
-    @GetMapping()
-    List<GetNode> getHubList();
+    @GetMapping
+    CommonResponse<List<GetHubRes>> getHubList();
 
     /**
      * 모든 허브 ID List 조회

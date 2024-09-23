@@ -92,6 +92,7 @@ public class ManagerService {
         ProviderCompanyManager providerCompanyManager = ProviderCompanyManager.builder()
             .username(Username.of(request.username()))
             .slackId(SlackId.of(request.slackId()))
+            .companyId(request.companyId())
             .build();
 
         hub.addProviderCompanyManager(providerCompanyManager);
