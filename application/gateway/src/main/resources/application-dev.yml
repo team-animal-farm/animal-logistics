@@ -22,6 +22,10 @@ spring:
           uri: lb://order-server
           predicates:
             - Path=/orders/**
+        - id: notification-server
+          uri: lb://notification-server
+          predicates:
+            - Path=/notifications/**
       discovery:
         locator:
           enabled: true
